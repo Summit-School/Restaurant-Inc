@@ -7,15 +7,15 @@
 }
 
 .sidebar-btn {
-    color: rgb(79, 124, 192);
-    border: 1px solid rgb(79, 124, 192);
+    color: darkblue;
+    border: 1px solid darkblue;
     border-radius: 5px;
     padding: 5px 10px;
 }
 
 .sidebar-btn:hover {
     color: white;
-    background-color: rgb(79, 124, 192);
+    background-color: darkblue;
 }
 
 .sidebar-body {
@@ -44,11 +44,11 @@
 
 .sidebar-body li:hover {
     background-color: whitesmoke;
-    border-left: 4px solid rgb(79, 124, 192);
+    border-left: 4px solid darkblue;
 }
 
 .icon {
-    color: rgb(79, 124, 192);
+    color: darkblue;
     float: left;
     margin: 20px 5px 0 0;
 }

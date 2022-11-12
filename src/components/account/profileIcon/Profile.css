@@ -9,6 +9,8 @@
 
 .thumbnail-image {
     width: 40px;
+    margin-left: 10px;
+    border-radius: 50%;
 }
 
 .pull-left {

@@ -8,10 +8,10 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 1rem;
-    background-color: var(--white-color);
-    z-index: var(--z-fixed);
+    z-index: 100;
     transition: .5s;
     background-color: darkblue;
+    color: white;
 }
 
 .layout-content {

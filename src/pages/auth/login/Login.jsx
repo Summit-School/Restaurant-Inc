@@ -1,24 +1,19 @@
 import "./Login.css";
-import { useState } from "react";
-import ForgotPassword from "../../../components/auth/ForgotPassword";
 import { Link } from "react-router-dom";
 
 const Login = () => {
-  const [forgotPassword, setForgotPassword] = useState(false);
-
   return (
     <div className="login-wrapper">
       <div className="login-form-wrapper">
         <div className="logo">
-          <img src="/images/Easy_pay.png" alt="" />
+          <img src="/images/logo.jpg" alt="" />
         </div>
-        <h3>Easy Pay Login</h3>
         <form>
           <div className="email-div">
             <input
               className="form-control"
-              type="email"
-              placeholder="Email Address"
+              type="number"
+              placeholder="Phone Number"
             />
           </div>
           <div className="password-div">
@@ -36,17 +31,13 @@ const Login = () => {
             </Link>
           </div>
         </form>
-        <p
+        {/* <p
           className="fp-link text-primary"
           onClick={() => setForgotPassword(true)}
         >
           Forgot Password?
-        </p>
+        </p> */}
       </div>
-      <ForgotPassword
-        show={forgotPassword}
-        onHide={() => setForgotPassword(false)}
-      />
     </div>
   );
 };
