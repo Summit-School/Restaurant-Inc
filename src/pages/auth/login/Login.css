@@ -1,0 +1,63 @@
+.login-wrapper {
+    background-color: whitesmoke;
+    height: 100vh;
+    padding-top: 100px;
+}
+
+.login-form-wrapper {
+    width: 350px;
+    margin: auto;
+    padding: 40px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: rgba(40, 22, 203, 0.24) 0px 3px 8px;
+}
+
+.logo {
+    width: 50%;
+    margin: auto;
+    /* background-color: red; */
+}
+
+.logo img {
+    width: 100%;
+    height: auto;
+}
+
+.login-form-wrapper h3 {
+    font-size: 18px;
+}
+
+form {
+    margin-top: 40px;
+}
+
+input {
+    box-shadow: rgba(40, 22, 203, 0.24) 0px 3px 8px;
+    outline: none;
+    font-size: 15px;
+    background-color: white;
+    color: black;
+    margin-top: 10px;
+}
+
+input:active {
+    border: none;
+    outline: none;
+    background-color: white;
+
+}
+
+input:focus {
+    color: black;
+    background-color: white;
+
+}
+
+.fp-link {
+    margin-top: 30px;
+}
+
+.fp-link:hover {
+    cursor: pointer;
+}
