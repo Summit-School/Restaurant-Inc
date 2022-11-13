@@ -1,0 +1,27 @@
+.staff-page-scroller {
+    display: flex;
+    justify-content: space-between;
+}
+
+.service {
+    box-shadow: rgba(40, 22, 203, 0.24) 0px 3px 8px;
+    border-radius: 5px;
+    min-height: 500px;
+    padding: 10px;
+    width: 50%;
+    margin: 5px;
+}
+
+.cash-and-kit {
+    width: 50%;
+    margin: 5px 5px 20px 5px;
+}
+
+.cashier, .kitchen {
+    box-shadow: rgba(40, 22, 203, 0.24) 0px 3px 8px;
+    border-radius: 5px;
+    min-height: 500px;
+    padding: 10px;
+    width: 100%;
+    margin: 5px;
+}

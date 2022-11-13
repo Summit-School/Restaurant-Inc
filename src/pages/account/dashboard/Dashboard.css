@@ -2,11 +2,6 @@
     background-color: whitesmoke;
 }
 
-.dashboard-scroller {
-    height: 100%;
-    overflow-y: scroll;
-}
-
 .dashboard-cards {
     display: flex;
     flex-wrap: wrap;

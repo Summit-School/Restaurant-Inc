@@ -2,6 +2,8 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/auth/login/Login";
 import Dashboard from "./pages/account/dashboard/Dashboard";
+import Settings from "./pages/account/settings/Settings";
+import Users from "./pages/account/users/Users";
 
 import PageError from "./pages/404/PageError";
 
@@ -17,6 +19,8 @@ function App() {
           {/* UNPROTECTED ROUTES */}
           <Route path="/" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/staff" element={<Users />} />
 
           {/* 404 ROUTE */}
           <Route path="*" element={<PageError />} />

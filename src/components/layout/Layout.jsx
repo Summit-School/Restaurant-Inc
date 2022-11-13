@@ -4,7 +4,7 @@ import Profile from "../account/profileIcon/Profile";
 
 const Layout = ({ children }) => {
   return (
-    <div>
+    <div className="layout-wrapper">
       <div className="nav-bar">
         <div className="side-bar">
           <Sidebar />
