@@ -44,6 +44,13 @@ const Dashboard = () => {
               bgColor="khaki"
               cardColor="orange"
             />
+            <DashboardCards
+              icon={<BiMoney size={35} />}
+              title="Total number of tables"
+              value={formatMoney(58)}
+              bgColor="lightgrey"
+              cardColor="grey"
+            />
           </div>
         </div>
       </div>
