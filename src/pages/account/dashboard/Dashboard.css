@@ -12,46 +12,19 @@
     flex-wrap: wrap;
 }
 
-.conversion-rate {
-    margin-top: 20px;
-    background-color: #fff;
-    padding: 20px 10px;
-    border-radius: 10px;
+
+.order-status {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.pending-order, .completed-order {
     box-shadow: rgba(40, 22, 203, 0.24) 0px 3px 8px;
-}
-
-.rate-wrapper {
-    width: 100%;
-    overflow-x: scroll;
-}
-
-.display-rate {
-    font-weight: bold;
-}
-
-.set-rate {
-    padding: 20px;
-}
-
-.set-rate input {
-    width: 80%;
-    float: left;
-}
-
-.set-rate button {
-    width: 20%;
-    margin-top: 10px;
-    margin-left: 5px;
-}
-
-.latest-transactions {
-    margin-top: 30px;
-}
-
-.latest-txn-heading {
-    text-align: left;
-    font-weight: bold;
-    font-size: 20px;
+    border-radius: 5px;
+    min-height: 500px;
+    padding: 10px;
+    width: 50%;
+    margin: 5px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -59,13 +32,4 @@
         display: block;
     }
 
-    .set-rate input {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    .set-rate button {
-        width: 100%;
-        margin-left: 0;
-    }
 }

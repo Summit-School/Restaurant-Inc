@@ -4,6 +4,8 @@ import { FaUsers } from "react-icons/fa";
 import { BiMoney } from "react-icons/bi";
 import { AiOutlineTransaction } from "react-icons/ai";
 import DashboardCards from "../../../components/account/dashboardCards/DashboardCards";
+import PendingOrders from "../../../components/account/pendingOrders/PendingOrders";
+import CompletedOrders from "../../../components/account/completedOrders/CompletedOrders";
 
 const Dashboard = () => {
   const formatMoney = (amount) => {
@@ -51,6 +53,14 @@ const Dashboard = () => {
               bgColor="lightgrey"
               cardColor="grey"
             />
+          </div>
+          <div className="order-status container">
+            <div className="pending-order">
+              <PendingOrders />
+            </div>
+            <div className="completed-order">
+              <CompletedOrders />
+            </div>
           </div>
         </div>
       </div>

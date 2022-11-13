@@ -56,7 +56,7 @@ const Sidebar = () => {
               <span className="icon">
                 <BiMoney size={35} />
               </span>
-              <Link to="/add_staff">ADD STAFF</Link>
+              <Link to="/settings">SETTINGS</Link>
             </li>
             <li>
               <span className="icon">
