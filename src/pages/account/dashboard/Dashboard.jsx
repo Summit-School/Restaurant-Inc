@@ -18,45 +18,32 @@ const Dashboard = () => {
           <div className="dashboard-cards container">
             <DashboardCards
               icon={<FaUsers size={35} />}
-              title="NUMBER OF USER"
+              title="Total daily order"
               value={formatMoney(10265)}
-              bgColor="purple"
+              bgColor="lightgreen"
+              cardColor="green"
             />
             <DashboardCards
               icon={<AiOutlineTransaction size={35} />}
-              title="NUMBER OF TRANSACTIONS"
+              title="Total daily earnings"
               value={formatMoney(10265)}
-              bgColor="green"
+              bgColor="cornflowerblue"
+              cardColor="blue"
             />
             <DashboardCards
               icon={<AiOutlineTransaction size={35} />}
-              title="PENDING TRANSACTIONS"
+              title="Total monthly order"
               value={formatMoney(10265)}
-              bgColor="orange"
+              bgColor="darksalmon"
+              cardColor="red"
             />
             <DashboardCards
               icon={<BiMoney size={35} />}
-              title="TOTAL INCOME"
+              title="Total monthly earnings"
               value={formatMoney(10265)}
-              bgColor="gray"
+              bgColor="khaki"
+              cardColor="orange"
             />
-          </div>
-          <div className="conversion-rate container">
-            <div className="rate-wrapper">
-              <div className="display-rate">
-                Conversion rate: 1 Barhain = xxxxx FCFA
-              </div>
-              <div className="set-rate">
-                <input
-                  type="number"
-                  placeholder="Enter FCFA equivalent"
-                  className="form-control"
-                />
-                <button className="form-control bg-secondary text-light">
-                  Submit
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       </div>

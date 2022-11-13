@@ -1,12 +1,12 @@
-.card {
+.dbcard {
     width: 23.9%;
     margin: 5px;
     min-height: 120px;
+    padding: 20px;
 }
 
 .card-icon, .card-title-header {
     margin-top: 10px;
-    color: white;
     font-weight: bold;
 }
 
@@ -14,11 +14,11 @@
     margin-top: 10px;
     margin-bottom: 10px;
     font-weight: bold;
-    color: white;
+    font-size: 25px;
 }
 
 @media only screen and (max-width: 600px) {
-    .card {
+    .dbcard {
         width: 96%;
     }
 }

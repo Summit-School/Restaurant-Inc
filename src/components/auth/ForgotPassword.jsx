@@ -1,6 +1,5 @@
 import Modal from "react-bootstrap/Modal";
 import { Button } from "react-bootstrap";
-import { useState } from "react";
 
 const ForgotPassword = (props) => {
   return (
