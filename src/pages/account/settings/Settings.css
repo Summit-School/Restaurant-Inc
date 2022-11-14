@@ -1,0 +1,22 @@
+.settings-page-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.add-staff, .add-table {
+    width: 49%;
+    box-shadow: rgba(40, 22, 203, 0.24) 0px 3px 8px;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 5px;
+    min-height: 500px;
+}
+
+.add-staff form button, .add-table form button {
+    border: none;
+    background-color: green;
+    padding: 10px 20px;
+    margin: 30px 0 0 0;
+    border-radius: 5px;
+    color: white;
+}
