@@ -6,6 +6,7 @@ import Settings from "./pages/account/settings/Settings";
 import Users from "./pages/account/users/Users";
 import Menu from "./pages/account/menu/Menu";
 import OrderHistory from "./pages/account/history/OrderHistory";
+import Tables from "./pages/service_account/tables/Tables";
 
 import PageError from "./pages/404/PageError";
 
@@ -25,6 +26,9 @@ function App() {
           <Route path="/staff" element={<Users />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/order_history" element={<OrderHistory />} />
+
+          <Route path="/service_account" element={<Tables />} />
+          <Route path="/service_dashboard" element={<Tables />} />
 
           {/* 404 ROUTE */}
           <Route path="*" element={<PageError />} />

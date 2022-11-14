@@ -1,0 +1,44 @@
+.user-profile-icon {
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+.thumbnail-image {
+    width: 40px;
+    margin-left: 10px;
+    border-radius: 50%;
+}
+
+.pull-left {
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.pull-left span {
+    margin-top: 8px;
+    font-weight: bold
+}
+
+.menu-item {
+    background-color: white;
+    color: black;
+}
+
+.menu-item a {
+    display: flex;
+    color: black;
+    text-decoration: none;
+}
+
+.menu-item .signout-link {
+    color: red;
+}
+
+.menu-item:hover {
+    background-color: whitesmoke;
+}
