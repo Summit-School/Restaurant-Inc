@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { RiLockPasswordFill } from "react-icons/ri";
+import UpdateKitchen from "./UpdateKitchen";
+import DeleteKitchen from "./DeleteKitchen";
 
 const Kitchen = () => {
+  const [updateKitchen, setUpdateKitchen] = useState(false);
+  const [deleteKitchen, setDeleteKitchen] = useState(false);
+
   return (
     <div className="accordion" id="accordionExample">
       <div className="pending-heading">Kitchen</div>
@@ -22,7 +27,7 @@ const Kitchen = () => {
         </h2>
         <div
           id="collapseOne"
-          className="accordion-collapse collapse show"
+          className="accordion-collapse collapse"
           aria-labelledby="headingOne"
           data-bs-parent="#accordionExample"
         >
@@ -48,9 +53,31 @@ const Kitchen = () => {
               </div>
               <div className="data-value">1234MyRestaurant</div>
             </div>
+            <div className="action-btns">
+              <button
+                className="edit-btn"
+                onClick={() => setUpdateKitchen(true)}
+              >
+                Edit
+              </button>
+              <button
+                className="delete-btn"
+                onClick={() => setDeleteKitchen(true)}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
       </div>
+      <UpdateKitchen
+        show={updateKitchen}
+        onHide={() => setUpdateKitchen(false)}
+      />
+      <DeleteKitchen
+        show={deleteKitchen}
+        onHide={() => setDeleteKitchen(false)}
+      />
     </div>
   );
 };

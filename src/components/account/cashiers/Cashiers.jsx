@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { RiLockPasswordFill } from "react-icons/ri";
+import UpdateCashier from "./UpdateCashier";
+import DeleteCashier from "./DeleteCashier";
 
 const Cashiers = () => {
+  const [updateCashier, setUpdateCashier] = useState(false);
+  const [deleteCashier, setDeleteCashier] = useState(false);
+
   return (
     <div className="accordion" id="accordionExample">
       <div className="pending-heading">Cashier</div>
@@ -22,7 +27,7 @@ const Cashiers = () => {
         </h2>
         <div
           id="collapseOne"
-          className="accordion-collapse collapse show"
+          className="accordion-collapse collapse"
           aria-labelledby="headingOne"
           data-bs-parent="#accordionExample"
         >
@@ -48,9 +53,31 @@ const Cashiers = () => {
               </div>
               <div className="data-value">1234MyRestaurant</div>
             </div>
+            <div className="action-btns">
+              <button
+                className="edit-btn"
+                onClick={() => setUpdateCashier(true)}
+              >
+                Edit
+              </button>
+              <button
+                className="delete-btn"
+                onClick={() => setDeleteCashier(true)}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
       </div>
+      <UpdateCashier
+        show={updateCashier}
+        onHide={() => setUpdateCashier(false)}
+      />
+      <DeleteCashier
+        show={deleteCashier}
+        onHide={() => setDeleteCashier(false)}
+      />
     </div>
   );
 };

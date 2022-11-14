@@ -11,3 +11,34 @@
 .data-key span {
     margin: 0 10px 0 10px;
 }
+
+.action-btns {
+    margin-top: 30px;
+    text-align: right;
+}
+
+.action-btns .delete-btn {
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    margin-left: 10px;
+}
+
+/* Delete file css */
+.delete-actions button {
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    margin: 5px;
+}
+
+.yes-btn {
+    background-color: green;
+}
+
+.no-btn {
+    background-color: red;
+}

@@ -1,9 +1,15 @@
 import "./Waiters.css";
+import { useState } from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { RiLockPasswordFill } from "react-icons/ri";
+import UpdateWaiter from "./UpdateWaiter";
+import DeleteWaiter from "./DeleteWaiter";
 
 const Waiters = () => {
+  const [updateWaiter, setUpdateWaiter] = useState(false);
+  const [deleteWaiter, setDeleteWaiter] = useState(false);
+
   return (
     <div className="accordion" id="accordionExample">
       <div className="pending-heading">Waiters</div>
@@ -22,7 +28,7 @@ const Waiters = () => {
         </h2>
         <div
           id="collapseOne"
-          className="accordion-collapse collapse show"
+          className="accordion-collapse collapse"
           aria-labelledby="headingOne"
           data-bs-parent="#accordionExample"
         >
@@ -48,9 +54,25 @@ const Waiters = () => {
               </div>
               <div className="data-value">1234MyRestaurant</div>
             </div>
+            <div className="action-btns">
+              <button
+                className="edit-btn"
+                onClick={() => setUpdateWaiter(true)}
+              >
+                Edit
+              </button>
+              <button
+                className="delete-btn"
+                onClick={() => setDeleteWaiter(true)}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
       </div>
+      <UpdateWaiter show={updateWaiter} onHide={() => setUpdateWaiter(false)} />
+      <DeleteWaiter show={deleteWaiter} onHide={() => setDeleteWaiter(false)} />
     </div>
   );
 };
