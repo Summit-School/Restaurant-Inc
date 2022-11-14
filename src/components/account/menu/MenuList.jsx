@@ -1,10 +1,14 @@
 import "./MenuList.css";
 import { useState } from "react";
+import EditItem from "./EditItem";
+import DeleteItem from "./DeleteItem";
 
 const MenuList = () => {
   const [menuList] = useState([
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
   ]);
+  const [editItem, setEditItem] = useState(false);
+  const [deleteItem, setDeleteItem] = useState(false);
 
   function filterFunction() {
     var input, filter, table, tr, td, i, txtValue;
@@ -51,13 +55,27 @@ const MenuList = () => {
                   <td>10000 FCFA</td>
                   <td>Food</td>
                   <td>
-                    <button className="edit-btn">Edit</button>
+                    <button
+                      className="edit-btn"
+                      onClick={() => setEditItem(true)}
+                    >
+                      Edit
+                    </button>
+                    <button className="disable-btn">Disable</button>
+                    <button
+                      className="delete-btn"
+                      onClick={() => setDeleteItem(true)}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))
             : "<p>No Menu Item</p>"}
         </tbody>
       </table>
+      <EditItem show={editItem} onHide={() => setEditItem(false)} />
+      <DeleteItem show={deleteItem} onHide={() => setDeleteItem(false)} />
     </div>
   );
 };

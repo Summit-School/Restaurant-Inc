@@ -1,6 +1,11 @@
 import "./CompletedOrders.css";
 
 const CompletedOrders = () => {
+  const formatMoney = (amount) => {
+    let dollarUSLocale = Intl.NumberFormat("en-US");
+    return dollarUSLocale.format(amount);
+  };
+
   return (
     <div className="accordion" id="accordionExample">
       <div className="pending-heading">Completed Orders</div>
@@ -14,7 +19,13 @@ const CompletedOrders = () => {
             aria-expanded="true"
             aria-controls="collapseOne"
           >
-            Accordion Item #1
+            Table number 13
+            <span
+              className="status"
+              style={{ backgroundColor: "green", color: "white" }}
+            >
+              Paid
+            </span>
           </button>
         </h2>
         <div
@@ -24,14 +35,21 @@ const CompletedOrders = () => {
           data-bs-parent="#accordionExample"
         >
           <div className="accordion-body">
-            <strong>This is the first item's accordion body.</strong> It is
-            shown by default, until the collapse plugin adds the appropriate
-            classNamees that we use to style each element. These classNamees
-            control the overall appearance, as well as the showing and hiding
-            via CSS transitions. You can modify any of this with custom CSS or
-            overriding our default variables. It's also worth noting that just
-            about any HTML can go within the <code>.accordion-body</code>,
-            though the transition does limit overflow.
+            <p>Order sent by username on timestamp</p>
+            <ul>
+              <li>
+                <span className="item">Fried rice</span>
+                <span className="price">{formatMoney(1000)} FCFA</span>
+              </li>
+              <li>
+                <span className="item">Garri and Eru</span>
+                <span className="price">{formatMoney(1000)} FCFA</span>
+              </li>
+              <li className="mt-3 total-list">
+                <span className="total">Total price</span>
+                <span className="total-price">{formatMoney(20000)} FCFA</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -46,7 +64,13 @@ const CompletedOrders = () => {
             aria-expanded="false"
             aria-controls="collapseTwo"
           >
-            Accordion Item #2
+            Table number 45
+            <span
+              className="status"
+              style={{ backgroundColor: "green", color: "white" }}
+            >
+              Paid
+            </span>
           </button>
         </h2>
         <div
@@ -56,14 +80,21 @@ const CompletedOrders = () => {
           data-bs-parent="#accordionExample"
         >
           <div className="accordion-body">
-            <strong>This is the second item's accordion body.</strong> It is
-            hidden by default, until the collapse plugin adds the appropriate
-            classNamees that we use to style each element. These classNamees
-            control the overall appearance, as well as the showing and hiding
-            via CSS transitions. You can modify any of this with custom CSS or
-            overriding our default variables. It's also worth noting that just
-            about any HTML can go within the <code>.accordion-body</code>,
-            though the transition does limit overflow.
+            <p>Order sent by username on timestamp</p>
+            <ul>
+              <li>
+                <span className="item">Fried rice</span>
+                <span className="price">{formatMoney(1000)} FCFA</span>
+              </li>
+              <li>
+                <span className="item">Garri and Eru</span>
+                <span className="price">{formatMoney(1000)} FCFA</span>
+              </li>
+              <li className="mt-3 total-list">
+                <span className="total">Total price</span>
+                <span className="total-price">{formatMoney(20000)} FCFA</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -77,7 +108,13 @@ const CompletedOrders = () => {
             aria-expanded="false"
             aria-controls="collapseThree"
           >
-            Accordion Item #3
+            Table number 42
+            <span
+              className="status"
+              style={{ backgroundColor: "green", color: "white" }}
+            >
+              Paid
+            </span>
           </button>
         </h2>
         <div
@@ -87,14 +124,21 @@ const CompletedOrders = () => {
           data-bs-parent="#accordionExample"
         >
           <div className="accordion-body">
-            <strong>This is the third item's accordion body.</strong> It is
-            hidden by default, until the collapse plugin adds the appropriate
-            classNamees that we use to style each element. These classNamees
-            control the overall appearance, as well as the showing and hiding
-            via CSS transitions. You can modify any of this with custom CSS or
-            overriding our default variables. It's also worth noting that just
-            about any HTML can go within the <code>.accordion-body</code>,
-            though the transition does limit overflow.
+            <p>Order sent by username on timestamp</p>
+            <ul>
+              <li>
+                <span className="item">Fried rice</span>
+                <span className="price">{formatMoney(1000)} FCFA</span>
+              </li>
+              <li>
+                <span className="item">Garri and Eru</span>
+                <span className="price">{formatMoney(1000)} FCFA</span>
+              </li>
+              <li className="mt-3 total-list">
+                <span className="total">Total price</span>
+                <span className="total-price">{formatMoney(20000)} FCFA</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

@@ -49,3 +49,21 @@
     color: white;
     padding: 5px 10px;
 }
+
+.delete-btn {
+    border: none;
+    border-radius: 5px;
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    margin-left: 10px;
+}
+
+.disable-btn {
+    border: none;
+    border-radius: 5px;
+    background-color: grey;
+    color: white;
+    padding: 5px 10px;
+    margin-left: 10px;
+}

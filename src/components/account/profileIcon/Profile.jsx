@@ -19,7 +19,7 @@ const Profile = () => {
       <NavDropdown
         title={
           <div className="pull-left">
-            <span>test@gmail.com</span>
+            <span>Super Admin</span>
             <img
               className="thumbnail-image"
               src="/images/logo.jpg"
