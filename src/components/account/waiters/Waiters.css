@@ -1,0 +1,13 @@
+.name, .phone-number, .password {
+    display: flex;
+    margin-top: 10px;
+}
+
+.data-key {
+    display: flex;
+    font-weight: bold;
+}
+
+.data-key span {
+    margin: 0 10px 0 10px;
+}
