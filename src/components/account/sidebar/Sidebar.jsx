@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { HiMenuAlt1 } from "react-icons/hi";
-import { MdDashboard, MdSettingsSuggest } from "react-icons/md";
-import { FaUsers } from "react-icons/fa";
-import { BiMoney } from "react-icons/bi";
+import { MdDashboard } from "react-icons/md";
+import { FaUsers, FaListAlt } from "react-icons/fa";
+import { AiFillSetting, AiOutlineHistory } from "react-icons/ai";
 import "./Sidebar.css";
 
 const Sidebar = () => {
@@ -54,13 +54,19 @@ const Sidebar = () => {
             </li>
             <li>
               <span className="icon">
-                <BiMoney size={35} />
+                <FaListAlt size={35} />
+              </span>
+              <Link to="/menu">MENU</Link>
+            </li>
+            <li>
+              <span className="icon">
+                <AiFillSetting size={35} />
               </span>
               <Link to="/settings">SETTINGS</Link>
             </li>
             <li>
               <span className="icon">
-                <MdSettingsSuggest size={35} />
+                <AiOutlineHistory size={35} />
               </span>
               <Link to="/order_history">ORDER HISTORT</Link>
             </li>

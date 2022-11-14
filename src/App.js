@@ -4,6 +4,7 @@ import Login from "./pages/auth/login/Login";
 import Dashboard from "./pages/account/dashboard/Dashboard";
 import Settings from "./pages/account/settings/Settings";
 import Users from "./pages/account/users/Users";
+import Menu from "./pages/account/menu/Menu";
 
 import PageError from "./pages/404/PageError";
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/staff" element={<Users />} />
+          <Route path="/menu" element={<Menu />} />
 
           {/* 404 ROUTE */}
           <Route path="*" element={<PageError />} />
