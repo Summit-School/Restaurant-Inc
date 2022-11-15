@@ -29,7 +29,7 @@ const TablesPage = () => {
           />
         </div>
         <div className="table-numbers">
-          <p>Select table number</p>
+          <p>Select table</p>
           <Tables />
         </div>
       </div>

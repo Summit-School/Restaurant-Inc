@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { HiMenuAlt1 } from "react-icons/hi";
 import { MdDashboard } from "react-icons/md";
-import { FaUsers, FaListAlt } from "react-icons/fa";
+import { FaListAlt } from "react-icons/fa";
 import "./Sidebar.css";
 
 const Sidebar = () => {
@@ -44,12 +44,6 @@ const Sidebar = () => {
                 <MdDashboard size={35} />
               </span>
               <Link to="/service_dashboard">DASHBOARD</Link>
-            </li>
-            <li>
-              <span className="icon">
-                <FaUsers size={35} />
-              </span>
-              <Link to="/service_menu">MENU</Link>
             </li>
             <li>
               <span className="icon">

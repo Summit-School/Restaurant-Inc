@@ -13,3 +13,23 @@
 .plus {
     background-color: green;
 }
+
+.menu-modal-header {
+    display: flex;
+    align-items: center;
+}
+
+.switch-btn {
+    max-height: 40px;
+    display: flex;
+    background-color: #ccc;
+    margin-left: 30px;
+    border-radius: 5px;
+}
+
+.switch-btn button {
+    font-size: 13px;
+    border: none;
+    margin: 5px;
+    border-radius: 5px;
+}

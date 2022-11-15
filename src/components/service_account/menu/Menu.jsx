@@ -5,11 +5,52 @@ import { useState } from "react";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 
 const Menu = (props) => {
-  const [menuList] = useState([
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+  const [menuList, setMenulist] = useState([
+    {
+      name: "Fried Rice",
+      price: 10000,
+      quantity: 0,
+    },
+    {
+      name: "Fried Rice",
+      price: 10000,
+      quantity: 0,
+    },
+    {
+      name: "Fried Rice",
+      price: 10000,
+      quantity: 0,
+    },
+    {
+      name: "Fried Rice",
+      price: 10000,
+      quantity: 0,
+    },
+  ]);
+  const [drinksList, setDrinksist] = useState([
+    {
+      name: "Cantelou",
+      price: 10000,
+      quantity: 0,
+    },
+    {
+      name: "Cantelou",
+      price: 10000,
+      quantity: 0,
+    },
+    {
+      name: "Cantelou",
+      price: 10000,
+      quantity: 0,
+    },
+    {
+      name: "Cantelou",
+      price: 10000,
+      quantity: 0,
+    },
   ]);
 
-  const [quantity, setQuantity] = useState(0);
+  const [showCategory, setShowCategory] = useState(true);
 
   function filterFunction() {
     var input, filter, table, tr, td, i, txtValue;
@@ -29,7 +70,26 @@ const Menu = (props) => {
       }
     }
   }
-
+  const actionFood = (action, index) => {
+    if (action === "add") {
+      menuList[index].quantity += 1;
+      setMenulist([...menuList]);
+    }
+    if (action === "remove" && menuList[index].quantity > 0) {
+      menuList[index].quantity -= 1;
+      setMenulist([...menuList]);
+    }
+  };
+  const actionDrinks = (action, index) => {
+    if (action === "add") {
+      drinksList[index].quantity += 1;
+      setDrinksist([...drinksList]);
+    }
+    if (action === "remove" && drinksList[index].quantity > 0) {
+      drinksList[index].quantity -= 1;
+      setDrinksist([...drinksList]);
+    }
+  };
   const formatMoney = (amount) => {
     let dollarUSLocale = Intl.NumberFormat("en-US");
     return dollarUSLocale.format(amount);
@@ -45,7 +105,10 @@ const Menu = (props) => {
       // key={remount}
     >
       <Modal.Header className="change-password-header" closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
+        <Modal.Title
+          id="contained-modal-title-vcenter"
+          className="menu-modal-header"
+        >
           <input
             type="text"
             id="search-input"
@@ -53,6 +116,28 @@ const Menu = (props) => {
             className="form-control mb-2"
             placeholder="Search Item"
           />
+          <div className="switch-btn">
+            <button
+              style={{
+                backgroundColor: showCategory ? "green" : "#ccc",
+                color: showCategory ? "white" : "black",
+              }}
+              className="food"
+              onClick={() => setShowCategory(true)}
+            >
+              Food
+            </button>
+            <button
+              style={{
+                backgroundColor: !showCategory ? "green" : "#ccc",
+                color: !showCategory ? "white" : "black",
+              }}
+              className="drinks"
+              onClick={() => setShowCategory(false)}
+            >
+              Drinks
+            </button>
+          </div>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="change-password-body">
@@ -62,32 +147,50 @@ const Menu = (props) => {
               <tr>
                 <th>Item name</th>
                 <th>Price</th>
-                <th>Category</th>
-                <th>Action</th>
                 <th>Quantity</th>
               </tr>
             </thead>
             <tbody id="menu-list">
-              {menuList
-                ? menuList.map((item, index) => (
+              {showCategory
+                ? menuList
+                  ? menuList.map((item, index) => (
+                      <tr key={index}>
+                        <td>{item.name}</td>
+                        <td>{formatMoney(item.price)} FCFA</td>
+                        <td>{item.quantity}</td>
+                        <td>
+                          <button
+                            className="minus"
+                            onClick={() => actionFood("remove", index)}
+                          >
+                            <AiOutlineMinus />
+                          </button>
+                          <button
+                            className="plus"
+                            onClick={() => actionFood("add", index)}
+                          >
+                            <AiOutlinePlus />
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  : "<p>No Menu Item</p>"
+                : drinksList
+                ? drinksList.map((item, index) => (
                     <tr key={index}>
-                      <td>Fried Rice</td>
-                      <td>{formatMoney(10000)} FCFA</td>
-                      <td>Food</td>
-                      <td>
-                        <input type="checkbox" className="menu-checkbox" />
-                      </td>
-                      <td>{quantity}</td>
+                      <td>{item.name}</td>
+                      <td>{formatMoney(item.price)} FCFA</td>
+                      <td>{item.quantity}</td>
                       <td>
                         <button
                           className="minus"
-                          onClick={() => setQuantity(quantity - 1)}
+                          onClick={() => actionDrinks("remove", index)}
                         >
                           <AiOutlineMinus />
                         </button>
                         <button
                           className="plus"
-                          onClick={() => setQuantity(quantity + 1)}
+                          onClick={() => actionDrinks("add", index)}
                         >
                           <AiOutlinePlus />
                         </button>
