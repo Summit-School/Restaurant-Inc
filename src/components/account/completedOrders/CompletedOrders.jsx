@@ -113,7 +113,7 @@ const CompletedOrders = () => {
               className="status"
               style={{ backgroundColor: "green", color: "white" }}
             >
-              Paid
+              paid
             </span>
           </button>
         </h2>

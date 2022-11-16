@@ -14,7 +14,7 @@
     background-color: green;
 }
 
-.menu-modal-header {
+.menu-wrapper {
     display: flex;
     align-items: center;
 }

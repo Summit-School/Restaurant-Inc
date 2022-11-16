@@ -14,6 +14,11 @@ import CashierDashboard from "./pages/cashierAccount/dashboard/CashierDashboard"
 import PendingOrders from "./pages/cashierAccount/pendingOrders/PendingOrders";
 import PaidOrders from "./pages/cashierAccount/paidOrders/PaidOrders";
 
+// Import For Kitchen Account
+import KitchenDashboard from "./pages/kitchenAccount/dashboard/KitchenDashboard";
+import PendingDelivery from "./pages/kitchenAccount/pendingDelivery/PendingDelivery";
+import Served from "./pages/kitchenAccount/served/Served";
+
 import PageError from "./pages/404/PageError";
 
 // bringing in the toastify for it to work everywhere
@@ -42,6 +47,11 @@ function App() {
           <Route path="/cashier" element={<CashierDashboard />} />
           <Route path="/pending_orders" element={<PendingOrders />} />
           <Route path="/completed_orders" element={<PaidOrders />} />
+
+          {/* ROUTES FOR KITCHEN ACCOUNT */}
+          <Route path="/kitchen" element={<KitchenDashboard />} />
+          <Route path="/pending_delivery" element={<PendingDelivery />} />
+          <Route path="/served" element={<Served />} />
 
           {/* 404 ROUTE */}
           <Route path="*" element={<PageError />} />

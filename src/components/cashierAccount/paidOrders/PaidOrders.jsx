@@ -34,7 +34,6 @@ const PaidOrders = () => {
           data-bs-parent="#accordionExample"
         >
           <div className="accordion-body">
-            <p>Order sent by username on timestamp</p>
             <ul>
               <li>
                 <span className="item">Fried rice</span>

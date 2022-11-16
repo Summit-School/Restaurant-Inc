@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { HiMenuAlt1 } from "react-icons/hi";
-import { MdDashboard } from "react-icons/md";
-import { AiOutlineTable } from "react-icons/ai";
+import { MdDashboard, MdViewList } from "react-icons/md";
 import "./Sidebar.css";
 
 const Sidebar = () => {
@@ -43,13 +42,19 @@ const Sidebar = () => {
               <span className="icon">
                 <MdDashboard size={35} />
               </span>
-              <Link to="/service_dashboard">DASHBOARD</Link>
+              <Link to="/kitchen">DASHBOARD</Link>
             </li>
             <li>
               <span className="icon">
-                <AiOutlineTable size={35} />
+                <MdViewList size={35} />
               </span>
-              <Link to="/pending_tables">PENDING TABLES</Link>
+              <Link to="/pending_delivery">PENDING ORDERS</Link>
+            </li>
+            <li>
+              <span className="icon">
+                <MdViewList size={35} />
+              </span>
+              <Link to="/served">SERVED</Link>
             </li>
           </div>
         </div>

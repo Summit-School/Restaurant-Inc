@@ -107,7 +107,7 @@ const Menu = (props) => {
       <Modal.Header className="change-password-header" closeButton>
         <Modal.Title
           id="contained-modal-title-vcenter"
-          className="menu-modal-header"
+          className="menu-wrapper"
         >
           <input
             type="text"

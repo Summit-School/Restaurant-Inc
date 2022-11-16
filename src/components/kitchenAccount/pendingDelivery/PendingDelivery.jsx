@@ -1,14 +1,13 @@
-import "./PendingOrders.css";
+import React from "react";
 
-const PendingOrders = () => {
+const PendingDelivery = () => {
   const formatMoney = (amount) => {
     let dollarUSLocale = Intl.NumberFormat("en-US");
     return dollarUSLocale.format(amount);
   };
-
   return (
     <div className="accordion" id="accordionExample">
-      <div className="pending-heading">Pending Orders</div>
+      <div className="pending-heading">Pending Delivery</div>
       <div className="accordion-item">
         <h2 className="accordion-header" id="headingOne">
           <button
@@ -49,7 +48,7 @@ const PendingOrders = () => {
                 <span className="total-price">{formatMoney(20000)} FCFA</span>
               </li>
             </ul>
-            <button className="paid-btn">PAID</button>
+            <button className="paid-btn">SERVED</button>
           </div>
         </div>
       </div>
@@ -57,4 +56,4 @@ const PendingOrders = () => {
   );
 };
 
-export default PendingOrders;
+export default PendingDelivery;

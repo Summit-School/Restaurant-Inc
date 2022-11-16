@@ -4,9 +4,52 @@ import EditItem from "./EditItem";
 import DeleteItem from "./DeleteItem";
 
 const MenuList = () => {
-  const [menuList] = useState([
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+  const [menuList, setMenulist] = useState([
+    {
+      name: "Fried Rice",
+      price: 10000,
+      quantity: 0,
+    },
+    {
+      name: "Fried Rice",
+      price: 10000,
+      quantity: 0,
+    },
+    {
+      name: "Fried Rice",
+      price: 10000,
+      quantity: 0,
+    },
+    {
+      name: "Fried Rice",
+      price: 10000,
+      quantity: 0,
+    },
   ]);
+  const [drinksList, setDrinksist] = useState([
+    {
+      name: "Cantelou",
+      price: 5000,
+      quantity: 0,
+    },
+    {
+      name: "Cantelou",
+      price: 5000,
+      quantity: 0,
+    },
+    {
+      name: "Cantelou",
+      price: 5000,
+      quantity: 0,
+    },
+    {
+      name: "Cantelou",
+      price: 5000,
+      quantity: 0,
+    },
+  ]);
+
+  const [showCategory, setShowCategory] = useState(true);
   const [editItem, setEditItem] = useState(false);
   const [deleteItem, setDeleteItem] = useState(false);
 
@@ -29,31 +72,104 @@ const MenuList = () => {
     }
   }
 
+  const actionFood = (action, index) => {
+    if (action === "add") {
+      menuList[index].quantity += 1;
+      setMenulist([...menuList]);
+    }
+    if (action === "remove" && menuList[index].quantity > 0) {
+      menuList[index].quantity -= 1;
+      setMenulist([...menuList]);
+    }
+  };
+  const actionDrinks = (action, index) => {
+    if (action === "add") {
+      drinksList[index].quantity += 1;
+      setDrinksist([...drinksList]);
+    }
+    if (action === "remove" && drinksList[index].quantity > 0) {
+      drinksList[index].quantity -= 1;
+      setDrinksist([...drinksList]);
+    }
+  };
+  const formatMoney = (amount) => {
+    let dollarUSLocale = Intl.NumberFormat("en-US");
+    return dollarUSLocale.format(amount);
+  };
+
   return (
     <div className="menu-list-table">
-      <input
-        type="text"
-        id="search-input"
-        onKeyUp={() => filterFunction()}
-        className="form-control mb-2"
-        placeholder="Search Item"
-      />
+      <div className="menu-wrapper">
+        <input
+          type="text"
+          id="search-input"
+          onKeyUp={() => filterFunction()}
+          className="form-control mb-2"
+          placeholder="Search Item"
+        />
+        <div className="switch-btn">
+          <button
+            style={{
+              backgroundColor: showCategory ? "green" : "#ccc",
+              color: showCategory ? "white" : "black",
+            }}
+            className="food"
+            onClick={() => setShowCategory(true)}
+          >
+            Food
+          </button>
+          <button
+            style={{
+              backgroundColor: !showCategory ? "green" : "#ccc",
+              color: !showCategory ? "white" : "black",
+            }}
+            className="drinks"
+            onClick={() => setShowCategory(false)}
+          >
+            Drinks
+          </button>
+        </div>
+      </div>
       <table id="menu">
         <thead>
           <tr>
             <th>Item name</th>
             <th>Price</th>
-            <th>Category</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody id="menu-list">
-          {menuList
-            ? menuList.map((item, index) => (
+          {showCategory
+            ? menuList
+              ? menuList.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.name}</td>
+                    <td>{formatMoney(item.price)} FCFA</td>
+                    <td>{item.quantity}</td>
+                    <td>
+                      <button
+                        className="edit-btn"
+                        onClick={() => setEditItem(true)}
+                      >
+                        Edit
+                      </button>
+                      <button className="disable-btn">Disable</button>
+                      <button
+                        className="delete-btn"
+                        onClick={() => setDeleteItem(true)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              : "<p>No Menu Item</p>"
+            : drinksList
+            ? drinksList.map((item, index) => (
                 <tr key={index}>
-                  <td>Fried Rice</td>
-                  <td>10000 FCFA</td>
-                  <td>Food</td>
+                  <td>{item.name}</td>
+                  <td>{formatMoney(item.price)} FCFA</td>
+                  <td>{item.quantity}</td>
                   <td>
                     <button
                       className="edit-btn"

@@ -5,7 +5,7 @@ import PendingOrders from "../../../components/cashierAccount/pendingOrders/Pend
 const PendingOrdersPage = () => {
   return (
     <CashierLayout>
-      <div className="pending-orders">
+      <div className="container pending-orders">
         <PendingOrders />
       </div>
     </CashierLayout>
