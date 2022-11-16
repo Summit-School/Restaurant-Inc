@@ -30,22 +30,22 @@ const Menu = (props) => {
   const [drinksList, setDrinksist] = useState([
     {
       name: "Cantelou",
-      price: 10000,
+      price: 5000,
       quantity: 0,
     },
     {
       name: "Cantelou",
-      price: 10000,
+      price: 5000,
       quantity: 0,
     },
     {
       name: "Cantelou",
-      price: 10000,
+      price: 5000,
       quantity: 0,
     },
     {
       name: "Cantelou",
-      price: 10000,
+      price: 5000,
       quantity: 0,
     },
   ]);

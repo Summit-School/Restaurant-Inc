@@ -6,8 +6,13 @@ import Settings from "./pages/account/settings/Settings";
 import Users from "./pages/account/users/Users";
 import Menu from "./pages/account/menu/Menu";
 import OrderHistory from "./pages/account/history/OrderHistory";
+// Import For Waiters Account
 import Tables from "./pages/service_account/tables/Tables";
 import PendingTables from "./pages/service_account/pendingTables/PendingTables";
+// Import For Cashiers Account
+import CashierDashboard from "./pages/cashierAccount/dashboard/CashierDashboard";
+import PendingOrders from "./pages/cashierAccount/pendingOrders/PendingOrders";
+import PaidOrders from "./pages/cashierAccount/paidOrders/PaidOrders";
 
 import PageError from "./pages/404/PageError";
 
@@ -28,9 +33,15 @@ function App() {
           <Route path="/menu" element={<Menu />} />
           <Route path="/order_history" element={<OrderHistory />} />
 
-          <Route path="/service_account" element={<Tables />} />
+          {/* ROUTES FOR WAITERS ACCOUNT */}
+          <Route path="/service" element={<Tables />} />
           <Route path="/service_dashboard" element={<Tables />} />
-          <Route path="/service_pending_tables" element={<PendingTables />} />
+          <Route path="/pending_tables" element={<PendingTables />} />
+
+          {/* ROUTES FOR CASHIER ACCOUNT */}
+          <Route path="/cashier" element={<CashierDashboard />} />
+          <Route path="/pending_orders" element={<PendingOrders />} />
+          <Route path="/completed_orders" element={<PaidOrders />} />
 
           {/* 404 ROUTE */}
           <Route path="*" element={<PageError />} />

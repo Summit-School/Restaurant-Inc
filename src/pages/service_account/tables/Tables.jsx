@@ -2,7 +2,7 @@ import "./Tables.css";
 import Layout from "../../../components/service_layout/Layout";
 import DashboardCards from "../../../components/account/dashboardCards/DashboardCards";
 import Tables from "../../../components/service_account/tables/Tables";
-import { FaUsers } from "react-icons/fa";
+import { AiOutlineTable } from "react-icons/ai";
 
 const TablesPage = () => {
   const formatMoney = (amount) => {
@@ -14,14 +14,14 @@ const TablesPage = () => {
       <div className="container table-page-wrapper">
         <div className="dashboard-cards">
           <DashboardCards
-            icon={<FaUsers size={35} />}
+            icon={<AiOutlineTable size={35} />}
             title="Total pending tables"
             value={formatMoney(10)}
             bgColor="lightgreen"
             cardColor="green"
           />
           <DashboardCards
-            icon={<FaUsers size={35} />}
+            icon={<AiOutlineTable size={35} />}
             title="Total waited tables"
             value={formatMoney(14)}
             bgColor="cornflowerblue"
