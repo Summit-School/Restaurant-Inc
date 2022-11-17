@@ -24,6 +24,7 @@ import PageError from "./pages/404/PageError";
 // bringing in the toastify for it to work everywhere
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import React from "react";
 
 function App() {
   return (
