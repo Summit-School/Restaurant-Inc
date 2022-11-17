@@ -20,3 +20,14 @@
     border-radius: 5px;
     color: white;
 }
+
+@media only screen and (max-width: 600px) {
+    settings-page-wrapper {
+        display: block;
+    }
+
+    .add-staff, .add-table {
+        width: 100%;
+        min-height: 330px;
+    }
+}

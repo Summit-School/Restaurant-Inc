@@ -42,6 +42,11 @@
     background-color: #f1f1f1;
 }
 
+.action-btns {
+    display: flex;
+    font-size: 13px;
+}
+
 .edit-btn {
     border: none;
     border-radius: 5px;
@@ -66,4 +71,15 @@
     color: white;
     padding: 5px 10px;
     margin-left: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+    .action-btns {
+        display: block;
+    }
+
+    .disable-btn {
+        margin: 5px;
+    }
+
 }

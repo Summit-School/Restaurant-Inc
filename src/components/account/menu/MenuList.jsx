@@ -125,7 +125,7 @@ const MenuList = () => {
                   <tr key={index}>
                     <td>{item.name}</td>
                     <td>{formatMoney(item.price)} FCFA</td>
-                    <td>
+                    <td className="action-btns">
                       <button
                         className="edit-btn"
                         onClick={() => setEditItem(true)}
@@ -149,7 +149,7 @@ const MenuList = () => {
                   <td>{item.name}</td>
                   <td>{formatMoney(item.price)} FCFA</td>
                   <td>{item.quantity}</td>
-                  <td>
+                  <td className="action-btns">
                     <button
                       className="edit-btn"
                       onClick={() => setEditItem(true)}
