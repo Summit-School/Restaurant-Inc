@@ -6,6 +6,12 @@ const EditItem = (props) => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
+  const [showQuantity, setShowQuantity] = useState("");
+
+  const handleChange = (e) => {
+    setShowQuantity(e.target.value);
+  };
+
   return (
     <Modal
       {...props}
@@ -23,6 +29,11 @@ const EditItem = (props) => {
       <Modal.Body className="change-password-body">
         <form className="mt-0">
           <div className="pass-field">
+            <select onChange={(e) => handleChange(e)} class="form-control mt-2">
+              <option>Select Category</option>
+              <option value="food">Food</option>
+              <option value="drink">Drink</option>
+            </select>
             <input
               type="text"
               className="form-control form-control-sm"
@@ -37,11 +48,15 @@ const EditItem = (props) => {
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
-            <select class="form-control mt-2">
-              <option>Select Category</option>
-              <option value="food">Food</option>
-              <option value="drink">Drink</option>
-            </select>
+            {showQuantity === "food" ? (
+              ""
+            ) : (
+              <input
+                type="number"
+                placeholder="Quantity"
+                className="form-control"
+              />
+            )}
           </div>
         </form>
       </Modal.Body>

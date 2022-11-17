@@ -72,26 +72,6 @@ const MenuList = () => {
     }
   }
 
-  const actionFood = (action, index) => {
-    if (action === "add") {
-      menuList[index].quantity += 1;
-      setMenulist([...menuList]);
-    }
-    if (action === "remove" && menuList[index].quantity > 0) {
-      menuList[index].quantity -= 1;
-      setMenulist([...menuList]);
-    }
-  };
-  const actionDrinks = (action, index) => {
-    if (action === "add") {
-      drinksList[index].quantity += 1;
-      setDrinksist([...drinksList]);
-    }
-    if (action === "remove" && drinksList[index].quantity > 0) {
-      drinksList[index].quantity -= 1;
-      setDrinksist([...drinksList]);
-    }
-  };
   const formatMoney = (amount) => {
     let dollarUSLocale = Intl.NumberFormat("en-US");
     return dollarUSLocale.format(amount);
@@ -135,7 +115,7 @@ const MenuList = () => {
           <tr>
             <th>Item name</th>
             <th>Price</th>
-            <th>Actions</th>
+            {showCategory ? "" : <th>Quantity</th>}
           </tr>
         </thead>
         <tbody id="menu-list">
@@ -145,7 +125,6 @@ const MenuList = () => {
                   <tr key={index}>
                     <td>{item.name}</td>
                     <td>{formatMoney(item.price)} FCFA</td>
-                    <td>{item.quantity}</td>
                     <td>
                       <button
                         className="edit-btn"
