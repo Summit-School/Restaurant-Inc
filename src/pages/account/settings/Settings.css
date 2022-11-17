@@ -1,6 +1,7 @@
 .settings-page-wrapper {
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 30px;
 }
 
 .add-staff, .add-table {
