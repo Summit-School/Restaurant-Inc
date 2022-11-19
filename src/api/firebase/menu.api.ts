@@ -47,3 +47,8 @@ export async function fetchAllMenuItems() {
     const menu = (await getDocs(menuRef)).docs.map(doc => doc.data() as MenuItem[])
     return menu;
 }
+
+
+/**
+ *  
+ */

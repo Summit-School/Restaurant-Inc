@@ -1,7 +1,18 @@
 import "./Settings.css";
 import Layout from "../../../components/layout/Layout";
+import { useEffect } from "react";
+import { fetchPendingOrders } from "../../../api/firebase/admin.api"
 
 const Settings = () => {
+
+  useEffect(() => {
+    fetchPendingOrders((orders) => { console.log(orders) })
+
+    return () => {
+
+    }
+  }, [])
+
   return (
     <Layout>
       <div className="container settings-page-wrapper">

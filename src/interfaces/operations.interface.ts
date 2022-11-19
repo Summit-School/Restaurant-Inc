@@ -1,11 +1,15 @@
-import { User } from "./auth.interface"
+import { Cashier, Counter, Kitchen, Service, User } from "./auth.interface"
 
 
 export interface Order {
     table: Table,
     id: string,
     items: MenuItem[],
-    state: "ORDERED" | "AVAILABLE" | "SERVED" | "DELIVERED"
+    state: "ORDERED" | "AVAILABLE" | "SERVED" | "DELIVERED",
+    service?: Service,
+    counter?: Counter,
+    kitchen?: Kitchen,
+    cashier?: Cashier
 
 }
 
@@ -20,7 +24,8 @@ export interface MenuItem {
     id: string,
     name: string,
     price: number,
-    category: "DRINKS" | "FOOD"
+    category: "DRINKS" | "FOOD",
+    quantity: number
 }
 
 export interface Menu {
