@@ -19,6 +19,10 @@ import KitchenDashboard from "./pages/kitchenAccount/dashboard/KitchenDashboard"
 import PendingDelivery from "./pages/kitchenAccount/pendingDelivery/PendingDelivery";
 import Served from "./pages/kitchenAccount/served/Served";
 
+// Import For Counter Account
+import CounterDashboard from "./pages/counterAccount/dashboard/CounterDashboard";
+import ServedDrinks from "./pages/counterAccount/served/Served";
+
 import PageError from "./pages/404/PageError";
 
 // bringing in the toastify for it to work everywhere
@@ -53,6 +57,10 @@ function App() {
           <Route path="/kitchen" element={<KitchenDashboard />} />
           <Route path="/pending_delivery" element={<PendingDelivery />} />
           <Route path="/served" element={<Served />} />
+
+          {/* ROUTES FOR COUNTER ACCOUNT */}
+          <Route path="/counter" element={<CounterDashboard />} />
+          <Route path="/counter_orders" element={<ServedDrinks />} />
 
           {/* 404 ROUTE */}
           <Route path="*" element={<PageError />} />
