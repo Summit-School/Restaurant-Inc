@@ -3,27 +3,28 @@ import Modal from "react-bootstrap/Modal";
 import { Button } from "react-bootstrap";
 import { useState } from "react";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
+import { AddOrderToPending } from "../../../api/firebase/admin.api.ts";
 
 const Menu = (props) => {
   const [menuList, setMenulist] = useState([
     {
       name: "Fried Rice",
-      price: 10000,
+      price: 1200,
       quantity: 0,
     },
     {
-      name: "Fried Rice",
-      price: 10000,
+      name: "Garri and Eru",
+      price: 7000,
       quantity: 0,
     },
     {
-      name: "Fried Rice",
-      price: 10000,
+      name: "kati kati",
+      price: 4000,
       quantity: 0,
     },
     {
-      name: "Fried Rice",
-      price: 10000,
+      name: "Plantain and Ndole",
+      price: 8000,
       quantity: 0,
     },
   ]);
@@ -34,22 +35,21 @@ const Menu = (props) => {
       quantity: 0,
     },
     {
-      name: "Cantelou",
-      price: 5000,
+      name: "bavaria",
+      price: 3400,
       quantity: 0,
     },
     {
-      name: "Cantelou",
-      price: 5000,
+      name: "one man squad",
+      price: 2100,
       quantity: 0,
     },
     {
-      name: "Cantelou",
-      price: 5000,
+      name: "fanta",
+      price: 52000,
       quantity: 0,
     },
   ]);
-
   const [showCategory, setShowCategory] = useState(true);
 
   function filterFunction() {
@@ -95,6 +95,19 @@ const Menu = (props) => {
     return dollarUSLocale.format(amount);
   };
 
+  const submitOrder = () => {
+    let order = {
+      table: props.tablenumber,
+      food: [],
+      drinks: [],
+    };
+
+    order.food = menuList.filter((menu) => menu.quantity > 0);
+    order.drinks = drinksList.filter((drink) => drink.quantity > 0);
+    console.log(order);
+    AddOrderToPending(order);
+  };
+
   return (
     <Modal
       {...props}
@@ -116,6 +129,7 @@ const Menu = (props) => {
             className="form-control mb-2"
             placeholder="Search Item"
           />
+
           <div className="switch-btn">
             <button
               style={{
@@ -140,6 +154,7 @@ const Menu = (props) => {
           </div>
         </Modal.Title>
       </Modal.Header>
+      <div>Table {props.tablenumber}</div>
       <Modal.Body className="change-password-body">
         <div className="menu-list-table">
           <table id="menu">
@@ -203,8 +218,7 @@ const Menu = (props) => {
         </div>
       </Modal.Body>
       <Modal.Footer className="change-password-footer">
-        <Button className="modal-btn form-control-sm">
-          {/* {loading ? <Spinner /> : "Submit"} */}
+        <Button className="modal-btn form-control-sm" onClick={submitOrder}>
           Submit
         </Button>
       </Modal.Footer>

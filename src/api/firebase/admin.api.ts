@@ -12,8 +12,8 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { db } from ".";
-import { throwError } from "..";
+import { db } from "./index.ts";
+import { throwError } from "../index.ts";
 
 export function addToInventory(inventory: InventoryItem) {}
 

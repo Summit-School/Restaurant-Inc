@@ -1,17 +1,16 @@
 import "./Settings.css";
 import Layout from "../../../components/layout/Layout";
 import { useEffect } from "react";
-import { fetchPendingOrders } from "../../../api/firebase/admin.api"
+import { fetchPendingOrders } from "../../../api/firebase/admin.api.ts";
 
 const Settings = () => {
-
   useEffect(() => {
-    fetchPendingOrders((orders) => { console.log(orders) })
+    fetchPendingOrders((orders) => {
+      console.log(orders);
+    });
 
-    return () => {
-
-    }
-  }, [])
+    return () => {};
+  }, []);
 
   return (
     <Layout>
