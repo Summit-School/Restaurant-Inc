@@ -15,7 +15,7 @@ const OrderHistory = () => {
       <div className="pending-heading">Order History</div>
       {history
         ? history.map((history_item, index) => (
-            <div className="accordion-item">
+            <div key={index} className="accordion-item">
               <h2 className="accordion-header" id="headingOne">
                 <button
                   className="accordion-button"

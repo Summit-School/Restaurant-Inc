@@ -9,7 +9,7 @@ const AddMenu = () => {
   };
   return (
     <form className="add-menu-item">
-      <select onChange={(e) => handleChange(e)} class="form-control mt-2">
+      <select onChange={(e) => handleChange(e)} className="form-control mt-2">
         <option>Select Category</option>
         <option value="food">Food</option>
         <option value="drink">Drink</option>
