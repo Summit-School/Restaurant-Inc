@@ -15,6 +15,7 @@ import {
 } from "firebase/firestore";
 import { db } from "./index.ts";
 import { throwError } from "../index.ts";
+import { table } from "console";
 
 export function addToInventory(inventory: InventoryItem) {}
 
@@ -62,9 +63,9 @@ export async function AddOrderToPending(order: Order) {
         "Table is already occupied please free table before placing order",
     });
   }
-  const pendingOrderRef = doc(db, "pending_orders", order.table.id);
+  const pendingOrderRef = doc(db, "all_tables", order.table.id);
 
-  return setDoc(pendingOrderRef, order);
+  return setDoc(pendingOrderRef, { id: order.table.id, order });
 }
 
 /**
@@ -75,9 +76,10 @@ export async function AddOrderToPending(order: Order) {
  */
 
 export async function isTableOccupied(tableId: string): Promise<Order | null> {
-  const tableRef = doc(db, "pending_orders", tableId);
+  const tableRef = doc(db, "all_tables", tableId);
   return getDoc(tableRef).then((res) => {
-    return res.data() as Order | null;
+    const data = res.data();
+    return data ? (data as Table).order! : null;
   });
 }
 
@@ -127,7 +129,7 @@ export async function createTable(tableNumber: number): Promise<Table> {
   const table: Table = {
     id: tableNumber + "",
   };
-  const tableRef = doc(db, "tables", tableNumber + "");
+  const tableRef = doc(db, "all_tables", tableNumber + "");
   await setDoc(tableRef, table);
   return table;
 }
@@ -142,7 +144,7 @@ export async function createTable(tableNumber: number): Promise<Table> {
  */
 
 export async function deleteTable(table: Table): Promise<void> {
-  const tableRef = doc(db, "tables", table.id + "");
+  const tableRef = doc(db, "all_tables", table.id + "");
   await deleteDoc(tableRef);
 }
 

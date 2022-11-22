@@ -38,21 +38,21 @@ const Menu = (props) => {
   }
   const actionFood = (action, index) => {
     if (action === "add") {
-      menuList[index].quantity += 1;
+      menuList[index].quantity = +menuList[index].quantity + 1;
       setMenulist([...menuList]);
     }
     if (action === "remove" && menuList[index].quantity > 0) {
-      menuList[index].quantity -= 1;
+      menuList[index].quantity = +menuList[index].quantity - 1;
       setMenulist([...menuList]);
     }
   };
   const actionDrinks = (action, index) => {
     if (action === "add") {
-      drinksList[index].quantity += 1;
+      drinksList[index].quantity = +drinksList[index].quantity + 1;
       setDrinksist([...drinksList]);
     }
     if (action === "remove" && drinksList[index].quantity > 0) {
-      drinksList[index].quantity -= 1;
+      drinksList[index].quantity = +drinksList[index].quantity - 1;
       setDrinksist([...drinksList]);
     }
   };
@@ -71,7 +71,7 @@ const Menu = (props) => {
     order.food = menuList.filter((menu) => menu.quantity > 0);
     order.drinks = drinksList.filter((drink) => drink.quantity > 0);
     console.log(order);
-    AddOrderToPending(order);
+    // AddOrderToPending(order);
   };
 
   return (
@@ -136,7 +136,7 @@ const Menu = (props) => {
                 ? menuList
                   ? menuList.map((item, index) => (
                       <tr key={index}>
-                        <td>{item.name}</td>
+                        <td>{item.itemName}</td>
                         <td>{formatMoney(item.price)} FCFA</td>
                         <td>{item.quantity}</td>
                         <td>
@@ -159,7 +159,7 @@ const Menu = (props) => {
                 : drinksList
                 ? drinksList.map((item, index) => (
                     <tr key={index}>
-                      <td>{item.name}</td>
+                      <td>{item.itemName}</td>
                       <td>{formatMoney(item.price)} FCFA</td>
                       <td>{item.quantity}</td>
                       <td>
