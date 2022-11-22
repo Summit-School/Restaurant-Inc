@@ -27,16 +27,17 @@ export const loginAdmin = async (email: string, password: string): Promise<Admin
 
 
 /**
- * Create staff account 
+ * Creates a staff account 
  * 
  * @param staff  the staff to be created 
  *   
  * @param type The type of the account to be created could be "SERVICE"|"CASHIER"|"KITCHEN"|"COUNTER"
- * @returns {Promise<User|null>} - A Promise resolved with the service user object or null
+ * 
+ * @returns {Promise<User|null>} - A Promise resolved with the staff user object or null
  * 
  */
 
-export async function createService(staff: User, type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"): Promise<User | null> {
+export async function createStaff(staff: User, type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"): Promise<User | null> {
     const error = new Error()
     if (!staff.name) {
         error.message = "Please provide a name for the service";
