@@ -135,7 +135,7 @@ export async function createTable(tableNumber: number): Promise<Table> {
 /**
  * Delete a table from the list of tables in the restaurant
  *
- * @param tableNumber The number of the table to be deleted
+ * @param table The table to be deleted
  *
  * @return Returns a Promise resolved once the table has been deleted
  *
@@ -144,4 +144,13 @@ export async function createTable(tableNumber: number): Promise<Table> {
 export async function deleteTable(table: Table): Promise<void> {
   const tableRef = doc(db, "tables", table.id + "");
   await deleteDoc(tableRef);
+}
+
+export async function onSnapshotGetAllTables(
+  onSuccess: (tables: Table[]) => void
+) {
+  const tablesRef = collection(db, "all_tables");
+  onSnapshot(tablesRef, (res) => {
+    onSuccess(res.docs.map((doc) => doc.data() as Table));
+  });
 }

@@ -20,7 +20,6 @@ const MenuList = () => {
 
   useEffect(() => {
     onSnapshotFetchMenuItems((response) => {
-      console.log(response);
       setMenulist(response.food);
       setDrinksist(response.drinks);
     });
@@ -102,7 +101,7 @@ const MenuList = () => {
           <tr>
             <th>Item name</th>
             <th>Price</th>
-            {showCategory ? "" : <th>Quantity</th>}
+            {showCategory ? "" : <th>Inventory</th>}
           </tr>
         </thead>
         <tbody id="menu-list">
@@ -140,7 +139,7 @@ const MenuList = () => {
                 <tr key={index}>
                   <td>{item.itemName}</td>
                   <td>{formatMoney(item.price)} FCFA</td>
-                  <td>{item.quantity}</td>
+                  <td>{item.inventory}</td>
                   <td className="action-btns">
                     <button
                       className="edit-btn"

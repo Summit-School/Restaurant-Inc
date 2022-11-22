@@ -1,10 +1,7 @@
 import "./Tables.css";
 import { useState, useEffect } from "react";
 import Menu from "../menu/Menu";
-import {
-  onSnapshotFetchMenuItems,
-  changeDisableState,
-} from "../../../api/firebase/admin.api.ts";
+import { onSnapshotGetAllTables } from "../../../api/firebase/admin.api.ts";
 
 const Tables = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -12,7 +9,7 @@ const Tables = () => {
 
   const [tables, setTables] = useState([]);
   useEffect(() => {
-    onSnapshotFetchMenuItems((response) => {
+    onSnapshotGetAllTables((response) => {
       console.log(response);
       setTables(response);
     });
@@ -25,7 +22,7 @@ const Tables = () => {
               key={index}
               className="table-btn"
               onClick={() => {
-                setTableNumber(table);
+                setTableNumber(table.id);
                 setShowMenu(true);
               }}
             >

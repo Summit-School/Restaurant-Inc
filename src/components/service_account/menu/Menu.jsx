@@ -1,56 +1,22 @@
 import "./Menu.css";
 import Modal from "react-bootstrap/Modal";
 import { Button } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { AddOrderToPending } from "../../../api/firebase/admin.api.ts";
+import { onSnapshotFetchMenuItems } from "../../../api/firebase/menu.api.ts";
 
 const Menu = (props) => {
-  const [menuList, setMenulist] = useState([
-    {
-      name: "Fried Rice",
-      price: 1200,
-      quantity: 0,
-    },
-    {
-      name: "Garri and Eru",
-      price: 7000,
-      quantity: 0,
-    },
-    {
-      name: "kati kati",
-      price: 4000,
-      quantity: 0,
-    },
-    {
-      name: "Plantain and Ndole",
-      price: 8000,
-      quantity: 0,
-    },
-  ]);
-  const [drinksList, setDrinksist] = useState([
-    {
-      name: "Cantelou",
-      price: 5000,
-      quantity: 0,
-    },
-    {
-      name: "bavaria",
-      price: 3400,
-      quantity: 0,
-    },
-    {
-      name: "one man squad",
-      price: 2100,
-      quantity: 0,
-    },
-    {
-      name: "fanta",
-      price: 52000,
-      quantity: 0,
-    },
-  ]);
+  const [menuList, setMenulist] = useState([]);
+  const [drinksList, setDrinksist] = useState([]);
   const [showCategory, setShowCategory] = useState(true);
+
+  useEffect(() => {
+    onSnapshotFetchMenuItems((response) => {
+      setMenulist(response.food);
+      setDrinksist(response.drinks);
+    });
+  }, []);
 
   function filterFunction() {
     var input, filter, table, tr, td, i, txtValue;

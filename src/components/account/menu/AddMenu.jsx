@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 const AddMenu = () => {
   const [category, setCategory] = useState("");
   const [itemName, setItemName] = useState("");
-  const [quantity, setQuantity] = useState("");
+  const [inventory, setInventory] = useState("");
   const [price, setPrice] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -20,7 +20,7 @@ const AddMenu = () => {
     const itemData = {
       category,
       itemName,
-      quantity,
+      inventory,
       price,
     };
 
@@ -29,7 +29,7 @@ const AddMenu = () => {
       if (response) {
         toast.success("Menu Item Added");
         setItemName("");
-        setQuantity("");
+        setInventory("");
         setPrice("");
         setLoading(false);
       }
@@ -59,10 +59,10 @@ const AddMenu = () => {
       ) : (
         <input
           type="number"
-          placeholder="Quantity"
+          placeholder="Quantiy In Stock"
           className="form-control"
-          value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
+          value={inventory}
+          onChange={(e) => setInventory(e.target.value)}
         />
       )}
       <input
