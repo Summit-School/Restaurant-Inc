@@ -5,7 +5,6 @@ import { EditItemToMenu } from "../../../api/firebase/menu.api.ts";
 import { toast } from "react-toastify";
 
 const EditItem = (props) => {
-  const [category, setCategory] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -21,17 +20,12 @@ const EditItem = (props) => {
     }
   }, [props]);
 
-  const handleChange = (e) => {
-    setShowQuantity(e.target.value);
-  };
-
   const editMenuItem = async (e) => {
     e.preventDefault();
     setLoading(true);
     const itemData = {
-      id: props.item.id,
-      category,
-      name,
+      ...props.item,
+      itemName: name,
       quantity,
       price,
     };
@@ -44,6 +38,7 @@ const EditItem = (props) => {
         setQuantity("");
         setPrice("");
         setLoading(false);
+        props.onHide();
       }
     } catch (error) {
       setLoading(false);
@@ -69,11 +64,6 @@ const EditItem = (props) => {
       <Modal.Body className="change-password-body">
         <form className="mt-0">
           <div className="pass-field">
-            {/* <select onChange={(e) => handleChange(e)} class="form-control mt-2">
-              <option>Select Category</option>
-              <option value="FOOD">Food</option>
-              <option value="DRINKS">Drink</option>
-            </select> */}
             <input
               type="text"
               className="form-control form-control-sm"
