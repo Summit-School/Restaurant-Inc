@@ -14,6 +14,7 @@ const MenuList = () => {
 
   useEffect(() => {
     onSnapshotFetchMenuItems((response) => {
+      console.log(response);
       setMenulist(response.food);
       setDrinksist(response.drinks);
     });
@@ -118,7 +119,7 @@ const MenuList = () => {
                   <td className="action-btns">
                     <button
                       className="edit-btn"
-                      onClick={() => setEditItem(true)}
+                      onClick={() => setEditItem(item)}
                     >
                       Edit
                     </button>

@@ -96,5 +96,27 @@ export async function onSnapshotFetchMenuItems(
 }
 
 /**
+ * edits an item to the menu of the restaurant so it can be visible to the waiter
  *
+ * @param menuItem - the item to edit to the menu could be under the category "FOOD" or "DRINKS"
+ *
+ * @returns - A Promise resolved once the item has been successfully edited on the backend (note that it won't resolve while you're offline).
  */
+
+export async function EditItemToMenu(menuItem: MenuItem) {
+  if (menuItem.category === "DRINKS" && !menuItem.quantity) {
+    const error = new Error();
+    error.message = "You need to provide a quantity for the Drinks menu item";
+    throw error;
+  }
+
+  if (!menuItem.id) {
+    const error = new Error();
+    error.message = "You need to provide an id for the menu item";
+    throw error;
+  }
+
+  const menuRef = doc(db, "menu", menuItem!.id + "");
+  await setDoc(menuRef, menuItem);
+  return menuItem;
+}
