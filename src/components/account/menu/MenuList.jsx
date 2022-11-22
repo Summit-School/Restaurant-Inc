@@ -2,7 +2,11 @@ import "./MenuList.css";
 import { useState, useEffect } from "react";
 import EditItem from "./EditItem";
 import DeleteItem from "./DeleteItem";
-import { onSnapshotFetchMenuItems } from "../../../api/firebase/menu.api.ts";
+import { toast } from "react-toastify";
+import {
+  onSnapshotFetchMenuItems,
+  changeDisableState,
+} from "../../../api/firebase/menu.api.ts";
 
 const MenuList = () => {
   const [menuList, setMenulist] = useState([]);
@@ -12,6 +16,8 @@ const MenuList = () => {
   const [editItem, setEditItem] = useState("");
   const [deleteItem, setDeleteItem] = useState("");
 
+  const [disable, setDisable] = useState(false);
+
   useEffect(() => {
     onSnapshotFetchMenuItems((response) => {
       console.log(response);
@@ -20,8 +26,18 @@ const MenuList = () => {
     });
   }, []);
 
-  const disableItem = (item) => {
-    console.log(item);
+  const disableItem = async (item) => {
+    setDisable(!disable);
+
+    try {
+      const response = await changeDisableState(item.id, disable);
+      if (response) {
+        toast.success("Item Disabled");
+      }
+    } catch (error) {
+      toast.error("Failed");
+      console.error(error);
+    }
   };
 
   function filterFunction() {
@@ -107,7 +123,7 @@ const MenuList = () => {
                         className="disable-btn"
                         onClick={() => disableItem(item)}
                       >
-                        Disable
+                        {item.disabled === true ? "Enable" : "Disable"}
                       </button>
                       <button
                         className="delete-btn"
@@ -136,7 +152,7 @@ const MenuList = () => {
                       className="disable-btn"
                       onClick={() => disableItem(item)}
                     >
-                      Disable
+                      {item.disabled === true ? "Enable" : "Disable"}
                     </button>
                     <button
                       className="delete-btn"
