@@ -136,3 +136,17 @@ export async function DeleteMenuItem(menuItemId: string) {
     await deleteDoc(menuRef);
     return { message: "Successfully deleted" };
 }
+
+
+
+export async function changeDisableState(menuItemId: string, disable: boolean) {
+    if (!menuItemId) {
+        const error = new Error();
+        error.message = "You need to provide an id for the menu item";
+        throw error;
+    }
+
+    const menuRef = doc(db, "menu", menuItemId);
+    await updateDoc(menuRef, { disabled: disable });
+    return { message: "Successfully deleted" };
+}
