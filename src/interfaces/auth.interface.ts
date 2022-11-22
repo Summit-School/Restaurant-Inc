@@ -4,6 +4,14 @@ export interface User {
     password: string
 }
 
+export interface Admin {
+    email: string,
+    password: string,
+
+
+}
+
+
 export interface Service extends User {
 
 
