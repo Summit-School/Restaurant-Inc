@@ -64,19 +64,21 @@ export async function createStaff(
         staff = { ...staff, id: uuid.v4() };
     }
 
+    console.log(staff)
+
     switch (type) {
         case "SERVICE":
-            await setDoc(doc(getFirestore(), "service", staff.phone), staff);
+            await setDoc(doc(getFirestore(), "service", staff.id), staff);
             return staff;
         case "CASHIER":
-            await setDoc(doc(getFirestore(), "cashier", staff.phone), staff);
+            await setDoc(doc(getFirestore(), "cashier", staff.id), staff);
             return staff;
 
         case "KITCHEN":
-            await setDoc(doc(getFirestore(), "kitchen", staff.phone), staff);
+            await setDoc(doc(getFirestore(), "kitchen", staff.id), staff);
             return staff;
         case "COUNTER":
-            await setDoc(doc(getFirestore(), "counter", staff.phone), staff);
+            await setDoc(doc(getFirestore(), "counter", staff.id), staff);
             return staff;
         default:
             error.message = "Unknown staff type provided: " + type;
