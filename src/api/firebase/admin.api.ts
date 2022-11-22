@@ -16,6 +16,8 @@ import {
 import { db } from "./index.ts";
 import { throwError } from "../index.ts";
 import { table } from "console";
+import { User } from "../../interfaces/auth.interface";
+import * as  uuid from "uuid";
 
 export function addToInventory(inventory: InventoryItem) { }
 
@@ -55,7 +57,7 @@ export function fetchAllOrders(callBack: (orders: Order[]) => void) {
  * @param order - an order that is to be added
  */
 
-export async function AddOrderToPending(order: Order) {
+export async function AddOrderToPending(order: Order, user: User) {
   const tableOrder = await isTableOccupied(order.table.id);
   if (tableOrder) {
     throwError({
@@ -63,6 +65,12 @@ export async function AddOrderToPending(order: Order) {
         "Table is already occupied please free table before placing order",
     });
   }
+
+
+  order.id = uuid.v4();
+  order.state = "ORDERED";
+  order.service = user;
+
   const pendingOrderRef = doc(db, "all_tables", order.table.id);
 
   return setDoc(pendingOrderRef, { id: order.table.id, order });
