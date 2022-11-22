@@ -21,11 +21,12 @@ export interface Table {
 
 
 export interface MenuItem {
-    id: string,
+    id?: string,
     name: string,
     price: number,
     category: "DRINKS" | "FOOD",
-    quantity: number
+    quantity?: number,
+    disabled?: boolean;
 }
 
 export interface Menu {
