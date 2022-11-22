@@ -6,6 +6,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { Admin, Service, User } from "../../interfaces/auth.interface";
+import * as uuid from "uuid";
 
 /**
  * Logs into admin account with email address and password
@@ -59,7 +60,9 @@ export async function createStaff(
     error.message = "Please provide a password for the service";
     throw error;
   }
-  staff = { ...staff, id: staff.phone };
+  if (!staff.id) {
+    staff = { ...staff, id: uuid.v4() };
+  }
 
   switch (type) {
     case "SERVICE":
