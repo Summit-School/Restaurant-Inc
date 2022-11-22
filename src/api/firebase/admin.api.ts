@@ -55,6 +55,7 @@ export function fetchAllOrders(callBack: (orders: Order[]) => void) {
  * Get adds an order for a table
  *
  * @param order - an order that is to be added
+ * @param user - the staff to add the order 
  */
 
 export async function AddOrderToPending(order: Order, user: User) {
