@@ -5,11 +5,11 @@ import { User } from "../../interfaces/auth.interface"
 /**
  * gets all staff depending on the type of service they provide
  * 
- * @param type the type of staff to get from the database could be either "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER
+ * @param type the type of staff to get from the database could be either "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"
  * @param callBack  the callback function called when the staff data is retrieved successfully.
  * 
  */
-export const getStaffByType = (type: string, callBack: Function) => {
+export const getStaffByType = (type: string, callBack: (user: User[]) => void) => {
 
     switch (type) {
         case "SERVICE":
