@@ -16,6 +16,7 @@ export interface Order {
 
 export interface Table {
     id: string,
+    order?: Order
 
 }
 
