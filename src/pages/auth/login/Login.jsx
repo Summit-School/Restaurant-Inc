@@ -17,7 +17,6 @@ const Login = () => {
 
     try {
       const response = await loginAdmin(email, loginPassword);
-      console.log(response, "response");
       if (response) {
         toast.success("Login Successful");
         setLoading(false);

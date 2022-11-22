@@ -1,6 +1,8 @@
 import "./Settings.css";
 import { useState } from "react";
 import Layout from "../../../components/layout/Layout";
+import { createStaff } from "../../../api/firebase/auth.api.ts";
+import { toast } from "react-toastify";
 
 const Settings = () => {
   const [staffRole, setStaffRole] = useState("");
@@ -8,16 +10,31 @@ const Settings = () => {
   const [staffNumber, setStaffNumber] = useState("");
   const [staffPassword, setStaffPassword] = useState("");
   const [tableNumber, setTableNumber] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleStaff = (e) => {
+  const handleStaff = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const staffData = {
-      role: staffRole,
       name: staffName,
-      number: staffNumber,
+      phone: staffNumber,
       password: staffPassword,
     };
     console.log(staffData);
+    try {
+      const response = await createStaff(staffData, staffRole);
+      if (response) {
+        toast.success("Staff Added");
+        setStaffName("");
+        setStaffNumber("");
+        setStaffPassword("");
+        setLoading(false);
+      }
+    } catch (error) {
+      setLoading(false);
+      toast.error("Failed");
+      console.error(error);
+    }
   };
 
   const handleTable = (e) => {
@@ -39,10 +56,10 @@ const Settings = () => {
               className="form-control mt-2"
             >
               <option>Select Category</option>
-              <option value="waiter">Waiter</option>
-              <option value="cashier">Cashier</option>
-              <option value="kitchen">Kitchen</option>
-              <option value="counter">Counter</option>
+              <option value="SERVICE">Waiter</option>
+              <option value="CASHIER">Cashier</option>
+              <option value="KITCHEN">Kitchen</option>
+              <option value="COUNTER">Counter</option>
             </select>
             <input
               className="form-control"
@@ -65,7 +82,9 @@ const Settings = () => {
               value={staffPassword}
               onChange={(e) => setStaffPassword(e.target.value)}
             />
-            <button onClick={handleStaff}>Submit</button>
+            <button onClick={handleStaff}>
+              {loading ? "Loading..." : "Submit"}
+            </button>
           </form>
         </div>
         <div className="add-table">
@@ -78,7 +97,9 @@ const Settings = () => {
               value={tableNumber}
               onChange={(e) => setTableNumber(e.target.value)}
             />
-            <button onClick={handleTable}>Submit</button>
+            <button onClick={handleTable}>
+              {loading ? "Loading..." : "Submit"}
+            </button>
           </form>
         </div>
       </div>
