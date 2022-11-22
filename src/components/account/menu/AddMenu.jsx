@@ -2,16 +2,26 @@ import "./AddMenu.css";
 import { useState } from "react";
 
 const AddMenu = () => {
-  const [showQuantity, setShowQuantity] = useState("");
-  const [menuItem, setMenuItem] = useState("");
+  const [category, setCategory] = useState("");
+  const [itemName, setItemName] = useState("");
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
 
   const handleChange = (e) => {
-    setShowQuantity(e.target.value);
+    setCategory(e.target.value);
   };
 
-  const addMenuItem = () => {};
+  const addMenuItem = (e) => {
+    e.preventDefault();
+    const itemData = {
+      category,
+      itemName,
+      quantity,
+      price,
+    };
+
+    console.log(itemData);
+  };
   return (
     <form className="add-menu-item">
       <select onChange={(e) => handleChange(e)} className="form-control mt-2">
@@ -23,10 +33,11 @@ const AddMenu = () => {
         type="text"
         placeholder="Item name"
         className="form-control"
-        value={menuItem}
-        onChange={(e) => setMenuItem(e.target.value)}
+        required
+        value={itemName}
+        onChange={(e) => setItemName(e.target.value)}
       />
-      {showQuantity === "food" ? (
+      {category === "food" ? (
         ""
       ) : (
         <input
@@ -41,6 +52,7 @@ const AddMenu = () => {
         type="number"
         placeholder="Price"
         className="form-control"
+        required
         value={price}
         onChange={(e) => setPrice(e.target.value)}
       />
