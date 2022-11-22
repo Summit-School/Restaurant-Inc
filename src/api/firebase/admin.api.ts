@@ -126,11 +126,26 @@ export async function changeOrderState(order: Order, newState: string) {
  * @returns {Promise<Table>} - A Promise resolved once the table is added 
  */
 
-export async function createTable(tableNumber: string): Promise<Table> {
+export async function createTable(tableNumber: number): Promise<Table> {
   const table: Table = {
-    id: tableNumber
+    id: tableNumber + ""
   }
-  const tableRef = doc(db, "tables", tableNumber);
+  const tableRef = doc(db, "tables", tableNumber + "");
   await setDoc(tableRef, table);
   return table
+}
+
+
+/**
+ * Delete a table from the list of tables in the restaurant
+ * 
+ * @param tableNumber The number of the table to be deleted
+ * 
+ * @return Returns a Promise resolved once the table has been deleted
+ *
+ */
+
+export async function deleteTable(table: Table): Promise<void> {
+  const tableRef = doc(db, "tables", table.id + "");
+  await deleteDoc(tableRef);
 }
