@@ -23,7 +23,7 @@ const EditItem = (props) => {
     >
       <Modal.Header className="change-password-header" closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Edit Itemname
+          Edit {props.item.itemName}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="change-password-body">

@@ -2,18 +2,18 @@ import "./MenuList.css";
 import { useState, useEffect } from "react";
 import EditItem from "./EditItem";
 import DeleteItem from "./DeleteItem";
-import { fetchAllMenuItems } from "../../../api/firebase/menu.api.ts";
+import { onSnapshotFetchMenuItems } from "../../../api/firebase/menu.api.ts";
 
 const MenuList = () => {
   const [menuList, setMenulist] = useState([]);
   const [drinksList, setDrinksist] = useState([]);
 
   const [showCategory, setShowCategory] = useState(true);
-  const [editItem, setEditItem] = useState(false);
+  const [editItem, setEditItem] = useState("");
   const [deleteItem, setDeleteItem] = useState(false);
 
   useEffect(() => {
-    fetchAllMenuItems().then((response) => {
+    onSnapshotFetchMenuItems((response) => {
       setMenulist(response.food);
       setDrinksist(response.drinks);
     });
@@ -94,7 +94,7 @@ const MenuList = () => {
                     <td className="action-btns">
                       <button
                         className="edit-btn"
-                        onClick={() => setEditItem(true)}
+                        onClick={() => setEditItem(item)}
                       >
                         Edit
                       </button>
@@ -135,7 +135,11 @@ const MenuList = () => {
             : "<p>No Menu Item</p>"}
         </tbody>
       </table>
-      <EditItem show={editItem} onHide={() => setEditItem(false)} />
+      <EditItem
+        item={editItem}
+        show={!!editItem}
+        onHide={() => setEditItem(false)}
+      />
       <DeleteItem show={deleteItem} onHide={() => setDeleteItem(false)} />
     </div>
   );
