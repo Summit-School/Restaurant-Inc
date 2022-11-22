@@ -1,65 +1,57 @@
-import { Cashier, Counter, Kitchen, Service, User } from "./auth.interface"
-
+import { Cashier, Counter, Kitchen, Service, User } from "./auth.interface";
 
 export interface Order {
-    table: Table,
-    id: string,
-    items: MenuItem[],
-    state: "ORDERED" | "AVAILABLE" | "SERVED" | "DELIVERED",
-    service?: Service,
-    counter?: Counter,
-    kitchen?: Kitchen,
-    cashier?: Cashier
-
+  table: Table;
+  id: string;
+  items: MenuItem[];
+  state: "ORDERED" | "AVAILABLE" | "SERVED" | "DELIVERED";
+  service?: Service;
+  counter?: Counter;
+  kitchen?: Kitchen;
+  cashier?: Cashier;
 }
-
 
 export interface Table {
-    id: string,
-    order?: Order
-
+  id: string;
+  order?: Order;
 }
 
-
 export interface MenuItem {
-    id?: string,
-    name: string,
-    price: number,
-    category: "DRINKS" | "FOOD",
-    inventory?: number,
-    disabled?: boolean;
-    quantity?: number;
+  id?: string;
+  name: string;
+  price: number;
+  category: "DRINKS" | "FOOD";
+  inventory?: number;
+  disabled?: boolean;
+  quantity?: number;
 }
 
 export interface Menu {
-    food: MenuItem[],
-    drinks: MenuItem[],
+  food: MenuItem[];
+  drinks: MenuItem[];
 }
 
 export interface Attendance {
-    user: User,
-    timestamp: number,
+  user: User;
+  timestamp: number;
 }
 
 export interface Notification {
-    id: string,
-    timestamp: number,
-    message: string,
-    order?: Order
+  id: string;
+  timestamp: number;
+  message: string;
+  order?: Order;
 }
 
-
 export interface Inventory {
-    food: InventoryItem[],
-    drinks: InventoryItem[],
-
+  food: InventoryItem[];
+  drinks: InventoryItem[];
 }
 
 export interface InventoryItem {
-    id: string,
-    name: string,
-    price: number,
-    category: "DRINKS" | "FOOD",
-    quantity: number
-
+  id: string;
+  name: string;
+  price: number;
+  category: "DRINKS" | "FOOD";
+  quantity: number;
 }

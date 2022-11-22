@@ -11,18 +11,18 @@ import CompletedOrders from "../../../components/account/completedOrders/Complet
 import type { RootState } from "../../../redux/store.ts";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { fetchPendingOrders } from "../../../api/firebase/admin.api.ts";
+// import { fetchPendingOrders } from "../../../api/firebase/admin.api.ts";
 
 const Dashboard = () => {
   // const count = useSelector((state: RootState) => state.counter.value);
   // const dispatch = useDispatch();
 
-  useEffect(() => {
-    fetchPendingOrders((orders) => {
-      console.log(orders);
-    });
-    return () => {};
-  }, []);
+  // useEffect(() => {
+  //   fetchPendingOrders((orders) => {
+  //     console.log(orders);
+  //   });
+  //   return () => {};
+  // }, []);
 
   const formatMoney = (amount) => {
     let dollarUSLocale = Intl.NumberFormat("en-US");
