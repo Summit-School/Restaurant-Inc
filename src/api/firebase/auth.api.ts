@@ -13,11 +13,11 @@ import { Admin, Service, User } from "../../interfaces/auth.interface";
 
 export const loginAdmin = async (email: string, password: string): Promise<Admin | null> => {
 
-    const adminRef = doc(getFirestore(), "admin", email);
-    const admin = (await getDoc(adminRef)).data() as Admin
+    const adminRef = doc(getFirestore(), "admin", email.toLowerCase());
+    const admin = (await getDoc(adminRef)).data() as Admin;
     if (admin) {
         if (admin.password == password) {
-            return admin;
+            return { email: admin.email, password: "" };
         }
     }
     return null;
@@ -27,10 +27,12 @@ export const loginAdmin = async (email: string, password: string): Promise<Admin
 
 
 /**
- * Create service account 
+ * Create staff account 
  * 
- * @param service The service account to be created
- * 
+ * @param staff  the staff to be created 
+ *   
+ * @param type The type of the account to be created could be "SERVICE"
  * @returns {Promise<Service|null>} - A Promise resolved with the service user object or null
  * 
  */
+
