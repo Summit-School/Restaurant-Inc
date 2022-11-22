@@ -58,8 +58,8 @@ export async function fetchAllMenuItems() {
     const menuRef = collection(db, "menu")
     const menu = (await getDocs(menuRef)).docs.map(doc => doc.data() as MenuItem)
     return ({
-        drinks: menu.filter((item) => item.category === "DRINKS");
-        food: menu.filter((item) => item.category === "FOOD");
+        drinks: menu.filter((item) => item.category === "DRINKS"),
+        food: menu.filter((item) => item.category === "FOOD")
     })
 }
 
