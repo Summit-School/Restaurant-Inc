@@ -3,9 +3,10 @@ import { Cashier, Counter, Kitchen, Service, User } from "./auth.interface"
 
 export interface Order {
     table: Table,
-    id: string,
-    items: MenuItem[],
-    state: "ORDERED" | "AVAILABLE" | "SERVED" | "DELIVERED",
+    id?: string,
+    drinks: MenuItem[],
+    food: MenuItem[],
+    state?: "ORDERED" | "AVAILABLE" | "SERVED" | "DELIVERED",
     service?: Service,
     counter?: Counter,
     kitchen?: Kitchen,
