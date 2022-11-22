@@ -104,22 +104,19 @@ export async function onSnapshotFetchMenuItems(
  */
 
 export async function EditItemToMenu(menuItem: MenuItem) {
-
     if (menuItem.category === "DRINKS" && !menuItem.quantity) {
-        const error = new Error()
-        error.message = "You need to provide a quantity for the Drinks menu item"
-        throw error
+        const error = new Error();
+        error.message = "You need to provide a quantity for the Drinks menu item";
+        throw error;
     }
 
     if (!menuItem.id) {
-        const error = new Error()
-        error.message = "You need to provide an id for the menu item"
-        throw error
+        const error = new Error();
+        error.message = "You need to provide an id for the menu item";
+        throw error;
     }
 
-    console.log(menuItem)
+    const menuRef = doc(db, "menu", menuItem!.id + "");
+    await setDoc(menuRef, menuItem);
     return menuItem;
-    // const menuRef = doc(db, "menu", menuItem!.id)
-    // await setDoc(menuRef, menuItem);
-    return menuItem
 }

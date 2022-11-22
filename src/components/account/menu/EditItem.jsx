@@ -29,8 +29,7 @@ const EditItem = (props) => {
     e.preventDefault();
     setLoading(true);
     const itemData = {
-      id: props.item.id,
-      category,
+      ...props.item.id,
       name,
       quantity,
       price,
@@ -59,7 +58,7 @@ const EditItem = (props) => {
       aria-labelledby="contained-modal-title-vcenter"
       centered
       className="text-center "
-      // key={remount}
+    // key={remount}
     >
       <Modal.Header className="change-password-header" closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
