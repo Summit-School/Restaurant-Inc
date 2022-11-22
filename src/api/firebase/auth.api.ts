@@ -54,7 +54,7 @@ export async function createStaff(
         error.message = "Please provide a password for the service";
         throw error;
     }
-    if (staff.id) {
+    if (!staff.id) {
         staff = { ...staff, id: uuid.v4() };
     }
 
