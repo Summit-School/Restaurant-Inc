@@ -35,6 +35,7 @@ const UpdateWaiter = (props) => {
       if (response) {
         toast.success("Update Successful");
         setLoading(false);
+        props.onHide();
       }
     } catch (error) {
       setLoading(false);
