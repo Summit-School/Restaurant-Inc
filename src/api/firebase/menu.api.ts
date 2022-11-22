@@ -1,7 +1,7 @@
 import { InventoryItem, MenuItem, Order } from "../../interfaces/operations.interface";
 import { collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, setDoc, updateDoc } from 'firebase/firestore'
 import { db } from '.'
-import { throwError } from "..";
+import * as uuid from "uuid"
 
 
 
@@ -15,8 +15,20 @@ import { throwError } from "..";
 
 export async function addItemToMenu(menuItem: MenuItem) {
 
-    const menuRef = doc(db, "menu", menuItem.id)
-    await setDoc(menuRef, menuItem)
+    if (menuItem.category === "DRINKS" && !menuItem.quantity) {
+        const error = new Error()
+        error.message = "You need to provide a quantity for the Drinks menu item"
+        throw error
+    }
+
+    menuItem = {
+        id: uuid.v4(),
+        ...menuItem
+
+    }
+
+    const menuRef = doc(db, "menu", menuItem!.id + "")
+    await setDoc(menuRef, menuItem);
     return menuItem
 }
 
@@ -30,7 +42,7 @@ export async function addItemToMenu(menuItem: MenuItem) {
 
 export async function removeItemFromMenu(menuItem: MenuItem) {
 
-    const menuRef = doc(db, "menu", menuItem.id)
+    const menuRef = doc(db, "menu", menuItem!.id + "")
     await setDoc(menuRef, menuItem)
     return menuItem
 }
