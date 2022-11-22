@@ -1,4 +1,4 @@
-import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 import { Admin, Service, User } from "../../interfaces/auth.interface";
 
 /**
@@ -31,8 +31,43 @@ export const loginAdmin = async (email: string, password: string): Promise<Admin
  * 
  * @param staff  the staff to be created 
  *   
- * @param type The type of the account to be created could be "SERVICE"
- * @returns {Promise<Service|null>} - A Promise resolved with the service user object or null
+ * @param type The type of the account to be created could be "SERVICE"|"CASHIER"|"KITCHEN"|"COUNTER"
+ * @returns {Promise<User|null>} - A Promise resolved with the service user object or null
  * 
  */
 
+export async function createService(staff: User, type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"): Promise<User | null> {
+    const error = new Error()
+    if (!staff.name) {
+        error.message = "Please provide a name for the service";
+        throw error;
+    }
+    if (!staff.phone) {
+        error.message = "Please provide an phone address for the service";
+        throw error;
+    }
+    if (!staff.password) {
+        error.message = "Please provide a password for the service";
+        throw error;
+    }
+
+    switch (type) {
+        case "SERVICE":
+            await setDoc(doc(getFirestore(), "service", staff.phone), staff);
+            return staff;
+        case "CASHIER":
+            await setDoc(doc(getFirestore(), "cashier", staff.phone), staff);
+            return staff;
+
+        case "KITCHEN":
+            await setDoc(doc(getFirestore(), "kitchen", staff.phone), staff);
+            return staff;
+        case "COUNTER":
+            await setDoc(doc(getFirestore(), "counter", staff.phone), staff);
+            return staff;
+        default:
+            error.message = "Unknown staff type provided: " + type;
+            throw error;
+    }
+
+}
