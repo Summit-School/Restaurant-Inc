@@ -10,7 +10,7 @@ const MenuList = () => {
 
   const [showCategory, setShowCategory] = useState(true);
   const [editItem, setEditItem] = useState("");
-  const [deleteItem, setDeleteItem] = useState(false);
+  const [deleteItem, setDeleteItem] = useState("");
 
   useEffect(() => {
     onSnapshotFetchMenuItems((response) => {
@@ -19,6 +19,10 @@ const MenuList = () => {
       setDrinksist(response.drinks);
     });
   }, []);
+
+  const disableItem = (item) => {
+    console.log(item);
+  };
 
   function filterFunction() {
     var input, filter, table, tr, td, i, txtValue;
@@ -99,10 +103,15 @@ const MenuList = () => {
                       >
                         Edit
                       </button>
-                      <button className="disable-btn">Disable</button>
+                      <button
+                        className="disable-btn"
+                        onClick={() => disableItem(item)}
+                      >
+                        Disable
+                      </button>
                       <button
                         className="delete-btn"
-                        onClick={() => setDeleteItem(true)}
+                        onClick={() => setDeleteItem(item)}
                       >
                         Delete
                       </button>
@@ -123,10 +132,15 @@ const MenuList = () => {
                     >
                       Edit
                     </button>
-                    <button className="disable-btn">Disable</button>
+                    <button
+                      className="disable-btn"
+                      onClick={() => disableItem(item)}
+                    >
+                      Disable
+                    </button>
                     <button
                       className="delete-btn"
-                      onClick={() => setDeleteItem(true)}
+                      onClick={() => setDeleteItem(item)}
                     >
                       Delete
                     </button>
@@ -141,7 +155,11 @@ const MenuList = () => {
         show={!!editItem}
         onHide={() => setEditItem(false)}
       />
-      <DeleteItem show={deleteItem} onHide={() => setDeleteItem(false)} />
+      <DeleteItem
+        item={deleteItem}
+        show={!!deleteItem}
+        onHide={() => setDeleteItem(false)}
+      />
     </div>
   );
 };
