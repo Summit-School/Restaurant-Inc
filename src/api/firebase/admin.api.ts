@@ -2,6 +2,7 @@ import {
   InventoryItem,
   MenuItem,
   Order,
+  Table,
 } from "../../interfaces/operations.interface";
 import {
   collection,
@@ -15,7 +16,7 @@ import {
 import { db } from "./index.ts";
 import { throwError } from "../index.ts";
 
-export function addToInventory(inventory: InventoryItem) {}
+export function addToInventory(inventory: InventoryItem) { }
 
 /**
  * Gets all orders that are currently pending
@@ -99,6 +100,8 @@ export async function freeTable(order: Order) {
   return deleteDoc(pendingOrderRef);
 }
 
+
+
 /**
  * changes the state of a pending order
  *
@@ -112,4 +115,37 @@ export async function changeOrderState(order: Order, newState: string) {
   const pendingOrderRef = doc(db, "pending_orders", order.table.id);
   await updateDoc(pendingOrderRef, { state: newState });
   return pendingOrderRef;
+}
+
+
+/**
+ * Creates a table to be added to the list of tables in the restaurant
+ * 
+ * @param tableNumber The number of the table to be added
+ * 
+ * @returns {Promise<Table>} - A Promise resolved once the table is added 
+ */
+
+export async function createTable(tableNumber: number): Promise<Table> {
+  const table: Table = {
+    id: tableNumber + ""
+  }
+  const tableRef = doc(db, "tables", tableNumber + "");
+  await setDoc(tableRef, table);
+  return table
+}
+
+
+/**
+ * Delete a table from the list of tables in the restaurant
+ * 
+ * @param tableNumber The number of the table to be deleted
+ * 
+ * @return Returns a Promise resolved once the table has been deleted
+ *
+ */
+
+export async function deleteTable(table: Table): Promise<void> {
+  const tableRef = doc(db, "tables", table.id + "");
+  await deleteDoc(tableRef);
 }

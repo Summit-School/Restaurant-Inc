@@ -15,6 +15,7 @@ const Waiters = () => {
   useEffect(() => {
     getStaffByType("SERVICE", (response) => {
       setWaiters(response);
+      console.log(response);
     });
   }, []);
 

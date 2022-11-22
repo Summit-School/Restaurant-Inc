@@ -1,4 +1,10 @@
-import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import {
+  deleteDoc,
+  doc,
+  getDoc,
+  getFirestore,
+  setDoc,
+} from "firebase/firestore";
 import { Admin, Service, User } from "../../interfaces/auth.interface";
 
 /**
@@ -53,6 +59,7 @@ export async function createStaff(
     error.message = "Please provide a password for the service";
     throw error;
   }
+  staff = { ...staff, id: staff.phone };
 
   switch (type) {
     case "SERVICE":
@@ -72,4 +79,99 @@ export async function createStaff(
       error.message = "Unknown staff type provided: " + type;
       throw error;
   }
+}
+
+/**
+ *
+ * Edits a particular staff's information
+ *
+ * @param staff The staff that is to be edited
+ * @param type The type of the staff that is to be edited could be "SERVICE"| "CASHIER" | "KITCHEN" | "COUNTER"
+ *
+ * @return {Promise<User>} A promise that resolves with the updated staff information
+ */
+
+export async function editStaffInfo(
+  staff: User,
+  type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"
+): Promise<User> {
+  const staffExists = await verifyStaffExists(staff, type);
+  if (staffExists) {
+    await createStaff(staff, type);
+    return staff;
+  }
+
+  const error = new Error();
+  error.message = "The staff with id " + staff.id + " does not exist";
+  throw error;
+}
+
+/**
+ *
+ *Verifies if a particular staff exists in the Firestore
+ *
+ * @param staff The staff that is to be verified
+ * @param type The type of the staff that is to be verified could be "SERVICE"| "CASHIER" | "KITCHEN" | "COUNTER"
+ *
+ * @return {Promise<boolean>} A promise that resolves with true if the staff exists in the Firestore else false
+ */
+
+export async function verifyStaffExists(
+  staff: User,
+  type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"
+): Promise<boolean> {
+  switch (type) {
+    case "SERVICE":
+      const service = (
+        await getDoc(doc(getFirestore(), "service", staff.id))
+      ).data();
+      return !!service;
+
+    case "CASHIER":
+      const cashier = (
+        await getDoc(doc(getFirestore(), "cashier", staff.id))
+      ).data();
+      return !!cashier;
+
+    case "COUNTER":
+      const counter = (
+        await getDoc(doc(getFirestore(), "counter", staff.id))
+      ).data();
+      return !!counter;
+
+    case "KITCHEN":
+      const kitchen = (
+        await getDoc(doc(getFirestore(), "kitchen", staff.id))
+      ).data();
+      return !!kitchen;
+    default:
+      const error = new Error("unknown type " + type);
+      error.message = "Unknown staff type provided: " + type;
+      throw error;
+  }
+}
+
+/**
+ *
+ * Deletes a particular staff's information
+ *
+ * @param staff The staff that is to be deleted
+ * @param type The type of the staff that is to be deleted could be "SERVICE"| "CASHIER" | "KITCHEN" | "COUNTER"
+ *
+ * @return {Promise<{message:string}>} A promise that resolves with a message
+ */
+
+export async function deleteStaff(
+  staff: User,
+  type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"
+): Promise<{ message: string }> {
+  const staffExists = await verifyStaffExists(staff, type);
+  if (staffExists) {
+    await deleteDoc(doc(getFirestore(), "staff", staff.id));
+    return { message: "Deleted successfully" };
+  }
+
+  const error = new Error();
+  error.message = "The staff with id " + staff.id + " does not exist";
+  throw error;
 }
