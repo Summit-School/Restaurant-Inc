@@ -26,7 +26,7 @@ import * as uuid from "uuid";
  */
 
 export async function addItemToMenu(menuItem: MenuItem) {
-    if (menuItem.category === "DRINKS" && !menuItem.quantity) {
+    if (menuItem.category === "DRINKS" && !menuItem.inventory) {
         const error = new Error();
         error.message = "You need to provide a quantity for the Drinks menu item";
         throw error;
@@ -35,6 +35,7 @@ export async function addItemToMenu(menuItem: MenuItem) {
     menuItem = {
         id: uuid.v4(),
         ...menuItem,
+        quantity: 0
     };
 
     const menuRef = doc(db, "menu", menuItem!.id + "");
@@ -104,7 +105,7 @@ export async function onSnapshotFetchMenuItems(
  */
 
 export async function EditItemToMenu(menuItem: MenuItem) {
-    if (menuItem.category === "DRINKS" && !menuItem.quantity) {
+    if (menuItem.category === "DRINKS" && !menuItem.inventory) {
         const error = new Error();
         error.message = "You need to provide a quantity for the Drinks menu item";
         throw error;
