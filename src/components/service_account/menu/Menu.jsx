@@ -63,15 +63,26 @@ const Menu = (props) => {
 
   const submitOrder = () => {
     let order = {
-      table: props.tablenumber,
+      table: { id: props.tablenumber },
       food: [],
       drinks: [],
+      sender: {
+        name: "Enow Divine",
+        phone: 667241296,
+      },
     };
 
     order.food = menuList.filter((menu) => menu.quantity > 0);
     order.drinks = drinksList.filter((drink) => drink.quantity > 0);
     console.log(order);
-    // AddOrderToPending(order);
+    try {
+      const response = AddOrderToPending(order);
+      if (response) {
+        console.log(response);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
