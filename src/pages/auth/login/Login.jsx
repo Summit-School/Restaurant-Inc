@@ -24,7 +24,7 @@ const Login = () => {
       }
     } catch (error) {
       setLoading(false);
-      toast.error("Login Fales");
+      toast.error("Login Failed");
       console.error(error.message);
     }
   };

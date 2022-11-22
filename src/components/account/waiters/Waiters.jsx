@@ -24,68 +24,66 @@ const Waiters = () => {
       <div className="pending-heading">WAITERS</div>
       {waiters.length > 0
         ? waiters.map((waiter, index) => (
-            <>
-              <div className="accordion-item" key={index}>
-                <h2 className="accordion-header" id="headingOne">
-                  <button
-                    className="accordion-button"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapseOne"
-                    aria-expanded="true"
-                    aria-controls="collapseOne"
-                  >
-                    {waiter.name}
-                  </button>
-                </h2>
-                <div
-                  id="collapseOne"
-                  className="accordion-collapse collapse"
-                  aria-labelledby="headingOne"
-                  data-bs-parent="#accordionExample"
+            <div className="accordion-item" key={index}>
+              <h2 className="accordion-header" id="headingOne">
+                <button
+                  className="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne"
+                  aria-expanded="true"
+                  aria-controls="collapseOne"
                 >
-                  <div className="accordion-body">
-                    <div className="name">
-                      <div className="data-key">
-                        <FaUserAlt />
-                        <span> Name:</span>
-                      </div>
-                      <div className="data-value">{waiter.name}</div>
+                  {waiter.name}
+                </button>
+              </h2>
+              <div
+                id="collapseOne"
+                className="accordion-collapse collapse"
+                aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample"
+              >
+                <div className="accordion-body">
+                  <div className="name">
+                    <div className="data-key">
+                      <FaUserAlt />
+                      <span> Name:</span>
                     </div>
-                    <div className="phone-number">
-                      <div className="data-key">
-                        <BsFillTelephoneFill />
-                        <span>Phone Number:</span>
-                      </div>
-                      <div className="data-value">{waiter.phone}</div>
+                    <div className="data-value">{waiter.name}</div>
+                  </div>
+                  <div className="phone-number">
+                    <div className="data-key">
+                      <BsFillTelephoneFill />
+                      <span>Phone Number:</span>
                     </div>
-                    <div className="password">
-                      <div className="data-key">
-                        <RiLockPasswordFill />
-                        <span>Password:</span>
-                      </div>
-                      <div className="data-value">{waiter.password}</div>
+                    <div className="data-value">{waiter.phone}</div>
+                  </div>
+                  <div className="password">
+                    <div className="data-key">
+                      <RiLockPasswordFill />
+                      <span>Password:</span>
                     </div>
-                    <div className="action-btns">
-                      <button
-                        className="edit-btn"
-                        onClick={() =>
-                          setUpdateWaiter({ ...waiter, type: "SERVICE" })
-                        }
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="delete-btn"
-                        onClick={() => setDeleteWaiter(true)}
-                      >
-                        Delete
-                      </button>
-                    </div>
+                    <div className="data-value">{waiter.password}</div>
+                  </div>
+                  <div className="action-btns">
+                    <button
+                      className="edit-btn"
+                      onClick={() =>
+                        setUpdateWaiter({ ...waiter, type: "SERVICE" })
+                      }
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="delete-btn"
+                      onClick={() => setDeleteWaiter(true)}
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
               </div>
-            </>
+            </div>
           ))
         : "No Waiters In The System"}
       <UpdateWaiter

@@ -20,7 +20,7 @@ const Settings = () => {
       phone: staffNumber,
       password: staffPassword,
     };
-    console.log(staffData);
+
     try {
       const response = await createStaff(staffData, staffRole);
       if (response) {
