@@ -120,3 +120,19 @@ export async function EditItemToMenu(menuItem: MenuItem) {
     await setDoc(menuRef, menuItem);
     return menuItem;
 }
+
+
+
+export async function DeleteMenuItem(menuItemId: string) {
+
+
+    if (!menuItemId) {
+        const error = new Error();
+        error.message = "You need to provide an id for the menu item";
+        throw error;
+    }
+
+    const menuRef = doc(db, "menu", menuItemId);
+    await deleteDoc(menuRef);
+    return { message: "Successfully deleted" };
+}
