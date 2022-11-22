@@ -1,23 +1,33 @@
 import "./Login.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { loginAdmin } from "../../../api/firebase/auth.api.ts";
+import { toast } from "react-toastify";
 
 const Login = () => {
-  const [loginNumber, setLoginNumber] = useState("");
+  const [email, setEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  const loginFunction = (e) => {
+  const loginFunction = async (e) => {
     e.preventDefault();
-    const authData = {
-      number: loginNumber,
-      password: loginPassword,
-    };
+    setLoading(true);
 
-    console.log(authData);
-
-    navigate("/dashboard");
+    try {
+      const response = await loginAdmin(email, loginPassword);
+      console.log(response, "response");
+      if (response) {
+        toast.success("Login Successful");
+        setLoading(false);
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      setLoading(false);
+      toast.error("Login Fales");
+      console.error(error.message);
+    }
   };
   return (
     <div className="login-wrapper">
@@ -29,10 +39,10 @@ const Login = () => {
           <div className="email-div">
             <input
               className="form-control"
-              type="number"
-              placeholder="Phone Number"
-              value={loginNumber}
-              onChange={(e) => setLoginNumber(e.target.value)}
+              type="email"
+              placeholder="Email Address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="password-div">
@@ -49,7 +59,7 @@ const Login = () => {
               className="form-control bg-primary text-light font-weight-bold mt-4"
               onClick={loginFunction}
             >
-              Login
+              {loading ? "Loading..." : " Login"}
             </button>
           </div>
         </form>
