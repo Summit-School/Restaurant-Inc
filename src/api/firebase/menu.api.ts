@@ -1,4 +1,4 @@
-import { InventoryItem, MenuItem, Order } from "../../interfaces/operations.interface";
+import { InventoryItem, Menu, MenuItem, Order } from "../../interfaces/operations.interface";
 import { collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, setDoc, updateDoc } from 'firebase/firestore'
 import { db } from '.'
 import * as uuid from "uuid"
@@ -61,6 +61,30 @@ export async function fetchAllMenuItems() {
         drinks: menu.filter((item) => item.category === "DRINKS"),
         food: menu.filter((item) => item.category === "FOOD")
     })
+}
+
+
+
+/**
+ * realtime fetches all menu items from both the food and drinks category
+ * 
+ *@param onSuccess call back function called everytime a new menu item is updated
+ *
+ * @returns - A Promise resolved once the item has been successfully gotten
+ */
+
+export async function onSnapshotFetchMenuItems(onSuccess: (result: { drinks: MenuItem[], food: MenuItem[] }) => void) {
+
+    const menuRef = collection(db, "menu")
+    const menu = onSnapshot(menuRef, res => {
+        const menu = res.docs.map(doc => doc.data() as MenuItem)
+        const result = {
+            drinks: menu.filter((item) => item.category === "DRINKS"),
+            food: menu.filter((item) => item.category === "FOOD")
+        }
+        onSuccess(result)
+    })
+
 }
 
 
