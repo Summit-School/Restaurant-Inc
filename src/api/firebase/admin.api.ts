@@ -27,13 +27,13 @@ export function addToInventory(inventory: InventoryItem) { }
  *
  * @param callBack - called everytime a new order is added to pending orders
  */
-export function fetchPendingOrders(callBack: (orders: Order[]) => void) {
-  const adminRef = collection(db, "pending_orders");
-  onSnapshot(adminRef, (res) => {
-    const orders = res.docs.map((doc) => doc.data() as Order);
-    callBack(orders);
-  });
-}
+// export function fetchPendingOrders(callBack: (orders: Order[]) => void) {
+//   const adminRef = collection(db, "pending_orders");
+//   onSnapshot(adminRef, (res) => {
+//     const orders = res.docs.map((doc) => doc.data() as Order);
+//     callBack(orders);
+//   });
+// }
 
 /**
  * Get all orders made on the application

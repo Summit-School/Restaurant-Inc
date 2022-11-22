@@ -26,8 +26,9 @@ export interface MenuItem {
     name: string,
     price: number,
     category: "DRINKS" | "FOOD",
-    quantity?: number,
+    inventory?: number,
     disabled?: boolean;
+    quantity?: number;
 }
 
 export interface Menu {
