@@ -14,7 +14,6 @@ const Kitchen = () => {
   useEffect(() => {
     getStaffByType("KITCHEN", (response) => {
       setKitchen(response);
-      console.log("kitchen", kitchen);
     });
   }, []);
 

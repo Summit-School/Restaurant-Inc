@@ -13,8 +13,8 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { db } from ".";
-import { throwError } from "..";
+import { db } from "./index.ts";
+import * as uuid from "uuid";
 
 /**
  * adds an item to the menu of the restaurant so it can be visible to the waiter
@@ -25,7 +25,18 @@ import { throwError } from "..";
  */
 
 export async function addItemToMenu(menuItem: MenuItem) {
-  const menuRef = doc(db, "menu", menuItem.id);
+  if (menuItem.category === "DRINKS" && !menuItem.quantity) {
+    const error = new Error();
+    error.message = "You need to provide a quantity for the Drinks menu item";
+    throw error;
+  }
+
+  menuItem = {
+    id: uuid.v4(),
+    ...menuItem,
+  };
+
+  const menuRef = doc(db, "menu", menuItem!.id + "");
   await setDoc(menuRef, menuItem);
   return menuItem;
 }
@@ -39,7 +50,7 @@ export async function addItemToMenu(menuItem: MenuItem) {
  */
 
 export async function removeItemFromMenu(menuItem: MenuItem) {
-  const menuRef = doc(db, "menu", menuItem.id);
+  const menuRef = doc(db, "menu", menuItem!.id + "");
   await setDoc(menuRef, menuItem);
   return menuItem;
 }
@@ -53,9 +64,12 @@ export async function removeItemFromMenu(menuItem: MenuItem) {
 export async function fetchAllMenuItems() {
   const menuRef = collection(db, "menu");
   const menu = (await getDocs(menuRef)).docs.map(
-    (doc) => doc.data() as MenuItem[]
+    (doc) => doc.data() as MenuItem
   );
-  return menu;
+  return {
+    drinks: menu.filter((item) => item.category === "DRINKS"),
+    food: menu.filter((item) => item.category === "FOOD"),
+  };
 }
 
 /**

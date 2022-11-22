@@ -1,57 +1,23 @@
 import "./MenuList.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import EditItem from "./EditItem";
 import DeleteItem from "./DeleteItem";
+import { fetchAllMenuItems } from "../../../api/firebase/menu.api.ts";
 
 const MenuList = () => {
-  const [menuList, setMenulist] = useState([
-    {
-      name: "Fried Rice",
-      price: 10000,
-      quantity: 0,
-    },
-    {
-      name: "Fried Rice",
-      price: 10000,
-      quantity: 0,
-    },
-    {
-      name: "Fried Rice",
-      price: 10000,
-      quantity: 0,
-    },
-    {
-      name: "Fried Rice",
-      price: 10000,
-      quantity: 0,
-    },
-  ]);
-  const [drinksList, setDrinksist] = useState([
-    {
-      name: "Cantelou",
-      price: 5000,
-      quantity: 0,
-    },
-    {
-      name: "Cantelou",
-      price: 5000,
-      quantity: 0,
-    },
-    {
-      name: "Cantelou",
-      price: 5000,
-      quantity: 0,
-    },
-    {
-      name: "Cantelou",
-      price: 5000,
-      quantity: 0,
-    },
-  ]);
+  const [menuList, setMenulist] = useState([]);
+  const [drinksList, setDrinksist] = useState([]);
 
   const [showCategory, setShowCategory] = useState(true);
   const [editItem, setEditItem] = useState(false);
   const [deleteItem, setDeleteItem] = useState(false);
+
+  useEffect(() => {
+    fetchAllMenuItems().then((response) => {
+      setMenulist(response.food);
+      setDrinksist(response.drinks);
+    });
+  }, []);
 
   function filterFunction() {
     var input, filter, table, tr, td, i, txtValue;
@@ -123,7 +89,7 @@ const MenuList = () => {
             ? menuList
               ? menuList.map((item, index) => (
                   <tr key={index}>
-                    <td>{item.name}</td>
+                    <td>{item.itemName}</td>
                     <td>{formatMoney(item.price)} FCFA</td>
                     <td className="action-btns">
                       <button
@@ -146,7 +112,7 @@ const MenuList = () => {
             : drinksList
             ? drinksList.map((item, index) => (
                 <tr key={index}>
-                  <td>{item.name}</td>
+                  <td>{item.itemName}</td>
                   <td>{formatMoney(item.price)} FCFA</td>
                   <td>{item.quantity}</td>
                   <td className="action-btns">
