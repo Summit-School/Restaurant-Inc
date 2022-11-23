@@ -172,7 +172,7 @@ export async function deleteStaff(
 ): Promise<{ message: string }> {
   const staffExists = await verifyStaffExists(staff, type);
   if (staffExists) {
-    await deleteDoc(doc(getFirestore(), "staff", staff.id));
+    await deleteDoc(doc(getFirestore(), type.toLowerCase(), staff.id));
     return { message: "Deleted successfully" };
   }
 

@@ -15,9 +15,8 @@ import {
 } from "firebase/firestore";
 import { db } from "./index.ts";
 import { throwError } from "../index.ts";
-import { table } from "console";
 import { User } from "../../interfaces/auth.interface";
-import * as  uuid from "uuid";
+import * as uuid from "uuid";
 
 export function addToInventory(inventory: InventoryItem) {}
 
@@ -55,7 +54,7 @@ export function fetchAllOrders(callBack: (orders: Order[]) => void) {
  * Get adds an order for a table
  *
  * @param order - an order that is to be added
- * @param user - the staff to add the order 
+ * @param user - the staff to add the order
  */
 
 export async function AddOrderToPending(order: Order, user: User) {
@@ -66,7 +65,6 @@ export async function AddOrderToPending(order: Order, user: User) {
         "Table is already occupied please free table before placing order",
     });
   }
-
 
   order.id = uuid.v4();
   order.state = "ORDERED";

@@ -5,7 +5,7 @@ export interface Order {
   id?: string;
   drinks: MenuItem[];
   food: MenuItem[];
-  state?: "ORDERED" | "AVAILABLE" | "SERVED" | "DELIVERED";
+  state?: "ORDERED" | "AVAILABLE" | "SERVED" | "PAID";
   service?: Service;
   counter?: Counter;
   kitchen?: Kitchen;

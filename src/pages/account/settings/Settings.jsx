@@ -42,12 +42,9 @@ const Settings = () => {
   const handleTable = async (e) => {
     e.preventDefault();
     setTableLoading(true);
-    const tableData = {
-      number: tableNumber,
-    };
 
     try {
-      const response = await createTable(tableData);
+      const response = await createTable(tableNumber);
       if (response) {
         toast.success("Table Added");
         setTableLoading(false);

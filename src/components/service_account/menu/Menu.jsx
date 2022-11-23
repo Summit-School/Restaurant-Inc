@@ -5,11 +5,13 @@ import { useState, useEffect } from "react";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { AddOrderToPending } from "../../../api/firebase/admin.api.ts";
 import { onSnapshotFetchMenuItems } from "../../../api/firebase/menu.api.ts";
+import { toast } from "react-toastify";
 
 const Menu = (props) => {
   const [menuList, setMenulist] = useState([]);
   const [drinksList, setDrinksist] = useState([]);
   const [showCategory, setShowCategory] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     onSnapshotFetchMenuItems((response) => {
@@ -62,6 +64,7 @@ const Menu = (props) => {
   };
 
   const submitOrder = () => {
+    setLoading(true);
     let order = {
       table: { id: props.tablenumber },
       food: [],
@@ -79,9 +82,12 @@ const Menu = (props) => {
     try {
       const response = AddOrderToPending(order, user);
       if (response) {
-        console.log(response);
+        toast.success("Order Sent");
+        setLoading(false);
       }
     } catch (error) {
+      setLoading(false);
+      toast.error("Failed");
       console.error(error);
     }
   };
@@ -197,7 +203,7 @@ const Menu = (props) => {
       </Modal.Body>
       <Modal.Footer className="change-password-footer">
         <Button className="modal-btn form-control-sm" onClick={submitOrder}>
-          Submit
+          {loading ? "Loading..." : "Submit"}
         </Button>
       </Modal.Footer>
     </Modal>
