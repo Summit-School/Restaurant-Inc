@@ -7,21 +7,16 @@ import DashboardCards from "../../../components/account/dashboardCards/Dashboard
 import PendingOrders from "../../../components/account/pendingOrders/PendingOrders";
 import CompletedOrders from "../../../components/account/completedOrders/CompletedOrders";
 
-// redux toolkit imports
-import type { RootState } from "../../../redux/store.ts";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { fetchPendingOrders } from "../../../api/firebase/admin.api.ts";
 
 const Dashboard = () => {
   // const count = useSelector((state: RootState) => state.counter.value);
   // const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchPendingOrders((orders) => {
-      console.log(orders);
-    });
-    return () => {};
+
+    return () => { };
   }, []);
 
   const formatMoney = (amount) => {

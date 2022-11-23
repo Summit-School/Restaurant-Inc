@@ -15,7 +15,6 @@ import {
 } from "firebase/firestore";
 import { db } from "./index.ts";
 import { throwError } from "../index.ts";
-import { table } from "console";
 import { User } from "../../interfaces/auth.interface";
 import * as  uuid from "uuid";
 
