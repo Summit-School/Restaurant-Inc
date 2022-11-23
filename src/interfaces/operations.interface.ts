@@ -10,7 +10,8 @@ export interface Order {
     service?: Service,
     counter?: Counter,
     kitchen?: Kitchen,
-    cashier?: Cashier
+    cashier?: Cashier,
+    timestamp?: number,
 
 }
 
