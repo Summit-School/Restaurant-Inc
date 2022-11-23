@@ -76,6 +76,33 @@ export async function AddOrderToPending(order: Order, user: User) {
   return setDoc(pendingOrderRef, { id: order.table.id, order });
 }
 
+
+
+/**
+ * Get adds an order for a table
+ *
+ * @param order - an order that is to be added
+ * @param user - the staff to add the order 
+ */
+
+export async function serveOrder(order: Order, user: User) {
+  const tableOrder = await isTableOccupied(order.table.id);
+
+  order.state = "SERVED";
+  order.kitchen = user;
+
+  const pendingOrderRef = doc(db, "all_tables", order.table.id);
+
+  return setDoc(pendingOrderRef, { id: order.table.id, order });
+}
+
+
+
+
+
+
+
+
 /**
  * verifies if a particular table is occupied
  *
@@ -105,9 +132,9 @@ export async function freeTable(order: Order) {
     throwError({ message: "Table is not occupied" });
   }
   const ordersRef = doc(db, "all_orders", order.table.id);
-  const pendingOrderRef = doc(db, "pending_orders", order.table.id);
+  const pendingOrderRef = doc(db, "all_tables", order.table.id);
   await setDoc(ordersRef, order);
-  return deleteDoc(pendingOrderRef);
+  return setDoc({ id: order.table.id });
 }
 
 /**
