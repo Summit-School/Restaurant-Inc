@@ -1,9 +1,9 @@
 import {
-    deleteDoc,
-    doc,
-    getDoc,
-    getFirestore,
-    setDoc,
+  deleteDoc,
+  doc,
+  getDoc,
+  getFirestore,
+  setDoc,
 } from "firebase/firestore";
 import { Admin, Service, User } from "../../interfaces/auth.interface";
 import * as uuid from "uuid";
@@ -18,18 +18,18 @@ import * as uuid from "uuid";
  */
 
 export const loginAdmin = async (
-    email: string,
-    password: string
+  email: string,
+  password: string
 ): Promise<Admin | null> => {
-    const adminRef = doc(getFirestore(), "admin", email.toLowerCase());
-    const admin = (await getDoc(adminRef)).data() as Admin;
-    if (admin) {
-        if (admin.password == password) {
-            return { email: admin.email, password: "" };
-        }
+  const adminRef = doc(getFirestore(), "admin", email.toLowerCase());
+  const admin = (await getDoc(adminRef)).data() as Admin;
+  if (admin) {
+    if (admin.password == password) {
+      return { email: admin.email, password: "" };
     }
+  }
 
-    return null;
+  return null;
 };
 
 /**
@@ -44,46 +44,46 @@ export const loginAdmin = async (
  */
 
 export async function createStaff(
-    staff: User,
-    type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"
+  staff: User,
+  type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"
 ): Promise<User | null> {
-    const error = new Error();
-    if (!staff.name) {
-        error.message = "Please provide a name for the service";
-        throw error;
-    }
-    if (!staff.phone) {
-        error.message = "Please provide an phone address for the service";
-        throw error;
-    }
-    if (!staff.password) {
-        error.message = "Please provide a password for the service";
-        throw error;
-    }
-    if (!staff.id) {
-        staff = { ...staff, id: uuid.v4() };
-    }
+  const error = new Error();
+  if (!staff.name) {
+    error.message = "Please provide a name for the service";
+    throw error;
+  }
+  if (!staff.phone) {
+    error.message = "Please provide an phone address for the service";
+    throw error;
+  }
+  if (!staff.password) {
+    error.message = "Please provide a password for the service";
+    throw error;
+  }
+  if (!staff.id) {
+    staff = { ...staff, id: uuid.v4() };
+  }
 
-    console.log(staff)
+  console.log(staff);
 
-    switch (type) {
-        case "SERVICE":
-            await setDoc(doc(getFirestore(), "service", staff.id), staff);
-            return staff;
-        case "CASHIER":
-            await setDoc(doc(getFirestore(), "cashier", staff.id), staff);
-            return staff;
+  switch (type) {
+    case "SERVICE":
+      await setDoc(doc(getFirestore(), "service", staff.id), staff);
+      return staff;
+    case "CASHIER":
+      await setDoc(doc(getFirestore(), "cashier", staff.id), staff);
+      return staff;
 
-        case "KITCHEN":
-            await setDoc(doc(getFirestore(), "kitchen", staff.id), staff);
-            return staff;
-        case "COUNTER":
-            await setDoc(doc(getFirestore(), "counter", staff.id), staff);
-            return staff;
-        default:
-            error.message = "Unknown staff type provided: " + type;
-            throw error;
-    }
+    case "KITCHEN":
+      await setDoc(doc(getFirestore(), "kitchen", staff.id), staff);
+      return staff;
+    case "COUNTER":
+      await setDoc(doc(getFirestore(), "counter", staff.id), staff);
+      return staff;
+    default:
+      error.message = "Unknown staff type provided: " + type;
+      throw error;
+  }
 }
 
 /**
@@ -97,18 +97,18 @@ export async function createStaff(
  */
 
 export async function editStaffInfo(
-    staff: User,
-    type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"
+  staff: User,
+  type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"
 ): Promise<User> {
-    const staffExists = await verifyStaffExists(staff, type);
-    if (staffExists) {
-        await createStaff(staff, type);
-        return staff;
-    }
+  const staffExists = await verifyStaffExists(staff, type);
+  if (staffExists) {
+    await createStaff(staff, type);
+    return staff;
+  }
 
-    const error = new Error();
-    error.message = "The staff with id " + staff.id + " does not exist";
-    throw error;
+  const error = new Error();
+  error.message = "The staff with id " + staff.id + " does not exist";
+  throw error;
 }
 
 /**
@@ -122,38 +122,38 @@ export async function editStaffInfo(
  */
 
 export async function verifyStaffExists(
-    staff: User,
-    type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"
+  staff: User,
+  type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"
 ): Promise<boolean> {
-    switch (type) {
-        case "SERVICE":
-            const service = (
-                await getDoc(doc(getFirestore(), "service", staff.id))
-            ).data();
-            return !!service;
+  switch (type) {
+    case "SERVICE":
+      const service = (
+        await getDoc(doc(getFirestore(), "service", staff.id))
+      ).data();
+      return !!service;
 
-        case "CASHIER":
-            const cashier = (
-                await getDoc(doc(getFirestore(), "cashier", staff.id))
-            ).data();
-            return !!cashier;
+    case "CASHIER":
+      const cashier = (
+        await getDoc(doc(getFirestore(), "cashier", staff.id))
+      ).data();
+      return !!cashier;
 
-        case "COUNTER":
-            const counter = (
-                await getDoc(doc(getFirestore(), "counter", staff.id))
-            ).data();
-            return !!counter;
+    case "COUNTER":
+      const counter = (
+        await getDoc(doc(getFirestore(), "counter", staff.id))
+      ).data();
+      return !!counter;
 
-        case "KITCHEN":
-            const kitchen = (
-                await getDoc(doc(getFirestore(), "kitchen", staff.id))
-            ).data();
-            return !!kitchen;
-        default:
-            const error = new Error("unknown type " + type);
-            error.message = "Unknown staff type provided: " + type;
-            throw error;
-    }
+    case "KITCHEN":
+      const kitchen = (
+        await getDoc(doc(getFirestore(), "kitchen", staff.id))
+      ).data();
+      return !!kitchen;
+    default:
+      const error = new Error("unknown type " + type);
+      error.message = "Unknown staff type provided: " + type;
+      throw error;
+  }
 }
 
 /**
@@ -167,16 +167,16 @@ export async function verifyStaffExists(
  */
 
 export async function deleteStaff(
-    staff: User,
-    type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"
+  staff: User,
+  type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"
 ): Promise<{ message: string }> {
-    const staffExists = await verifyStaffExists(staff, type);
-    if (staffExists) {
-        await deleteDoc(doc(getFirestore(), "staff", staff.id));
-        return { message: "Deleted successfully" };
-    }
+  const staffExists = await verifyStaffExists(staff, type);
+  if (staffExists) {
+    await deleteDoc(doc(getFirestore(), "staff", staff.id));
+    return { message: "Deleted successfully" };
+  }
 
-    const error = new Error();
-    error.message = "The staff with id " + staff.id + " does not exist";
-    throw error;
+  const error = new Error();
+  error.message = "The staff with id " + staff.id + " does not exist";
+  throw error;
 }

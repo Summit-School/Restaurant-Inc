@@ -28,7 +28,6 @@ const UpdateWaiter = (props) => {
       phone: number,
       password: currentPassword,
     };
-    console.log(staffData, props.waiter.type);
 
     try {
       const response = await editStaffInfo(staffData, props.waiter.type);

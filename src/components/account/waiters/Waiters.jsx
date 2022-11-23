@@ -76,7 +76,9 @@ const Waiters = () => {
                     </button>
                     <button
                       className="delete-btn"
-                      onClick={() => setDeleteWaiter(true)}
+                      onClick={() =>
+                        setDeleteWaiter({ ...waiter, type: "SERVICE" })
+                      }
                     >
                       Delete
                     </button>
@@ -91,7 +93,11 @@ const Waiters = () => {
         show={!!updateWaiter}
         onHide={() => setUpdateWaiter(false)}
       />
-      <DeleteWaiter show={deleteWaiter} onHide={() => setDeleteWaiter(false)} />
+      <DeleteWaiter
+        waiter={deleteWaiter}
+        show={!!deleteWaiter}
+        onHide={() => setDeleteWaiter(false)}
+      />
     </div>
   );
 };

@@ -2,6 +2,7 @@ import "./Settings.css";
 import { useState } from "react";
 import Layout from "../../../components/layout/Layout";
 import { createStaff } from "../../../api/firebase/auth.api.ts";
+import { createTable } from "../../../api/firebase/admin.api.ts";
 import { toast } from "react-toastify";
 
 const Settings = () => {
@@ -10,11 +11,12 @@ const Settings = () => {
   const [staffNumber, setStaffNumber] = useState("");
   const [staffPassword, setStaffPassword] = useState("");
   const [tableNumber, setTableNumber] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [staffLoading, setStaffLoading] = useState(false);
+  const [tableLoading, setTableLoading] = useState(false);
 
   const handleStaff = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setStaffLoading(true);
     const staffData = {
       name: staffName,
       phone: staffNumber,
@@ -28,21 +30,33 @@ const Settings = () => {
         setStaffName("");
         setStaffNumber("");
         setStaffPassword("");
-        setLoading(false);
+        setStaffLoading(false);
       }
     } catch (error) {
-      setLoading(false);
+      setStaffLoading(false);
       toast.error("Failed");
       console.error(error);
     }
   };
 
-  const handleTable = (e) => {
+  const handleTable = async (e) => {
     e.preventDefault();
+    setTableLoading(true);
     const tableData = {
       number: tableNumber,
     };
-    console.log(tableData);
+
+    try {
+      const response = await createTable(tableData);
+      if (response) {
+        toast.success("Table Added");
+        setTableLoading(false);
+      }
+    } catch (error) {
+      setTableLoading(false);
+      toast.error("Failed");
+      console.error(error);
+    }
   };
 
   return (
@@ -83,7 +97,7 @@ const Settings = () => {
               onChange={(e) => setStaffPassword(e.target.value)}
             />
             <button onClick={handleStaff}>
-              {loading ? "Loading..." : "Submit"}
+              {staffLoading ? "Loading..." : "Submit"}
             </button>
           </form>
         </div>
@@ -98,7 +112,7 @@ const Settings = () => {
               onChange={(e) => setTableNumber(e.target.value)}
             />
             <button onClick={handleTable}>
-              {loading ? "Loading..." : "Submit"}
+              {tableLoading ? "Loading..." : "Submit"}
             </button>
           </form>
         </div>

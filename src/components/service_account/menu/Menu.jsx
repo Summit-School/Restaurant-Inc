@@ -66,17 +66,18 @@ const Menu = (props) => {
       table: { id: props.tablenumber },
       food: [],
       drinks: [],
-      sender: {
-        name: "Enow Divine",
-        phone: 667241296,
-      },
+    };
+
+    let user = {
+      name: "Enow Divine",
+      phone: 667241296,
     };
 
     order.food = menuList.filter((menu) => menu.quantity > 0);
     order.drinks = drinksList.filter((drink) => drink.quantity > 0);
     console.log(order);
     try {
-      const response = AddOrderToPending(order);
+      const response = AddOrderToPending(order, user);
       if (response) {
         console.log(response);
       }
