@@ -26,7 +26,7 @@ const PendingOrders = () => {
       const response = await markOrderAsPaid(order.order, user);
       if (response) {
         setLoading(false);
-        toast.success("Order Served");
+        toast.success("Order Paid");
       }
     } catch (error) {
       setLoading(false);
