@@ -10,6 +10,7 @@ export interface Order {
   counter?: Counter;
   kitchen?: Kitchen;
   cashier?: Cashier;
+  timestamp?: number;
 }
 
 export interface Table {

@@ -1,57 +1,68 @@
-import React from "react";
+import { useState, useEffect } from "react";
+import { onSnapshotGetAllTables } from "../../../api/firebase/admin.api.ts";
 
 const PendingDelivery = () => {
-  const formatMoney = (amount) => {
-    let dollarUSLocale = Intl.NumberFormat("en-US");
-    return dollarUSLocale.format(amount);
-  };
+  const [pendingList, setPendingList] = useState([]);
+
+  useEffect(() => {
+    onSnapshotGetAllTables((response) => {
+      let orders = response.filter((order) => order.order);
+      console.log(orders);
+      setPendingList(orders.reverse());
+    });
+  }, []);
+
+  const serveOrder = () => {};
+
   return (
     <div className="accordion" id="accordionExample">
       <div className="pending-heading">Pending Delivery</div>
-      <div className="accordion-item">
-        <h2 className="accordion-header" id="headingOne">
-          <button
-            className="accordion-button"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseOne"
-            aria-expanded="true"
-            aria-controls="collapseOne"
-          >
-            Table number 23
-            <span
-              className="status"
-              style={{ backgroundColor: "yellow", color: "grey" }}
-            >
-              pending
-            </span>
-          </button>
-        </h2>
-        <div
-          id="collapseOne"
-          className="accordion-collapse collapse"
-          aria-labelledby="headingOne"
-          data-bs-parent="#accordionExample"
-        >
-          <div className="accordion-body">
-            <ul>
-              <li>
-                <span className="item">Fried rice</span>
-                <span className="price">{formatMoney(1000)} FCFA</span>
-              </li>
-              <li>
-                <span className="item">Garri and Eru</span>
-                <span className="price">{formatMoney(1000)} FCFA</span>
-              </li>
-              <li className="mt-3 total-list">
-                <span className="total">Total price</span>
-                <span className="total-price">{formatMoney(20000)} FCFA</span>
-              </li>
-            </ul>
-            <button className="paid-btn">SERVED</button>
-          </div>
-        </div>
-      </div>
+      {pendingList
+        ? pendingList.map((order, index) => {
+            return (
+              <div className="accordion-item" key={index}>
+                <h2 className="accordion-header" id="headingOne">
+                  <button
+                    className="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne"
+                    aria-expanded="true"
+                    aria-controls="collapseOne"
+                  >
+                    Table number {order.order.table.id}
+                    <span
+                      className="status"
+                      style={{ backgroundColor: "yellow", color: "grey" }}
+                    >
+                      {order.order.state}
+                    </span>
+                  </button>
+                </h2>
+                <div
+                  id="collapseOne"
+                  className="accordion-collapse collapse"
+                  aria-labelledby="headingOne"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div className="accordion-body">
+                    <ul>
+                      {order.order.food.map((item, index) => (
+                        <li key={index}>
+                          <span className="item">{item.itemName} Plates</span>
+                          <span className="item">{item.quantity} Plates</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <button className="paid-btn" onClick={serveOrder}>
+                      SERVED
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        : "No Pending Oders"}
     </div>
   );
 };
