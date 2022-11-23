@@ -1,6 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/auth/login/Login";
+import StaffLogin from "./pages/auth/staff_login/Login";
 import Dashboard from "./pages/account/dashboard/Dashboard";
 import Settings from "./pages/account/settings/Settings";
 import Users from "./pages/account/users/Users";
@@ -42,6 +43,9 @@ function App() {
           <Route path="/staff" element={<Users />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/order_history" element={<OrderHistory />} />
+
+          {/*  STAFF LOGIN */}
+          <Route path="/staff_login" element={<StaffLogin />} />
 
           {/* ROUTES FOR WAITERS ACCOUNT */}
           <Route path="/service" element={<Tables />} />

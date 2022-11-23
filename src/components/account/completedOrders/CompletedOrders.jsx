@@ -41,12 +41,28 @@ const CompletedOrders = () => {
                     aria-controls="collapseOne"
                   >
                     Table number {order.order.table.id}
-                    <span
-                      className="status"
-                      style={{ backgroundColor: "yellow", color: "grey" }}
-                    >
-                      {order.order.state}
-                    </span>
+                    {order.order.state === "ORDERED" ? (
+                      <span
+                        className="status"
+                        style={{ backgroundColor: "yellow", color: "grey" }}
+                      >
+                        {order.order.state}
+                      </span>
+                    ) : order.order.state === "SERVED" ? (
+                      <span
+                        className="status"
+                        style={{ backgroundColor: "blue", color: "white" }}
+                      >
+                        {order.order.state}
+                      </span>
+                    ) : (
+                      <span
+                        className="status"
+                        style={{ backgroundColor: "green", color: "white" }}
+                      >
+                        {order.order.state}
+                      </span>
+                    )}
                   </button>
                 </h2>
                 <div

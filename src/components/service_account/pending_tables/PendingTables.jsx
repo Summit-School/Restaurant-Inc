@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
-import { onSnapshotGetAllTables } from "../../../api/firebase/admin.api.ts";
+import {
+  onSnapshotGetAllTables,
+  freeTable,
+} from "../../../api/firebase/admin.api.ts";
+import { toast } from "react-toastify";
 
 const PendingTables = () => {
   const [pendingList, setPendingList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     onSnapshotGetAllTables((response) => {
@@ -10,6 +15,20 @@ const PendingTables = () => {
       setPendingList(orders.reverse());
     });
   }, []);
+
+  const freeTableAction = async (order) => {
+    try {
+      const response = await freeTable(order.order);
+      if (response) {
+        setLoading(false);
+        toast.success("Table Freed");
+      }
+    } catch (error) {
+      setLoading(false);
+      toast.error("Failed");
+      console.error(error);
+    }
+  };
 
   const formatMoney = (amount) => {
     let dollarUSLocale = Intl.NumberFormat("en-US");
@@ -93,6 +112,12 @@ const PendingTables = () => {
                           </span>
                         </li>
                       </ul>
+                      <button
+                        className="paid-btn"
+                        onClick={() => freeTableAction(order)}
+                      >
+                        {loading ? "Loading..." : "Free Table"}
+                      </button>
                     </div>
                   </div>
                 </div>

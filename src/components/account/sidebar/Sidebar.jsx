@@ -70,6 +70,12 @@ const Sidebar = () => {
               </span>
               <Link to="/order_history">ORDER HISTORT</Link>
             </li>
+            <li>
+              <span className="icon">
+                <AiOutlineHistory size={35} />
+              </span>
+              <Link to="/attendance">ATTENDANCE</Link>
+            </li>
           </div>
         </div>
       </div>
