@@ -1,5 +1,5 @@
-import { collection, getFirestore, onSnapshot } from "firebase/firestore";
-import { User } from "../../interfaces/auth.interface";
+import { collection, doc, getDoc, getDocs, getFirestore, limitToLast, onSnapshot, orderBy, query, where } from "firebase/firestore";
+import { Admin, User } from "../../interfaces/auth.interface";
 
 /**
  * gets all staff depending on the type of service they provide
@@ -40,3 +40,40 @@ export const getStaffByType = (
       return;
   }
 };
+
+
+
+export const loginStaff = async (
+  phone: string,
+  password: string
+): Promise<Admin | null> => {
+
+  const staff = await getStaffInformation(phone)
+
+  if (staff) {
+    if (staff.password == password) {
+      return { email: staff.phone, password: "" };
+    }
+  }
+
+  return null;
+};
+
+
+async function getStaffInformation(phone: string): Promise<User | null> {
+
+  const possibleService = query(collection(getFirestore(), "service"), orderBy("phone"), where("phone", "==", phone), limitToLast(1));
+  const possibleCashier = query(collection(getFirestore(), "cashier"), orderBy("phone"), where("phone", "==", phone), limitToLast(1));
+  const possibleCounter = query(collection(getFirestore(), "counter"), orderBy("phone"), where("phone", "==", phone), limitToLast(1));
+  const possibleKitchen = query(collection(getFirestore(), "kitchen"), orderBy("phone"), where("phone", "==", phone), limitToLast(1));
+
+  const services = (await getDocs(possibleService)).docs.map((doc) => doc.data() as User);
+  const cashier = (await getDocs(possibleCashier)).docs.map((doc) => doc.data() as User);
+  const counter = (await getDocs(possibleCounter)).docs.map((doc) => doc.data() as User);
+  const kitchen = (await getDocs(possibleKitchen)).docs.map((doc) => doc.data() as User);
+
+  const staff = services.length > 0 ? services[0] : cashier.length > 0 ? cashier[0] : counter.length > 0 ? counter[0] : kitchen.length > 0 ? kitchen[0] : null;
+  return staff;
+
+
+}
