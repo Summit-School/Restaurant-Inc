@@ -86,7 +86,6 @@ export async function AddOrderToPending(order: Order, user: User) {
  */
 
 export async function serveOrder(order: Order, user: User) {
-  const tableOrder = await isTableOccupied(order.table.id);
 
   order.state = "SERVED";
   order.kitchen = user;
