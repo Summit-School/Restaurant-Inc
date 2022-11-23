@@ -1,8 +1,36 @@
 import Modal from "react-bootstrap/Modal";
-// import { Button } from "react-bootstrap";
-// import { useState } from "react";
+import { useState } from "react";
+import { deleteStaff } from "../../../api/firebase/auth.api.ts";
+import { toast } from "react-toastify";
 
 const DeleteKitchen = (props) => {
+  const [loading, setLoading] = useState(false);
+
+  const deleteKitchen = async () => {
+    setLoading(true);
+
+    const staffData = {
+      id: props.kitchen.id,
+      name: props.kitchen.name,
+      phone: props.kitchen.phone,
+      password: props.kitchen.password,
+    };
+
+    try {
+      const response = await deleteStaff(staffData, props.kitchen.type);
+      console.log(response);
+      if (response) {
+        toast.success("User Deleted");
+        setLoading(false);
+        props.onHide();
+      }
+    } catch (error) {
+      setLoading(false);
+      toast.error("Failed");
+      console.error(error);
+    }
+  };
+
   return (
     <Modal
       {...props}
@@ -17,10 +45,15 @@ const DeleteKitchen = (props) => {
         closeButton
       ></Modal.Header>
       <Modal.Body className="change-password-body">
-        <p>Are you sure you want to delete username</p>
+        <p>Are you sure you want to delete {props.kitchen.name}</p>
         <div className="delete-actions">
-          <button className="yes-btn">Yes</button>
-          <button className="no-btn">No</button>
+          <button className="yes-btn" onClick={deleteKitchen}>
+            {" "}
+            {loading ? "Loading..." : "Yes"}
+          </button>
+          <button className="no-btn" onClick={() => props.onHide()}>
+            No
+          </button>
         </div>
       </Modal.Body>
     </Modal>

@@ -11,7 +11,9 @@ const PendingDelivery = () => {
 
   useEffect(() => {
     onSnapshotGetAllTables((response) => {
-      let orders = response.filter((order) => order.order);
+      let orders = response.filter(
+        (order) => order.order && order.order.state === "ORDERED"
+      );
       setPendingList(orders.reverse());
     });
   }, []);

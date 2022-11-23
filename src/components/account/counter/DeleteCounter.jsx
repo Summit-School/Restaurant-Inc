@@ -3,21 +3,21 @@ import { useState } from "react";
 import { deleteStaff } from "../../../api/firebase/auth.api.ts";
 import { toast } from "react-toastify";
 
-const DeleteCashier = (props) => {
+const DeleteCounter = (props) => {
   const [loading, setLoading] = useState(false);
 
   const deleteCashier = async () => {
     setLoading(true);
 
     const staffData = {
-      id: props.cashier.id,
-      name: props.cashier.name,
-      phone: props.cashier.phone,
-      password: props.cashier.password,
+      id: props.counter.id,
+      name: props.counter.name,
+      phone: props.counter.phone,
+      password: props.counter.password,
     };
 
     try {
-      const response = await deleteStaff(staffData, props.cashier.type);
+      const response = await deleteStaff(staffData, props.counter.type);
       console.log(response);
       if (response) {
         toast.success("User Deleted");
@@ -45,7 +45,7 @@ const DeleteCashier = (props) => {
         closeButton
       ></Modal.Header>
       <Modal.Body className="change-password-body">
-        <p>Are you sure you want to delete {props.cashier.name}</p>
+        <p>Are you sure you want to delete {props.counter.name}</p>
         <div className="delete-actions">
           <button className="yes-btn" onClick={deleteCashier}>
             {" "}
@@ -60,4 +60,4 @@ const DeleteCashier = (props) => {
   );
 };
 
-export default DeleteCashier;
+export default DeleteCounter;

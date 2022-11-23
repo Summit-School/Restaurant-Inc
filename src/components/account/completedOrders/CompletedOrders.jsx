@@ -7,7 +7,7 @@ const CompletedOrders = () => {
 
   useEffect(() => {
     fetchAllOrders((response) => {
-      setPendingList(response);
+      setPendingList(response.reverse());
     });
   }, []);
 
@@ -72,6 +72,10 @@ const CompletedOrders = () => {
                   data-bs-parent="#accordionExample"
                 >
                   <div className="accordion-body">
+                    <p>
+                      Order From {order.order.service.name} on{" "}
+                      {order.order.Timestamp}
+                    </p>
                     <ul>
                       {order.order.food.map((item, index) => (
                         <li key={index}>

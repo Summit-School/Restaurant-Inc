@@ -51,6 +51,12 @@ const Sidebar = () => {
               </span>
               <Link to="/pending_tables">PENDING TABLES</Link>
             </li>
+            <li>
+              <span className="icon">
+                <AiOutlineTable size={35} />
+              </span>
+              <Link to="/served_tables">PAID ORDERS</Link>
+            </li>
           </div>
         </div>
       </div>

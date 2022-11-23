@@ -2,26 +2,26 @@ import React, { useState, useEffect } from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { RiLockPasswordFill } from "react-icons/ri";
-import UpdateCashier from "./UpdateCashier";
-import DeleteCashier from "./DeleteCashier";
+import UpdateCounter from "./UpdateCounter";
+import DeleteCounter from "./DeleteCounter";
 import { getStaffByType } from "../../../api/firebase/staff.api.ts";
 
-const Cashiers = () => {
-  const [updateCashier, setUpdateCashier] = useState("");
-  const [deleteCashier, setDeleteCashier] = useState("");
-  const [cashiers, setCashiers] = useState([]);
+const Counter = () => {
+  const [updateCounter, setUpdateCounter] = useState("");
+  const [deleteCounter, setDeleteCounter] = useState("");
+  const [counters, setCounters] = useState([]);
 
   useEffect(() => {
-    getStaffByType("CASHIER", (response) => {
-      setCashiers(response);
+    getStaffByType("COUNTER", (response) => {
+      setCounters(response);
     });
   }, []);
 
   return (
     <div className="accordion" id="accordionExample">
-      <div className="pending-heading">CASHIERS</div>
-      {cashiers.length > 0
-        ? cashiers.map((cashier, index) => (
+      <div className="pending-heading">COUNTER STAFF</div>
+      {counters.length > 0
+        ? counters.map((counter, index) => (
             <div className="accordion-item" key={index}>
               <h2 className="accordion-header" id="headingOne">
                 <button
@@ -32,7 +32,7 @@ const Cashiers = () => {
                   aria-expanded="true"
                   aria-controls="collapseOne"
                 >
-                  {cashier.name}
+                  {counter.name}
                 </button>
               </h2>
               <div
@@ -47,27 +47,27 @@ const Cashiers = () => {
                       <FaUserAlt />
                       <span> Name:</span>
                     </div>
-                    <div className="data-value">{cashier.name}</div>
+                    <div className="data-value">{counter.name}</div>
                   </div>
                   <div className="phone-number">
                     <div className="data-key">
                       <BsFillTelephoneFill />
                       <span>Phone Number:</span>
                     </div>
-                    <div className="data-value">{cashier.phone}</div>
+                    <div className="data-value">{counter.phone}</div>
                   </div>
                   <div className="password">
                     <div className="data-key">
                       <RiLockPasswordFill />
                       <span>Password:</span>
                     </div>
-                    <div className="data-value">{cashier.password}</div>
+                    <div className="data-value">{counter.password}</div>
                   </div>
                   <div className="action-btns">
                     <button
                       className="edit-btn"
                       onClick={() =>
-                        setUpdateCashier({ ...cashier, type: "CASHIER" })
+                        setUpdateCounter({ ...counter, type: "COUNTER" })
                       }
                     >
                       Edit
@@ -75,7 +75,7 @@ const Cashiers = () => {
                     <button
                       className="delete-btn"
                       onClick={() =>
-                        setDeleteCashier({ ...cashier, type: "CASHIER" })
+                        setDeleteCounter({ ...counter, type: "COUNTER" })
                       }
                     >
                       Delete
@@ -86,18 +86,18 @@ const Cashiers = () => {
             </div>
           ))
         : "No Cashiers In The System"}
-      <UpdateCashier
-        cashier={updateCashier}
-        show={!!updateCashier}
-        onHide={() => setUpdateCashier(false)}
+      <UpdateCounter
+        counter={updateCounter}
+        show={!!updateCounter}
+        onHide={() => setUpdateCounter(false)}
       />
-      <DeleteCashier
-        cashier={deleteCashier}
-        show={!!deleteCashier}
-        onHide={() => setDeleteCashier(false)}
+      <DeleteCounter
+        counter={deleteCounter}
+        show={!!deleteCounter}
+        onHide={() => setDeleteCounter(false)}
       />
     </div>
   );
 };
 
-export default Cashiers;
+export default Counter;

@@ -10,7 +10,11 @@ const PendingOrders = () => {
 
   useEffect(() => {
     onSnapshotGetAllTables((response) => {
-      let orders = response.filter((order) => order.order);
+      let orders = response.filter(
+        (order) =>
+          order.order &&
+          (order.order.state === "ORDERED") | (order.order.state === "SERVED")
+      );
       setPendingList(orders.reverse());
     });
   }, []);
@@ -26,7 +30,7 @@ const PendingOrders = () => {
       const response = await markOrderAsPaid(order.order, user);
       if (response) {
         setLoading(false);
-        toast.success("Order Paid");
+        toast.success("Order Served");
       }
     } catch (error) {
       setLoading(false);
@@ -132,12 +136,16 @@ const PendingOrders = () => {
                         </span>
                       </li>
                     </ul>
-                    <button
-                      className="paid-btn"
-                      onClick={() => confirmPay(order)}
-                    >
-                      {loading ? "Loading..." : "PAID"}
-                    </button>
+                    {order.order.state === "SERVED" ? (
+                      <button
+                        className="paid-btn"
+                        onClick={() => confirmPay(order)}
+                      >
+                        {loading ? "Loading..." : "PAID"}
+                      </button>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               </div>

@@ -1,12 +1,47 @@
-import React from "react";
 import Modal from "react-bootstrap/Modal";
 import { Button } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { editStaffInfo } from "../../../api/firebase/auth.api.ts";
+import { toast } from "react-toastify";
 
 const UpdateCashier = (props) => {
   const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, SetConfirmPassword] = useState("");
+  const [name, setName] = useState("");
+  const [number, setNumber] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (props.cashier) {
+      setName(props.cashier.name);
+      setNumber(props.cashier.phone);
+      setCurrentPassword(props.cashier.password);
+    }
+  }, [props]);
+
+  const updateUser = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const staffData = {
+      id: props.cashier.id,
+      name: name,
+      phone: number,
+      password: currentPassword,
+    };
+
+    try {
+      const response = await editStaffInfo(staffData, props.cashier.type);
+      if (response) {
+        toast.success("Update Successful");
+        setLoading(false);
+        props.onHide();
+      }
+    } catch (error) {
+      setLoading(false);
+      toast.error("Failed");
+      console.error(error);
+    }
+  };
 
   return (
     <Modal
@@ -19,7 +54,7 @@ const UpdateCashier = (props) => {
     >
       <Modal.Header className="change-password-header" closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Edit Username
+          Edit {props.cashier.name}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="change-password-body">
@@ -29,30 +64,29 @@ const UpdateCashier = (props) => {
               type="text"
               className="form-control form-control-sm"
               placeholder="Name"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
             <input
               type="number"
               className="form-control form-control-sm"
               placeholder="Phone number"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
+              value={number}
+              onChange={(e) => setNumber(e.target.value)}
             />
             <input
               type="password"
               className="form-control form-control-sm"
               placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={(e) => SetConfirmPassword(e.target.value)}
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
             />
           </div>
         </form>
       </Modal.Body>
       <Modal.Footer className="change-password-footer">
-        <Button className="modal-btn form-control-sm">
-          {/* {loading ? <Spinner /> : "Submit"} */}
-          Submit
+        <Button className="modal-btn form-control-sm" onClick={updateUser}>
+          {loading ? "Loading..." : "Submit"}
         </Button>
       </Modal.Footer>
     </Modal>

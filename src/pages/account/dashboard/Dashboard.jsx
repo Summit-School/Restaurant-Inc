@@ -6,8 +6,6 @@ import { AiOutlineTransaction } from "react-icons/ai";
 import DashboardCards from "../../../components/account/dashboardCards/DashboardCards";
 import PendingOrders from "../../../components/account/pendingOrders/PendingOrders";
 import CompletedOrders from "../../../components/account/completedOrders/CompletedOrders";
-
-import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 
 const Dashboard = () => {

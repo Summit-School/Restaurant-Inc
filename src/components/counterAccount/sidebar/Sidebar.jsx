@@ -48,7 +48,7 @@ const Sidebar = () => {
               <span className="icon">
                 <MdViewList size={35} />
               </span>
-              <Link to="/counter_orders">ORDERS</Link>
+              <Link to="/counter_orders">PAID ORDERS</Link>
             </li>
           </div>
         </div>

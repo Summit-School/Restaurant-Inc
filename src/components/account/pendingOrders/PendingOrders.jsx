@@ -1,14 +1,20 @@
 import "./PendingOrders.css";
 import { useState, useEffect } from "react";
-import { fetchAllOrders } from "../../../api/firebase/admin.api.ts";
+import { onSnapshotGetAllTables } from "../../../api/firebase/admin.api.ts";
 
 const PendingOrders = () => {
   const [pendingList, setPendingList] = useState([]);
   console.log(pendingList);
 
   useEffect(() => {
-    fetchAllOrders((response) => {
-      setPendingList(response);
+    onSnapshotGetAllTables((response) => {
+      let orders = response.filter(
+        (order) =>
+          (order.order.state === "ORDERED") | (order.order.state === "SERVED")
+      );
+
+      console.log(orders);
+      setPendingList(orders);
     });
   }, []);
   const formatMoney = (amount) => {
@@ -40,12 +46,28 @@ const PendingOrders = () => {
                     aria-controls="collapseOne"
                   >
                     Table number {order.order.table.id}
-                    <span
-                      className="status"
-                      style={{ backgroundColor: "yellow", color: "grey" }}
-                    >
-                      {order.order.state}
-                    </span>
+                    {order.order.state === "ORDERED" ? (
+                      <span
+                        className="status"
+                        style={{ backgroundColor: "yellow", color: "grey" }}
+                      >
+                        {order.order.state}
+                      </span>
+                    ) : order.order.state === "SERVED" ? (
+                      <span
+                        className="status"
+                        style={{ backgroundColor: "blue", color: "white" }}
+                      >
+                        {order.order.state}
+                      </span>
+                    ) : (
+                      <span
+                        className="status"
+                        style={{ backgroundColor: "green", color: "white" }}
+                      >
+                        {order.order.state}
+                      </span>
+                    )}
                   </button>
                 </h2>
                 <div
@@ -55,6 +77,10 @@ const PendingOrders = () => {
                   data-bs-parent="#accordionExample"
                 >
                   <div className="accordion-body">
+                    <p>
+                      Order From {order.order.service.name} on{" "}
+                      {order.order.Timestamp}
+                    </p>
                     <ul>
                       {order.order.food.map((item, index) => (
                         <li key={index}>

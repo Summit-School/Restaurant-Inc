@@ -1,19 +1,37 @@
 import { useState, useEffect } from "react";
-import { onSnapshotGetAllTables } from "../../../api/firebase/admin.api.ts";
+import {
+  onSnapshotGetAllTables,
+  freeTable,
+} from "../../../api/firebase/admin.api.ts";
+import { toast } from "react-toastify";
 
-const PendingTables = () => {
+const CompletedTables = () => {
   const [pendingList, setPendingList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     onSnapshotGetAllTables((response) => {
       let orders = response.filter(
-        (order) =>
-          order.order &&
-          (order.order.state === "ORDERED") | (order.order.state === "SERVED")
+        (order) => order.order && order.order.state === "PAID"
       );
       setPendingList(orders.reverse());
     });
   }, []);
+
+  const freeTableAction = async (order) => {
+    console.log(order.order);
+    try {
+      const response = await freeTable(order.order);
+      if (response) {
+        setLoading(false);
+        toast.success("Table Freed");
+      }
+    } catch (error) {
+      setLoading(false);
+      toast.error("Failed");
+      console.error(error);
+    }
+  };
 
   const formatMoney = (amount) => {
     let dollarUSLocale = Intl.NumberFormat("en-US");
@@ -23,8 +41,8 @@ const PendingTables = () => {
   return (
     <div className="container service-pending-tables">
       <div className="accordion" id="accordionExample">
-        <div className="pending-heading">Pending Tables</div>
-        {pendingList.length > 0
+        <div className="pending-heading">Paid Orders</div>
+        {pendingList
           ? pendingList.map((order, index) => {
               let drinkTotal = 0;
               let foodTotal = 0;
@@ -113,6 +131,12 @@ const PendingTables = () => {
                           </span>
                         </li>
                       </ul>
+                      <button
+                        className="paid-btn"
+                        onClick={() => freeTableAction(order)}
+                      >
+                        {loading ? "Loading..." : "Free Table"}
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -124,4 +148,4 @@ const PendingTables = () => {
   );
 };
 
-export default PendingTables;
+export default CompletedTables;

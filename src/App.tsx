@@ -7,9 +7,12 @@ import Settings from "./pages/account/settings/Settings";
 import Users from "./pages/account/users/Users";
 import Menu from "./pages/account/menu/Menu";
 import OrderHistory from "./pages/account/history/OrderHistory";
+
 // Import For Waiters Account
 import Tables from "./pages/service_account/tables/Tables";
 import PendingTables from "./pages/service_account/pendingTables/PendingTables";
+import ServedTables from "./pages/service_account/servedTables/ServedTables";
+
 // Import For Cashiers Account
 import CashierDashboard from "./pages/cashierAccount/dashboard/CashierDashboard";
 import PendingOrders from "./pages/cashierAccount/pendingOrders/PendingOrders";
@@ -51,6 +54,7 @@ function App() {
           <Route path="/service" element={<Tables />} />
           <Route path="/service_dashboard" element={<Tables />} />
           <Route path="/pending_tables" element={<PendingTables />} />
+          <Route path="/served_tables" element={<ServedTables />} />
 
           {/* ROUTES FOR CASHIER ACCOUNT */}
           <Route path="/cashier" element={<CashierDashboard />} />

@@ -3,17 +3,18 @@ import { Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { editStaffInfo } from "../../../api/firebase/auth.api.ts";
 import { toast } from "react-toastify";
-const UpdateKitchen = (props) => {
+
+const UpdateCounter = (props) => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (props.kitchen) {
-      setName(props.kitchen.name);
-      setNumber(props.kitchen.phone);
-      setCurrentPassword(props.kitchen.password);
+    if (props.counter) {
+      setName(props.counter.name);
+      setNumber(props.counter.phone);
+      setCurrentPassword(props.counter.password);
     }
   }, [props]);
 
@@ -22,14 +23,14 @@ const UpdateKitchen = (props) => {
     setLoading(true);
 
     const staffData = {
-      id: props.kitchen.id,
+      id: props.counter.id,
       name: name,
       phone: number,
       password: currentPassword,
     };
 
     try {
-      const response = await editStaffInfo(staffData, props.kitchen.type);
+      const response = await editStaffInfo(staffData, props.counter.type);
       if (response) {
         toast.success("Update Successful");
         setLoading(false);
@@ -53,7 +54,7 @@ const UpdateKitchen = (props) => {
     >
       <Modal.Header className="change-password-header" closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Edit {props.kitchen.name}
+          Edit {props.counter.name}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="change-password-body">
@@ -92,4 +93,4 @@ const UpdateKitchen = (props) => {
   );
 };
 
-export default UpdateKitchen;
+export default UpdateCounter;

@@ -9,13 +9,12 @@ import { getStaffByType } from "../../../api/firebase/staff.api.ts";
 
 const Waiters = () => {
   const [updateWaiter, setUpdateWaiter] = useState("");
-  const [deleteWaiter, setDeleteWaiter] = useState(false);
+  const [deleteWaiter, setDeleteWaiter] = useState("");
   const [waiters, setWaiters] = useState([]);
 
   useEffect(() => {
     getStaffByType("SERVICE", (response) => {
       setWaiters(response);
-      console.log(response);
     });
   }, []);
 

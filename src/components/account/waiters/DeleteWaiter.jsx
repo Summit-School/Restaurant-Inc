@@ -17,8 +17,6 @@ const DeleteWaiter = (props) => {
       password: props.waiter.password,
     };
 
-    console.log(staffData, props.waiter.type);
-
     try {
       const response = await deleteStaff(staffData, props.waiter.type);
       console.log(response);

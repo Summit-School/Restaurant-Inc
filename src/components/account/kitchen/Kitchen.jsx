@@ -7,8 +7,8 @@ import DeleteKitchen from "./DeleteKitchen";
 import { getStaffByType } from "../../../api/firebase/staff.api.ts";
 
 const Kitchen = () => {
-  const [updateKitchen, setUpdateKitchen] = useState(false);
-  const [deleteKitchen, setDeleteKitchen] = useState(false);
+  const [updateKitchen, setUpdateKitchen] = useState("");
+  const [deleteKitchen, setDeleteKitchen] = useState("");
   const [kitchen, setKitchen] = useState([]);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const Kitchen = () => {
 
   return (
     <div className="accordion" id="accordionExample">
-      <div className="pending-heading">KITCHEN</div>
+      <div className="pending-heading">KITCHEN STAFF</div>
       {kitchen.length > 0
         ? kitchen.map((staff, index) => (
             <div className="accordion-item" key={index}>
@@ -66,13 +66,17 @@ const Kitchen = () => {
                   <div className="action-btns">
                     <button
                       className="edit-btn"
-                      onClick={() => setUpdateKitchen(true)}
+                      onClick={() =>
+                        setUpdateKitchen({ ...staff, type: "KITCHEN" })
+                      }
                     >
                       Edit
                     </button>
                     <button
                       className="delete-btn"
-                      onClick={() => setDeleteKitchen(true)}
+                      onClick={() =>
+                        setDeleteKitchen({ ...staff, type: "KITCHEN" })
+                      }
                     >
                       Delete
                     </button>
@@ -83,11 +87,13 @@ const Kitchen = () => {
           ))
         : "No kitchen Staff In The System"}
       <UpdateKitchen
-        show={updateKitchen}
+        kitchen={updateKitchen}
+        show={!!updateKitchen}
         onHide={() => setUpdateKitchen(false)}
       />
       <DeleteKitchen
-        show={deleteKitchen}
+        kitchen={deleteKitchen}
+        show={!!deleteKitchen}
         onHide={() => setDeleteKitchen(false)}
       />
     </div>

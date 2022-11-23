@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { fetchAllOrders } from "../../../api/firebase/admin.api.ts";
 
 const OrderHistory = () => {
-  const [history] = useState([
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-  ]);
+  const [pendingList, setPendingList] = useState([]);
+
+  useEffect(() => {
+    fetchAllOrders((response) => {
+      setPendingList(response);
+    });
+  }, []);
 
   const formatMoney = (amount) => {
     let dollarUSLocale = Intl.NumberFormat("en-US");
@@ -13,50 +18,105 @@ const OrderHistory = () => {
   return (
     <div className="accordion" id="accordionExample">
       <div className="pending-heading">Order History</div>
-      {history
-        ? history.map((history_item, index) => (
-            <div key={index} className="accordion-item">
-              <h2 className="accordion-header" id="headingOne">
-                <button
-                  className="accordion-button"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseOne"
-                  aria-expanded="true"
-                  aria-controls="collapseOne"
-                >
-                  Table number 23
-                </button>
-              </h2>
-              <div
-                id="collapseOne"
-                className="accordion-collapse collapse"
-                aria-labelledby="headingOne"
-                data-bs-parent="#accordionExample"
-              >
-                <div className="accordion-body">
-                  <p>Order sent by username on timestamp</p>
-                  <ul>
-                    <li>
-                      <span className="item">Fried rice</span>
-                      <span className="price">{formatMoney(1000)} FCFA</span>
-                    </li>
-                    <li>
-                      <span className="item">Garri and Eru</span>
-                      <span className="price">{formatMoney(1000)} FCFA</span>
-                    </li>
-                    <li className="mt-3 total-list">
-                      <span className="total">Total price</span>
-                      <span className="total-price">
-                        {formatMoney(20000)} FCFA
+      {pendingList
+        ? pendingList.map((order, index) => {
+            let drinkTotal = 0;
+            let foodTotal = 0;
+            order.order.drinks.map((drink) => {
+              drinkTotal += drink.price * drink.quantity;
+            });
+            order.order.food.map((food) => {
+              foodTotal += food.price * food.quantity;
+            });
+            return (
+              <div className="accordion-item" key={index}>
+                <h2 className="accordion-header" id="headingOne">
+                  <button
+                    className="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne"
+                    aria-expanded="true"
+                    aria-controls="collapseOne"
+                  >
+                    Table number {order.order.table.id}
+                    {order.order.state === "ORDERED" ? (
+                      <span
+                        className="status"
+                        style={{ backgroundColor: "yellow", color: "grey" }}
+                      >
+                        {order.order.state}
                       </span>
-                    </li>
-                  </ul>
+                    ) : order.order.state === "SERVED" ? (
+                      <span
+                        className="status"
+                        style={{ backgroundColor: "blue", color: "white" }}
+                      >
+                        {order.order.state}
+                      </span>
+                    ) : (
+                      <span
+                        className="status"
+                        style={{ backgroundColor: "green", color: "white" }}
+                      >
+                        {order.order.state}
+                      </span>
+                    )}
+                  </button>
+                </h2>
+                <div
+                  id="collapseOne"
+                  className="accordion-collapse collapse"
+                  aria-labelledby="headingOne"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div className="accordion-body">
+                    <p>
+                      Order From {order.order.service.name} on{" "}
+                      {order.order.Timestamp}
+                    </p>
+                    <ul>
+                      {order.order.food.map((item, index) => (
+                        <li key={index}>
+                          <span className="item">{item.itemName}</span>
+                          <span className="item">{item.quantity}</span>
+                          <span className="price">
+                            {formatMoney(item.price * item.quantity)} FCFA
+                          </span>
+                        </li>
+                      ))}
+
+                      <li className="mt-3 total-list">
+                        <span className="total">Total price</span>
+                        <span className="total-price">
+                          {formatMoney(foodTotal)} FCFA
+                        </span>
+                      </li>
+                    </ul>
+
+                    <ul>
+                      {order.order.drinks.map((item, index) => (
+                        <li key={index}>
+                          <span className="item">{item.itemName}</span>
+                          <span className="item">{item.quantity}</span>
+                          <span className="price">
+                            {formatMoney(item.price * item.quantity)} FCFA
+                          </span>
+                        </li>
+                      ))}
+                      <li className="mt-3 total-list">
+                        <span className="total">Total price</span>
+                        <span className="total-price">
+                          {formatMoney(drinkTotal)} FCFA
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
-        : "<p>No History Found</p>"}
+            );
+          })
+        : "No Oders History"}
     </div>
   );
 };
