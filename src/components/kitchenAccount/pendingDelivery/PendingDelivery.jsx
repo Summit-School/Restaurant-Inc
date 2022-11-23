@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
-import { onSnapshotGetAllTables } from "../../../api/firebase/admin.api.ts";
+import {
+  onSnapshotGetAllTables,
+  serveOrder,
+} from "../../../api/firebase/admin.api.ts";
+import { toast } from "react-toastify";
 
 const PendingDelivery = () => {
   const [pendingList, setPendingList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     onSnapshotGetAllTables((response) => {
@@ -12,7 +17,25 @@ const PendingDelivery = () => {
     });
   }, []);
 
-  const serveOrder = () => {};
+  const servedOrder = async (order) => {
+    setLoading(true);
+    let user = {
+      name: "Enow Divine",
+      phone: 667241296,
+    };
+
+    try {
+      const response = await serveOrder(order.order, user);
+      if (response) {
+        setLoading(false);
+        toast.success("Order Served");
+      }
+    } catch (error) {
+      setLoading(false);
+      toast.error("Failed");
+      console.error(error);
+    }
+  };
 
   return (
     <div className="accordion" id="accordionExample">
@@ -31,12 +54,28 @@ const PendingDelivery = () => {
                     aria-controls="collapseOne"
                   >
                     Table number {order.order.table.id}
-                    <span
-                      className="status"
-                      style={{ backgroundColor: "yellow", color: "grey" }}
-                    >
-                      {order.order.state}
-                    </span>
+                    {order.order.state === "ORDERED" ? (
+                      <span
+                        className="status"
+                        style={{ backgroundColor: "yellow", color: "grey" }}
+                      >
+                        {order.order.state}
+                      </span>
+                    ) : order.order.state === "SERVED" ? (
+                      <span
+                        className="status"
+                        style={{ backgroundColor: "blue", color: "white" }}
+                      >
+                        {order.order.state}
+                      </span>
+                    ) : (
+                      <span
+                        className="status"
+                        style={{ backgroundColor: "green", color: "white" }}
+                      >
+                        {order.order.state}
+                      </span>
+                    )}
                   </button>
                 </h2>
                 <div
@@ -54,8 +93,11 @@ const PendingDelivery = () => {
                         </li>
                       ))}
                     </ul>
-                    <button className="paid-btn" onClick={serveOrder}>
-                      SERVED
+                    <button
+                      className="paid-btn"
+                      onClick={() => servedOrder(order)}
+                    >
+                      {loading ? "Loading..." : "SERVED"}
                     </button>
                   </div>
                 </div>
