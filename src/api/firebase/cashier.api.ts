@@ -22,7 +22,19 @@ export async function markOrderAsPaid(order: Order, user: User) {
   order.state = "PAID";
   order.cashier = user;
 
-  const pendingOrderRef = doc(db, "all_tables", order.table.id);
+  if (!order.id) {
+    const error = new Error();
+    error.message = " You need to provide an order with an id";
+    throw error;
+  }
 
-  return setDoc(pendingOrderRef, { id: order.table.id, order });
+  order.state = "PAID";
+  order.cashier = user;
+
+  const pendingOrderRef = doc(db, "all_tables", order.table.id);
+  const orderRef = doc(db, "all_others", order.id);
+  await setDoc(pendingOrderRef, { id: order.table.id, order });
+  await setDoc(orderRef, { id: order.id, order });
+
+  return { message: "successfully paid for order" };
 }
