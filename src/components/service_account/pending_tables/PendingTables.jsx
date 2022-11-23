@@ -7,7 +7,6 @@ const PendingTables = () => {
   useEffect(() => {
     onSnapshotGetAllTables((response) => {
       let orders = response.filter((order) => order.order);
-      console.log(orders);
       setPendingList(orders.reverse());
     });
   }, []);
