@@ -32,7 +32,7 @@ export async function markOrderAsPaid(order: Order, user: User) {
     order.cashier = user;
 
     const pendingOrderRef = doc(db, "all_tables", order.table.id);
-    const orderRef = doc(db, "all_others", order.id);
+    const orderRef = doc(db, "all_orders", order.id);
     await setDoc(pendingOrderRef, { id: order.table.id, order });
     await setDoc(orderRef, { id: order.id, order });
 
