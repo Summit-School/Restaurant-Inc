@@ -130,10 +130,11 @@ export async function freeTable(order: Order) {
   if (!tableOrder) {
     throwError({ message: "Table is not occupied" });
   }
-  const ordersRef = doc(db, "all_orders", order.table.id);
+  // const ordersRef = doc(db, "all_orders", order.id);
   const pendingOrderRef = doc(db, "all_tables", order.table.id);
-  await setDoc(ordersRef, order);
-  return setDoc({ id: order.table.id });
+  // await setDoc(ordersRef, order);
+  await setDoc({ id: order.table.id });
+  return ({ message: 'table freed' })
 }
 
 /**
