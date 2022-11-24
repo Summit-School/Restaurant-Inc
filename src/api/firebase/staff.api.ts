@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import { Admin, User } from "../../interfaces/auth.interface";
 import * as uuid from "uuid";
+import OneSignalReact from "react-onesignal";
 /**
  * gets all staff depending on the type of service they provide
  *
@@ -63,6 +64,7 @@ export const loginStaff = async (
     if (staff.password == password) {
       const id = uuid.v4();
       await setDoc(doc(getFirestore(), "attendance", id), { staff, timestamp: Date.now(), id })
+      OneSignalReact.setExternalUserId(staff.id)
       return { phone: staff.phone, password: "", id: staff.id, name: staff.name, type: staff.type };
     }
   }

@@ -66,9 +66,6 @@ const Login = () => {
             </button>
           </div>
         </form>
-        <button className="btn btn-dark" onClick={() => {
-          sendNotification({ title: "food is ready", description: "Food for table 1 is ready" })
-        }}>Notify</button>
       </div>
     </div>
   );
