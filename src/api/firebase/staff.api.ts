@@ -48,6 +48,7 @@ export const loginStaff = async (
   const staff = await getStaffInformation(phone);
 
   if (staff) {
+
     if (staff.password == password) {
       const id = uuid.v4();
       await setDoc(doc(getFirestore(), "attendance", id), { staff, timestamp: Date.now(), id })
