@@ -17,7 +17,8 @@ const Login = () => {
 
     try {
       const response = await loginAdmin(email, loginPassword);
-      if (response) {
+      if (response.email === email) {
+        localStorage.setItem("admin", JSON.stringify(response.email));
         toast.success("Login Successful");
         setLoading(false);
         navigate("/dashboard");
@@ -40,6 +41,7 @@ const Login = () => {
               className="form-control"
               type="email"
               placeholder="Email Address"
+              autoComplete="on"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -49,6 +51,7 @@ const Login = () => {
               className="form-control mt-2"
               type="password"
               placeholder="Password"
+              autoComplete="on"
               value={loginPassword}
               onChange={(e) => setLoginPassword(e.target.value)}
             />

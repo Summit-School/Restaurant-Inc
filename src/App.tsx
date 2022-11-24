@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/auth/login/Login";
-import StaffLogin from "./pages/auth/staff_login/Login";
+import StaffLogin from "./pages/auth/staffLogin/Login";
 import Dashboard from "./pages/account/dashboard/Dashboard";
 import Settings from "./pages/account/settings/Settings";
 import Users from "./pages/account/users/Users";
@@ -34,6 +34,9 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import React from "react";
 
+// routes protection
+import ProtectAdmin from "./components/protectedRoutes/ProtectRoute";
+
 function App() {
   return (
     <div className="App">
@@ -41,11 +44,46 @@ function App() {
         <Routes>
           {/* UNPROTECTED ROUTES */}
           <Route path="/" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/staff" element={<Users />} />
-          <Route path="/menu" element={<Menu />} />
-          <Route path="/order_history" element={<OrderHistory />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectAdmin>
+                <Dashboard />
+              </ProtectAdmin>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ProtectAdmin>
+                <Settings />
+              </ProtectAdmin>
+            }
+          />
+          <Route
+            path="/staff"
+            element={
+              <ProtectAdmin>
+                <Users />
+              </ProtectAdmin>
+            }
+          />
+          <Route
+            path="/menu"
+            element={
+              <ProtectAdmin>
+                <Menu />
+              </ProtectAdmin>
+            }
+          />
+          <Route
+            path="/order_history"
+            element={
+              <ProtectAdmin>
+                <OrderHistory />
+              </ProtectAdmin>
+            }
+          />
 
           {/*  STAFF LOGIN */}
           <Route path="/staff_login" element={<StaffLogin />} />

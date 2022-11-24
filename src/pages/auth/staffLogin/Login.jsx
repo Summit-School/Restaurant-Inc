@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginAdmin } from "../../../api/firebase/auth.api.ts";
+import { loginStaff } from "../../../api/firebase/staff.api.ts";
 import { toast } from "react-toastify";
 
 const Login = () => {
@@ -15,12 +15,14 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await loginAdmin(number, loginPassword);
-      if (response) {
-        toast.success("Login Successful");
-        setLoading(false);
-        navigate("/dashboard");
-      }
+      console.log(number.toString(), loginPassword);
+      const response = await loginStaff(String(number), String(loginPassword));
+      // if (response) {
+      //   toast.success("Login Successful");
+      //   setLoading(false);
+      //   navigate("/service");
+      // }
+      console.log(response);
     } catch (error) {
       setLoading(false);
       toast.error("Login Failed");
