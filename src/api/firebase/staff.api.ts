@@ -62,22 +62,18 @@ async function getStaffInformation(phone: string): Promise<User | null> {
   const possibleService = query(
     collection(getFirestore(), "service"),
     where("phone", "==", phone),
-    limitToLast(1)
   );
   const possibleCashier = query(
     collection(getFirestore(), "cashier"),
     where("phone", "==", phone),
-    limitToLast(1)
   );
   const possibleCounter = query(
     collection(getFirestore(), "counter"),
     where("phone", "==", phone),
-    limitToLast(1)
   );
   const possibleKitchen = query(
     collection(getFirestore(), "kitchen"),
     where("phone", "==", phone),
-    limitToLast(1)
   );
 
   const services = (await getDocs(possibleService)).docs.map(
