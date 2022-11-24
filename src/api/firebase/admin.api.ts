@@ -18,7 +18,7 @@ import { throwError } from "../index.ts";
 import { User } from "../../interfaces/auth.interface";
 import * as uuid from "uuid";
 
-export function addToInventory(inventory: InventoryItem) {}
+export function addToInventory(inventory: InventoryItem) { }
 
 /**
  * Gets all orders that are currently pending
@@ -130,10 +130,10 @@ export async function freeTable(order: Order) {
   if (!tableOrder) {
     throwError({ message: "Table is not occupied" });
   }
-  // const ordersRef = doc(db, "all_orders", order.id);
-  const pendingOrderRef = doc(db, "all_tables", order.table.id);
+  // const ordersRef = doc(db, "all_orders", order.id); 
+  const alltablesRef = doc(db, "all_tables", order.table.id);
   // await setDoc(ordersRef, order);
-  await setDoc({ id: order.table.id });
+  await deleteDoc(alltablesRef);
   return ({ message: 'table freed' })
 }
 
