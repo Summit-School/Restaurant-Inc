@@ -17,6 +17,7 @@ import { db } from "./index.ts";
 import { throwError } from "../index.ts";
 import { User } from "../../interfaces/auth.interface";
 import * as uuid from "uuid";
+import { sendNotification } from "../oneSignal/notifications.api";
 
 export async function markOrderAsPaid(order: Order, user: User) {
   order.state = "PAID";
@@ -35,6 +36,8 @@ export async function markOrderAsPaid(order: Order, user: User) {
   const orderRef = doc(db, "all_orders", order.id);
   await setDoc(pendingOrderRef, { id: order.table.id, order });
   await setDoc(orderRef, { id: order.id, order });
+
+  await sendNotification({ title: "order paid", description: `Table ${order.table.id}'s order has been paid` })
 
   return { message: "successfully paid for order" };
 }

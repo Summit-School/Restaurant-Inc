@@ -25,5 +25,5 @@ export async function sendNotification(notification: { title: string, descriptio
         },
     };
 
-    axios.post(options.url, body, { headers: options.headers })
+    return axios.post(options.url, body, { headers: options.headers })
 }

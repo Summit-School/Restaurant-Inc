@@ -17,6 +17,7 @@ import { db } from "./index.ts";
 import { throwError } from "../index.ts";
 import { User } from "../../interfaces/auth.interface";
 import * as uuid from "uuid";
+import { sendNotification } from "../oneSignal/notifications.api"
 
 export function addToInventory(inventory: InventoryItem) { }
 
@@ -73,7 +74,11 @@ export async function AddOrderToPending(order: Order, user: User) {
 
   const pendingOrderRef = doc(db, "all_tables", order.table.id);
 
-  return setDoc(pendingOrderRef, { id: order.table.id, order });
+
+  await setDoc(pendingOrderRef, { id: order.table.id, order });
+  await sendNotification({ title: "placed order", description: `An order has just been added to table ${order.table.id}` })
+
+  return { message: "successfully placed order" }
 }
 
 
@@ -92,7 +97,11 @@ export async function serveOrder(order: Order, user: User) {
 
   const pendingOrderRef = doc(db, "all_tables", order.table.id);
 
-  return setDoc(pendingOrderRef, { id: order.table.id, order });
+  await setDoc(pendingOrderRef, { id: order.table.id, order });
+  await sendNotification({ title: "served order", description: `Table ${order.table.id} has just been served` })
+
+  return { message: "successfully served order" };
+
 }
 
 
@@ -134,6 +143,8 @@ export async function freeTable(order: Order) {
   const alltablesRef = doc(db, "all_tables", order.table.id);
   // await setDoc(ordersRef, order);
   await setDoc(alltablesRef, { id: order.table.id });
+  await sendNotification({ title: "Table Freed", description: `Table ${order.table.id} has just been freed` })
+
   return ({ message: 'table freed' })
 }
 
