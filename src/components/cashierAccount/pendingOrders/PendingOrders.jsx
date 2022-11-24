@@ -49,6 +49,15 @@ const PendingOrders = () => {
     return dollarUSLocale.format(amount);
   };
 
+  const PrintReceipt = () => {
+    //console.log('print');
+    let printContents = document.getElementById("printablediv").innerHTML;
+    let originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+  };
+
   return (
     <div className="accordion" id="accordionExample">
       <div className="pending-heading">Pending Orders</div>
@@ -104,17 +113,19 @@ const PendingOrders = () => {
                   aria-labelledby="headingOne"
                   data-bs-parent="#accordionExample"
                 >
-                  <div className="accordion-body">
+                  <div id="printablediv" className="accordion-body">
                     <ul>
-                      {order.order.food.map((item, index) => (
-                        <li key={index}>
-                          <span className="item">{item.itemName}</span>
-                          <span className="item">{item.quantity}</span>
-                          <span className="price">
-                            {formatMoney(item.price * item.quantity)} FCFA
-                          </span>
-                        </li>
-                      ))}
+                      {order.order.food.length > 0
+                        ? order.order.food.map((item, index) => (
+                            <li key={index}>
+                              <span className="item">{item.itemName}</span>
+                              <span className="item">{item.quantity}</span>
+                              <span className="price">
+                                {formatMoney(item.price * item.quantity)} FCFA
+                              </span>
+                            </li>
+                          ))
+                        : "No Order Made"}
 
                       <li className="mt-3 total-list">
                         <span className="total">Total price</span>
@@ -125,15 +136,17 @@ const PendingOrders = () => {
                     </ul>
 
                     <ul>
-                      {order.order.drinks.map((item, index) => (
-                        <li key={index}>
-                          <span className="item">{item.itemName}</span>
-                          <span className="item">{item.quantity}</span>
-                          <span className="price">
-                            {formatMoney(item.price * item.quantity)} FCFA
-                          </span>
-                        </li>
-                      ))}
+                      {order.order.drinks.length > 0
+                        ? order.order.drinks.map((item, index) => (
+                            <li key={index}>
+                              <span className="item">{item.itemName}</span>
+                              <span className="item">{item.quantity}</span>
+                              <span className="price">
+                                {formatMoney(item.price * item.quantity)} FCFA
+                              </span>
+                            </li>
+                          ))
+                        : "No Order Made"}
                       <li className="mt-3 total-list">
                         <span className="total">Total price</span>
                         <span className="total-price">
@@ -151,6 +164,9 @@ const PendingOrders = () => {
                     ) : (
                       ""
                     )}
+                    <button className="paid-btn m-2" onClick={PrintReceipt}>
+                      PRINT
+                    </button>
                   </div>
                 </div>
               </div>
