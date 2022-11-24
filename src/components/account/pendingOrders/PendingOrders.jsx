@@ -5,25 +5,23 @@ import { onSnapshotGetAllTables } from "../../../api/firebase/admin.api.ts";
 
 const PendingOrders = () => {
   const [pendingList, setPendingList] = useState([]);
-  console.log(pendingList);
 
   useEffect(() => {
     onSnapshotGetAllTables((response) => {
-      console.log(response);
       let orders = response.filter(
         (order) =>
           order.order &&
           (order.order.state === "ORDERED") | (order.order.state === "SERVED")
       );
-
-      console.log(orders);
       setPendingList(orders);
     });
   }, []);
+
   const formatMoney = (amount) => {
     let dollarUSLocale = Intl.NumberFormat("en-US");
     return dollarUSLocale.format(amount);
   };
+
   return (
     <div className="accordion" id="accordionExample">
       <div className="pending-heading">Pending Orders</div>
