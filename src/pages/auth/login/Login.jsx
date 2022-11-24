@@ -1,9 +1,9 @@
 import "./Login.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginAdmin } from "../../../api/firebase/auth.api.ts";
 import { toast } from "react-toastify";
-import { sendNotification } from "../../../api/oneSignal/notifications.api.ts";
+import { onSnapshotGetAttendance } from "../../../api/firebase/admin.api.ts";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -11,6 +11,12 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    onSnapshotGetAttendance((response) => {
+      console.log(response);
+    });
+  }, []);
 
   const loginFunction = async (e) => {
     e.preventDefault();

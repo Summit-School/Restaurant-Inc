@@ -1,4 +1,5 @@
 import {
+  Attendance,
   InventoryItem,
   MenuItem,
   Order,
@@ -15,9 +16,10 @@ import {
 } from "firebase/firestore";
 import { db } from "./index.ts";
 import { throwError } from "../index.ts";
-import { User } from "../../interfaces/auth.interface";
+import { Admin, User } from "../../interfaces/auth.interface";
 import * as uuid from "uuid";
 import { sendNotification } from "../oneSignal/notifications.api.ts";
+import { loginAdmin } from "./auth.api.ts";
 
 export function addToInventory(inventory: InventoryItem) {}
 
@@ -198,4 +200,31 @@ export async function onSnapshotGetAllTables(
   onSnapshot(tablesRef, (res) => {
     onSuccess(res.docs.map((doc) => doc.data() as Table));
   });
+}
+
+export async function onSnapshotGetAttendance(
+  onSuccess: (attendance: Attendance[]) => void
+) {
+  const attendanceRef = collection(db, "attendance");
+  onSnapshot(attendanceRef, (res) => {
+    onSuccess([...res.docs.map((doc) => doc.data() as Attendance)]);
+  });
+}
+
+export async function changeAdminPassword(
+  email: string,
+  oldPassword: string,
+  newPassword: string
+): Promise<Admin> {
+  const admin = await loginAdmin(email, oldPassword);
+
+  if (admin) {
+    const adminRef = doc(db, "admin", admin.email);
+    await setDoc(adminRef, admin);
+    return admin;
+  }
+
+  const error = new Error();
+  error.message = "Can't change admin password ";
+  throw error;
 }

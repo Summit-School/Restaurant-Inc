@@ -2,14 +2,40 @@ import "./UpdatePassword.css";
 import Modal from "react-bootstrap/Modal";
 import { Button } from "react-bootstrap";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { changeAdminPassword } from "../../../api/firebase/admin.api.ts";
 
 const UpdatePassword = (props) => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, SetConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const passwordChangeHandle = (e) => {
-    console.log("updatePassword");
+  const passwordChangeHandle = async (e) => {
+    setLoading(true);
+    if (newPassword != confirmPassword) {
+      setLoading(false);
+      return toast.error("New passwords do not match");
+    }
+
+    const user = await JSON.parse(localStorage.getItem("admin"));
+    console.log(user);
+    try {
+      const response = await changeAdminPassword(
+        user,
+        currentPassword,
+        newPassword
+      );
+      if (response) {
+        toast.success("Password changed successfully");
+        console.log(response);
+        setLoading(false);
+      }
+    } catch (error) {
+      setLoading(false);
+      toast.error("Failed");
+      console.error(error);
+    }
   };
 
   return (
@@ -58,8 +84,7 @@ const UpdatePassword = (props) => {
           className="modal-btn form-control-sm"
           onClick={passwordChangeHandle}
         >
-          {/* {loading ? <Spinner /> : "Submit"} */}
-          Submit
+          {loading ? "Loading..." : "Submit"}
         </Button>
       </Modal.Footer>
     </Modal>
