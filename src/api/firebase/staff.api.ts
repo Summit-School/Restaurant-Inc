@@ -14,6 +14,7 @@ import {
 import { Admin, User } from "../../interfaces/auth.interface";
 import * as uuid from "uuid";
 import OneSignalReact from "react-onesignal";
+import { TYPE } from "react-toastify/dist/utils";
 /**
  * gets all staff depending on the type of service they provide
  *
@@ -46,6 +47,38 @@ export const getStaffByType = (
         callBack(res.docs.map((doc) => doc.data() as User));
       });
       return;
+
+    default:
+      const error = new Error();
+      error.message = "Unknown type: " + type;
+      return;
+  }
+};
+
+
+
+export const getStaffById = (
+  id: string,
+  type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"
+) => {
+  switch (type) {
+    case "SERVICE":
+      return getDoc(doc(getFirestore(), "service")).then((doc) => {
+        return doc.data() as User
+      });
+
+    case "CASHIER":
+      return getDoc(doc(getFirestore(), "cashier")).then((doc) => {
+        return doc.data() as User
+      });
+    case "KITCHEN":
+      return getDoc(doc(getFirestore(), "kitchen")).then((doc) => {
+        return doc.data() as User;
+      });
+    case "COUNTER":
+      return getDoc(doc(getFirestore(), "counter")).then((doc) => {
+        return doc.data() as User;
+      });
 
     default:
       const error = new Error();
@@ -114,4 +147,21 @@ async function getStaffInformation(phone: string): Promise<User | null> {
             ? kitchen[0]
             : null;
   return staff;
+}
+
+
+
+
+
+
+async function updateStaffInformation(staffInfo: User, type: "SERVICE" | "KITCHEN" | "CASHIER" | "COUNTER") {
+  const staff = await getStaffById(staffInfo.id, type);
+  if (!staff) {
+    const error = new Error();
+    error.message = "Sorry but the staff does not exist"
+    throw error;
+  }
+  await setDoc(doc(getFirestore(), type.toLowerCase(), staffInfo.id), staffInfo);
+  return staffInfo;
+
 }
