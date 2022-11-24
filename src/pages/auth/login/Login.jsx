@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginAdmin } from "../../../api/firebase/auth.api.ts";
 import { toast } from "react-toastify";
+import { sendNotification } from "../../../api/oneSignal/notifications.api.ts";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -65,6 +66,9 @@ const Login = () => {
             </button>
           </div>
         </form>
+        <button className="btn btn-dark" onClick={() => {
+          sendNotification({ title: "food is ready", description: "Food for table 1 is ready" })
+        }}>Notify</button>
       </div>
     </div>
   );

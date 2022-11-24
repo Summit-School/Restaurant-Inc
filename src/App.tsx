@@ -40,9 +40,11 @@ import ProtectAdmin from "./components/protectedRoutes/ProtectAdmin";
 
 function App() {
   useEffect(() => {
-    OneSignal.init({
-      appId: "f1137cf2-0598-4989-bc86-4f6e34a44242"
-    });
+    // OneSignal.init({
+    //   appId: "f1137cf2-0598-4989-bc86-4f6e34a44242",
+
+    // });
+
   }, []);
   return (
     <div className="App">

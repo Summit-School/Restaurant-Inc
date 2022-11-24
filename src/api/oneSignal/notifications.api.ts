@@ -1,4 +1,3 @@
-import OneSignalReact from "react-onesignal";
 import axios from "axios"
 
 
@@ -7,6 +6,8 @@ export async function sendNotification(notification: { title: string, descriptio
     const body = {
         "app_id": "f1137cf2-0598-4989-bc86-4f6e34a44242",
         // "include_external_user_ids": [receiver.email],
+        included_segments: ["Subscribed Users"],
+
         "data": {
             notification
         },
