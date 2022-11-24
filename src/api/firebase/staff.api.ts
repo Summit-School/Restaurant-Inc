@@ -81,7 +81,7 @@ async function getStaffInformation(phone: string): Promise<User | null> {
   );
 
   const services = (await getDocs(possibleService)).docs.map(
-    (doc) => doc.data() as User;
+    (doc) => doc.data() as User
   );
   const cashier = (await getDocs(possibleCashier)).docs.map(
     (doc) => doc.data() as User
