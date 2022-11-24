@@ -17,7 +17,7 @@ import { db } from "./index.ts";
 import { throwError } from "../index.ts";
 import { User } from "../../interfaces/auth.interface";
 import * as uuid from "uuid";
-import { sendNotification } from "../oneSignal/notifications.api";
+import { sendNotification } from "../oneSignal/notifications.api.ts";
 
 export async function markOrderAsPaid(order: Order, user: User) {
   order.state = "PAID";
