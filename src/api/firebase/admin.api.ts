@@ -64,6 +64,7 @@ export async function AddOrderToPending(order: Order, user: User) {
     const error = new Error();
     error.message = "Table is already occupied please free table before placing order";
     throw error;
+
   }
 
   order.id = uuid.v4();
@@ -136,7 +137,7 @@ export async function isTableOccupied(tableId: string): Promise<Order | null> {
 export async function freeTable(order: Order) {
   const tableOrder = await isTableOccupied(order.table.id);
   if (!tableOrder) {
-    throwError({ message: "Table is not occupied" });
+    return throwError({ message: "Table is not occupied" });
   }
   // const ordersRef = doc(db, "all_orders", order.id); 
   const alltablesRef = doc(db, "all_tables", order.table.id);
