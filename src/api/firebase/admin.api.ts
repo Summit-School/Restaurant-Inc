@@ -133,7 +133,7 @@ export async function freeTable(order: Order) {
   // const ordersRef = doc(db, "all_orders", order.id); 
   const alltablesRef = doc(db, "all_tables", order.table.id);
   // await setDoc(ordersRef, order);
-  await deleteDoc(alltablesRef);
+  await setDoc(alltablesRef, { id: order.table.id });
   return ({ message: 'table freed' })
 }
 
