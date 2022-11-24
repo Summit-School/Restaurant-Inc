@@ -63,24 +63,26 @@ const Menu = (props) => {
     return dollarUSLocale.format(amount);
   };
 
-  const submitOrder = () => {
+  const submitOrder = async () => {
     setLoading(true);
+    const user = await JSON.parse(localStorage.getItem("service"));
+
     let order = {
       table: { id: props.tablenumber },
       food: [],
       drinks: [],
     };
 
-    let user = {
-      name: "Enow Divine",
-      phone: 667241296,
+    let userData = {
+      name: user.name,
+      phone: user.phone,
     };
 
     order.food = menuList.filter((menu) => menu.quantity > 0);
     order.drinks = drinksList.filter((drink) => drink.quantity > 0);
     console.log(order);
     try {
-      const response = AddOrderToPending(order, user);
+      const response = await AddOrderToPending(order, userData);
       if (response) {
         toast.success("Order Sent");
         setLoading(false);

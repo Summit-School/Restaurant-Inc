@@ -17,9 +17,9 @@ import { db } from "./index.ts";
 import { throwError } from "../index.ts";
 import { User } from "../../interfaces/auth.interface";
 import * as uuid from "uuid";
-import { sendNotification } from "../oneSignal/notifications.api.ts"
+import { sendNotification } from "../oneSignal/notifications.api.ts";
 
-export function addToInventory(inventory: InventoryItem) { }
+export function addToInventory(inventory: InventoryItem) {}
 
 /**
  * Gets all orders that are currently pending
@@ -62,54 +62,48 @@ export async function AddOrderToPending(order: Order, user: User) {
   const tableOrder = await isTableOccupied(order.table.id);
   if (tableOrder) {
     const error = new Error();
-    error.message = "Table is already occupied please free table before placing order";
+    error.message =
+      "Table is already occupied please free table before placing order";
     throw error;
-
   }
 
   order.id = uuid.v4();
   order.state = "ORDERED";
   order.service = user;
-  order.timestamp = Date.now()
+  order.timestamp = Date.now();
 
   const pendingOrderRef = doc(db, "all_tables", order.table.id);
 
-
   await setDoc(pendingOrderRef, { id: order.table.id, order });
-  await sendNotification({ title: "placed order", description: `An order has just been added to table ${order.table.id}` })
+  await sendNotification({
+    title: "placed order",
+    description: `An order has just been added to table ${order.table.id}`,
+  });
 
-  return { message: "successfully placed order" }
+  return { message: "successfully placed order" };
 }
-
-
 
 /**
  * Get adds an order for a table
  *
  * @param order - an order that is to be added
- * @param user - the staff to add the order 
+ * @param user - the staff to add the order
  */
 
 export async function serveOrder(order: Order, user: User) {
-
   order.state = "SERVED";
   order.kitchen = user;
 
   const pendingOrderRef = doc(db, "all_tables", order.table.id);
 
   await setDoc(pendingOrderRef, { id: order.table.id, order });
-  await sendNotification({ title: "served order", description: `Table ${order.table.id} has just been served` })
+  await sendNotification({
+    title: "served order",
+    description: `Table ${order.table.id} has just been served`,
+  });
 
   return { message: "successfully served order" };
-
 }
-
-
-
-
-
-
-
 
 /**
  * verifies if a particular table is occupied
@@ -139,13 +133,16 @@ export async function freeTable(order: Order) {
   if (!tableOrder) {
     return throwError({ message: "Table is not occupied" });
   }
-  // const ordersRef = doc(db, "all_orders", order.id); 
+  // const ordersRef = doc(db, "all_orders", order.id);
   const alltablesRef = doc(db, "all_tables", order.table.id);
   // await setDoc(ordersRef, order);
   await setDoc(alltablesRef, { id: order.table.id });
-  await sendNotification({ title: "Table Freed", description: `Table ${order.table.id} has just been freed` })
+  await sendNotification({
+    title: "Table Freed",
+    description: `Table ${order.table.id} has just been freed`,
+  });
 
-  return ({ message: 'table freed' })
+  return { message: "table freed" };
 }
 
 /**

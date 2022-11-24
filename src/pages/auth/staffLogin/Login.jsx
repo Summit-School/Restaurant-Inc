@@ -15,12 +15,41 @@ const Login = () => {
     setLoading(true);
 
     try {
-      console.log(number, loginPassword);
       const response = await loginStaff(number, loginPassword);
       if (response) {
         toast.success("Login Successful");
-        setLoading(false);
-        navigate("/service");
+        if (response.type === "CASHIER") {
+          localStorage.setItem(
+            "cashier",
+            JSON.stringify(response.name, response.phone, response.type)
+          );
+          setLoading(false);
+          navigate("/cashier");
+        }
+        if (response.type === "SERVICE") {
+          localStorage.setItem(
+            "service",
+            JSON.stringify(response.name, response.phone, response.type)
+          );
+          setLoading(false);
+          navigate("/service");
+        }
+        if (response.type === "KITCHEN") {
+          localStorage.setItem(
+            "kitchen",
+            JSON.stringify(response.name, response.phone, response.type)
+          );
+          setLoading(false);
+          navigate("/kitchen");
+        }
+        if (response.type === "COUNTER") {
+          localStorage.setItem(
+            "counter",
+            JSON.stringify(response.name, response.phone, response.type)
+          );
+          setLoading(false);
+          navigate("/counter");
+        }
       }
       console.log(response);
     } catch (error) {

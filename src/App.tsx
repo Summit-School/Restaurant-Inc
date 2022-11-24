@@ -33,18 +33,20 @@ import PageError from "./pages/404/PageError";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import React, { useEffect } from "react";
-import OneSignal from 'react-onesignal'
+import OneSignal from "react-onesignal";
 
 // routes protection
 import ProtectAdmin from "./components/protectedRoutes/ProtectAdmin";
+import ProtectCashier from "./components/protectedRoutes/ProtectCashier";
+import ProtectCounter from "./components/protectedRoutes/ProtectCounter";
+import ProtectService from "./components/protectedRoutes/ProtectService";
+import ProtectKitchen from "./components/protectedRoutes/ProtectKitchen";
 
 function App() {
   useEffect(() => {
     // OneSignal.init({
     //   appId: "f1137cf2-0598-4989-bc86-4f6e34a44242",
-
     // });
-
   }, []);
   return (
     <div className="App">
@@ -97,24 +99,108 @@ function App() {
           <Route path="/staff_login" element={<StaffLogin />} />
 
           {/* ROUTES FOR WAITERS ACCOUNT */}
-          <Route path="/service" element={<Tables />} />
-          <Route path="/service_dashboard" element={<Tables />} />
-          <Route path="/pending_tables" element={<PendingTables />} />
-          <Route path="/served_tables" element={<ServedTables />} />
+          <Route
+            path="/service"
+            element={
+              <ProtectService>
+                <Tables />
+              </ProtectService>
+            }
+          />
+          <Route
+            path="/service_dashboard"
+            element={
+              <ProtectService>
+                <Tables />
+              </ProtectService>
+            }
+          />
+          <Route
+            path="/pending_tables"
+            element={
+              <ProtectService>
+                <PendingTables />
+              </ProtectService>
+            }
+          />
+          <Route
+            path="/served_tables"
+            element={
+              <ProtectService>
+                <ServedTables />
+              </ProtectService>
+            }
+          />
 
           {/* ROUTES FOR CASHIER ACCOUNT */}
-          <Route path="/cashier" element={<CashierDashboard />} />
-          <Route path="/pending_orders" element={<PendingOrders />} />
-          <Route path="/completed_orders" element={<PaidOrders />} />
+          <Route
+            path="/cashier"
+            element={
+              <ProtectCashier>
+                <CashierDashboard />
+              </ProtectCashier>
+            }
+          />
+          <Route
+            path="/pending_orders"
+            element={
+              <ProtectCashier>
+                <PendingOrders />
+              </ProtectCashier>
+            }
+          />
+          <Route
+            path="/completed_orders"
+            element={
+              <ProtectCashier>
+                <PaidOrders />
+              </ProtectCashier>
+            }
+          />
 
           {/* ROUTES FOR KITCHEN ACCOUNT */}
-          <Route path="/kitchen" element={<KitchenDashboard />} />
-          <Route path="/pending_delivery" element={<PendingDelivery />} />
-          <Route path="/served" element={<Served />} />
+          <Route
+            path="/kitchen"
+            element={
+              <ProtectKitchen>
+                <KitchenDashboard />
+              </ProtectKitchen>
+            }
+          />
+          <Route
+            path="/pending_delivery"
+            element={
+              <ProtectKitchen>
+                <PendingDelivery />
+              </ProtectKitchen>
+            }
+          />
+          <Route
+            path="/served"
+            element={
+              <ProtectKitchen>
+                <Served />
+              </ProtectKitchen>
+            }
+          />
 
           {/* ROUTES FOR COUNTER ACCOUNT */}
-          <Route path="/counter" element={<CounterDashboard />} />
-          <Route path="/counter_orders" element={<ServedDrinks />} />
+          <Route
+            path="/counter"
+            element={
+              <ProtectCounter>
+                <CounterDashboard />
+              </ProtectCounter>
+            }
+          />
+          <Route
+            path="/counter_orders"
+            element={
+              <ProtectCounter>
+                <ServedDrinks />
+              </ProtectCounter>
+            }
+          />
 
           {/* 404 ROUTE */}
           <Route path="*" element={<PageError />} />

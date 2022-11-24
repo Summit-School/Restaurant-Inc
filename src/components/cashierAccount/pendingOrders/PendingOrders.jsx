@@ -21,13 +21,15 @@ const PendingOrders = () => {
 
   const confirmPay = async (order) => {
     setLoading(true);
-    let user = {
-      name: "Enow Divine",
-      phone: 667241296,
+    const user = await JSON.parse(localStorage.getItem("service"));
+
+    let userData = {
+      name: user.name,
+      phone: user.phone,
     };
 
     try {
-      const response = await markOrderAsPaid(order.order, user);
+      const response = await markOrderAsPaid(order.order, userData);
       if (response) {
         setLoading(false);
         toast.success("Order Served");
