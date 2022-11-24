@@ -44,14 +44,14 @@ export const getStaffByType = (
 export const loginStaff = async (
   phone: string,
   password: string
-): Promise<Admin | null> => {
+): Promise<User | null> => {
   const staff = await getStaffInformation(phone);
 
   if (staff) {
     if (staff.password == password) {
       const id = uuid.v4();
       await setDoc(doc(getFirestore(), "attendance", id), { staff, timestamp: Date.now(), id })
-      return { email: staff.phone, password: "" };
+      return { phone: staff.phone, password: "", id: staff.id, name: staff.name };
     }
   }
 
