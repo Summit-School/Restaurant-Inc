@@ -3,15 +3,18 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { GoSignOut } from "react-icons/go";
 import UpdatePassword from "../updatePassword/UpdatePassword";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const Profile = () => {
   const [changePassword, setChangePassword] = useState(false);
-  const handleLogout = (e) => {
-    e.preventDefault();
 
-    console.lgo("logout");
+  const navigate = useNavigate();
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    await localStorage.removeItem("admin");
+    navigate("/");
   };
 
   return (

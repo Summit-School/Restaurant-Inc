@@ -15,8 +15,8 @@ const Login = () => {
     setLoading(true);
 
     try {
-      console.log(number.toString(), loginPassword);
-      const response = await loginStaff(String(number), String(loginPassword));
+      console.log(number, loginPassword);
+      const response = await loginStaff(number, loginPassword);
       // if (response) {
       //   toast.success("Login Successful");
       //   setLoading(false);

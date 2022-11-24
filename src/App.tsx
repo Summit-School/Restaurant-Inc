@@ -35,7 +35,7 @@ import "react-toastify/dist/ReactToastify.css";
 import React from "react";
 
 // routes protection
-import ProtectAdmin from "./components/protectedRoutes/ProtectRoute";
+import ProtectAdmin from "./components/protectedRoutes/ProtectAdmin";
 
 function App() {
   return (

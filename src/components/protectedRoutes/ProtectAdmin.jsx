@@ -20,8 +20,5 @@ const ProtectStaff = ({ children }) => {
   return <>{children}</>;
 };
 
-const allRoutes = {
-  ProtectAdmin,
-  ProtectStaff,
-};
-export default allRoutes;
+export default ProtectAdmin;
+// export default ProtectStaff
