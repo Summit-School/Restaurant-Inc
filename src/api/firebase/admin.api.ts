@@ -222,7 +222,7 @@ export async function changeAdminPassword(email: string, oldPassword: string, ne
 
   if (admin) {
     const adminRef = doc(db, "admin", admin.email);
-    await setDoc(adminRef, admin);
+    await setDoc(adminRef, { email: admin.email, password: newPassword });
     return admin;
   }
 
