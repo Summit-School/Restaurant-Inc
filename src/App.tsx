@@ -32,9 +32,15 @@ import PageError from "./pages/404/PageError";
 // bringing in the toastify for it to work everywhere
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import React from "react";
+import React, { useEffect } from "react";
+import OneSignal from 'react-onesignal'
 
 function App() {
+  useEffect(() => {
+    OneSignal.init({
+      appId: "f1137cf2-0598-4989-bc86-4f6e34a44242"
+    });
+  }, []);
   return (
     <div className="App">
       <Router>
