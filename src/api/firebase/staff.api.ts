@@ -100,6 +100,11 @@ export const loginStaff = async (
       OneSignalReact.setExternalUserId(staff.id)
       return { phone: staff.phone, password: "", id: staff.id, name: staff.name, type: staff.type };
     }
+    else {
+      const error = new Error()
+      error.message = "Password is incorrect"
+      throw error;
+    }
   }
 
   return null;

@@ -61,10 +61,9 @@ export function fetchAllOrders(callBack: (orders: Order[]) => void) {
 export async function AddOrderToPending(order: Order, user: User) {
   const tableOrder = await isTableOccupied(order.table.id);
   if (tableOrder) {
-    throwError({
-      message:
-        "Table is already occupied please free table before placing order",
-    });
+    const error = new Error();
+    error.message = "Table is already occupied please free table before placing order";
+    throw error;
   }
 
   order.id = uuid.v4();

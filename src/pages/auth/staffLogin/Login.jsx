@@ -17,11 +17,11 @@ const Login = () => {
     try {
       console.log(number, loginPassword);
       const response = await loginStaff(number, loginPassword);
-      // if (response) {
-      //   toast.success("Login Successful");
-      //   setLoading(false);
-      //   navigate("/service");
-      // }
+      if (response) {
+        toast.success("Login Successful");
+        setLoading(false);
+        navigate("/service");
+      }
       console.log(response);
     } catch (error) {
       setLoading(false);
