@@ -7,6 +7,7 @@ import Settings from "./pages/account/settings/Settings";
 import Users from "./pages/account/users/Users";
 import Menu from "./pages/account/menu/Menu";
 import OrderHistory from "./pages/account/history/OrderHistory";
+import Attendance from "./pages/account/attendance/Attendance";
 
 // Import For Waiters Account
 import Tables from "./pages/service_account/tables/Tables";
@@ -91,6 +92,14 @@ function App() {
             element={
               <ProtectAdmin>
                 <OrderHistory />
+              </ProtectAdmin>
+            }
+          />
+          <Route
+            path="/attendance"
+            element={
+              <ProtectAdmin>
+                <Attendance />
               </ProtectAdmin>
             }
           />

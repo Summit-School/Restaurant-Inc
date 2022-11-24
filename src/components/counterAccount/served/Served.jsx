@@ -13,10 +13,6 @@ const Served = () => {
     });
   }, []);
 
-  const formatMoney = (amount) => {
-    let dollarUSLocale = Intl.NumberFormat("en-US");
-    return dollarUSLocale.format(amount);
-  };
   return (
     <div className="accordion" id="accordionExample">
       <div className="pending-heading">Served</div>
@@ -80,7 +76,7 @@ const Served = () => {
               </div>
             );
           })
-        : "No Pending Oders"}
+        : "No Served Oders"}
     </div>
   );
 };

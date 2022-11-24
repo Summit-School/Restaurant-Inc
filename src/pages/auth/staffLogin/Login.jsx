@@ -19,34 +19,42 @@ const Login = () => {
       if (response) {
         toast.success("Login Successful");
         if (response.type === "CASHIER") {
-          localStorage.setItem(
-            "cashier",
-            JSON.stringify(response.name, response.phone, response.type)
-          );
+          let cashier = {
+            name: response.name,
+            phone: response.phone,
+            type: response.type,
+          };
+          localStorage.setItem("cashier", JSON.stringify(cashier));
           setLoading(false);
           navigate("/cashier");
         }
         if (response.type === "SERVICE") {
-          localStorage.setItem(
-            "service",
-            JSON.stringify(response.name, response.phone, response.type)
-          );
+          let service = {
+            name: response.name,
+            phone: response.phone,
+            type: response.type,
+          };
+          localStorage.setItem("service", JSON.stringify(service));
           setLoading(false);
           navigate("/service");
         }
         if (response.type === "KITCHEN") {
-          localStorage.setItem(
-            "kitchen",
-            JSON.stringify(response.name, response.phone, response.type)
-          );
+          let kitchen = {
+            name: response.name,
+            phone: response.phone,
+            type: response.type,
+          };
+          localStorage.setItem("kitchen", JSON.stringify(kitchen));
           setLoading(false);
           navigate("/kitchen");
         }
         if (response.type === "COUNTER") {
-          localStorage.setItem(
-            "counter",
-            JSON.stringify(response.name, response.phone, response.type)
-          );
+          let counter = {
+            name: response.name,
+            phone: response.phone,
+            type: response.type,
+          };
+          localStorage.setItem("counter", JSON.stringify(counter));
           setLoading(false);
           navigate("/counter");
         }

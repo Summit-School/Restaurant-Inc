@@ -1,5 +1,6 @@
 import "./CompletedOrders.css";
 import { useState, useEffect } from "react";
+import Moment from "react-moment";
 import { fetchAllOrders } from "../../../api/firebase/admin.api.ts";
 
 const CompletedOrders = () => {
@@ -74,7 +75,9 @@ const CompletedOrders = () => {
                   <div className="accordion-body">
                     <p>
                       Order From {order.order.service.name} on{" "}
-                      {order.order.Timestamp}
+                      <Moment format="HH:mm - DD:MM:YYYY ">
+                        {order.order.timestamp}
+                      </Moment>
                     </p>
                     <ul>
                       {order.order.food.map((item, index) => (

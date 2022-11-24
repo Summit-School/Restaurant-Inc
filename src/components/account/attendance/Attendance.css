@@ -1,0 +1,16 @@
+.key {
+    font-weight: bold;
+}
+
+.card-wrapper {
+    padding: 20px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    background-color: white;
+}
+
+.attendance-title {
+    font-weight: bold;
+    font-size: 22px;
+    margin: 40px 0 20px 0;
+}
