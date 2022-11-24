@@ -2,7 +2,8 @@ export interface User {
     id: string;
     name: string,
     phone: string,
-    password: string
+    password: string,
+    type?: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"
 }
 
 export interface Admin {

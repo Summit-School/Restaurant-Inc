@@ -56,7 +56,7 @@ export const getStaffByType = (
 export const loginStaff = async (
   phone: string,
   password: string
-): Promise<Admin | null> => {
+): Promise<User | null> => {
   const staff = await getStaffInformation(phone);
 
   if (staff) {
@@ -67,7 +67,12 @@ export const loginStaff = async (
         timestamp: Date.now(),
         id,
       });
-      return { email: staff.phone, password: "" };
+      return {
+        phone: staff.phone,
+        password: "",
+        id: staff.id,
+        name: staff.name,
+      };
     }
   }
 
@@ -77,19 +82,19 @@ export const loginStaff = async (
 async function getStaffInformation(phone: string): Promise<User | null> {
   const possibleService = query(
     collection(getFirestore(), "service"),
-    where("phone", "==", phone),
+    where("phone", "==", phone)
   );
   const possibleCashier = query(
     collection(getFirestore(), "cashier"),
-    where("phone", "==", phone),
+    where("phone", "==", phone)
   );
   const possibleCounter = query(
     collection(getFirestore(), "counter"),
-    where("phone", "==", phone),
+    where("phone", "==", phone)
   );
   const possibleKitchen = query(
     collection(getFirestore(), "kitchen"),
-    where("phone", "==", phone),
+    where("phone", "==", phone)
   );
 
   const services = (await getDocs(possibleService)).docs.map(
