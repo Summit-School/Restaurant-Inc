@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Print = (props) => {
   const [drinkTotal, setDrinkTotal] = useState(0);
   const [foodTotal, setFoodTotal] = useState(0);
-  const [foodList, setFoodList] = useState([]);
-  const [drinksList, setDrinksList] = useState([]);
   const [printDetails, setPrintDetails] = useState();
+  console.log(printDetails);
+
   const location = useLocation();
 
   const PrintReceipt = () => {
@@ -26,14 +26,28 @@ const Print = (props) => {
     if (location.state) {
       const details = location.state.details;
       setPrintDetails(details);
+
+      let drinksSum = 0;
+      let foodSum = 0;
+
+      details.order.food.map((food, index) => {
+        drinksSum += food.price * food.quantity;
+      });
+
+      details.order.drinks.map((drink, index) => {
+        foodSum += drink.price * drink.quantity;
+      });
+
+      setDrinkTotal(drinksSum);
+      setFoodTotal(foodSum);
     }
   }, [location]);
 
   return (
     <div>
       <ul>
-        {/* {props.order.order.food.length > 0
-          ? props.order.order.food.map((item, index) => (
+        {printDetails.order.food.length > 0
+          ? printDetails.order.food.map((item, index) => (
               <li key={index}>
                 <span className="item">{item.itemName}</span>
                 <span className="item">{item.quantity}</span>
@@ -42,7 +56,7 @@ const Print = (props) => {
                 </span>
               </li>
             ))
-          : "No Orders On Food Made"} */}
+          : "No Orders On Food Made"}
 
         <li className="mt-3 total-list">
           <span className="total">Total price</span>
