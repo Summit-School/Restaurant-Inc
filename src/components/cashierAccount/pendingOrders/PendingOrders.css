@@ -6,3 +6,13 @@
     padding: 5px 20px;
     font-weight: bold;
 }
+
+/* @media print {
+    body * {
+        display: none;
+    }
+
+    body #printablediv, body #printablediv * {
+        display: block;
+    }
+} */

@@ -18,6 +18,7 @@ import ServedTables from "./pages/service_account/servedTables/ServedTables";
 import CashierDashboard from "./pages/cashierAccount/dashboard/CashierDashboard";
 import PendingOrders from "./pages/cashierAccount/pendingOrders/PendingOrders";
 import PaidOrders from "./pages/cashierAccount/paidOrders/PaidOrders";
+import Print from "./pages/cashierAccount/printReceipt/Print";
 
 // Import For Kitchen Account
 import KitchenDashboard from "./pages/kitchenAccount/dashboard/KitchenDashboard";
@@ -163,6 +164,14 @@ function App() {
             element={
               <ProtectCashier>
                 <PaidOrders />
+              </ProtectCashier>
+            }
+          />
+          <Route
+            path="/print"
+            element={
+              <ProtectCashier>
+                <Print />
               </ProtectCashier>
             }
           />

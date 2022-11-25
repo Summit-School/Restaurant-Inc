@@ -2,11 +2,16 @@ import "./PendingOrders.css";
 import { useState, useEffect } from "react";
 import { onSnapshotGetAllTables } from "../../../api/firebase/admin.api.ts";
 import { markOrderAsPaid } from "../../../api/firebase/cashier.api.ts";
+import Print from "../printReceipt/Print";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const PendingOrders = () => {
   const [pendingList, setPendingList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [print, setPrint] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     onSnapshotGetAllTables((response) => {
@@ -22,14 +27,11 @@ const PendingOrders = () => {
   const confirmPay = async (order) => {
     setLoading(true);
     const user = await JSON.parse(localStorage.getItem("cashier"));
-    console.log(user);
 
     let userData = {
       name: user.name,
       phone: user.phone,
     };
-
-    console.log(userData);
 
     try {
       const response = await markOrderAsPaid(order.order, userData);
@@ -43,19 +45,14 @@ const PendingOrders = () => {
       console.error(error);
     }
   };
+  const PrintAction = async (printDetails) => {
+    await setPrint(printDetails);
+    navigate("/print");
+  };
 
   const formatMoney = (amount) => {
     let dollarUSLocale = Intl.NumberFormat("en-US");
     return dollarUSLocale.format(amount);
-  };
-
-  const PrintReceipt = () => {
-    //console.log('print');
-    let printContents = document.getElementById("printablediv").innerHTML;
-    let originalContents = document.body.innerHTML;
-    document.body.innerHTML = printContents;
-    window.print();
-    document.body.innerHTML = originalContents;
   };
 
   return (
@@ -164,15 +161,22 @@ const PendingOrders = () => {
                     ) : (
                       ""
                     )}
-                    <button className="paid-btn m-2" onClick={PrintReceipt}>
-                      PRINT
-                    </button>
                   </div>
+
+                  <button
+                    className="paid-btn m-2"
+                    onClick={() =>
+                      PrintAction({ order, drinkTotal, foodTotal })
+                    }
+                  >
+                    PRINT
+                  </button>
                 </div>
               </div>
             );
           })
         : "No Pending Oders"}
+      <Print order={print} />
     </div>
   );
 };
