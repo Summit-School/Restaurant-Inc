@@ -47,7 +47,7 @@ const PendingOrders = () => {
   };
   const PrintAction = async (printDetails) => {
     await setPrint(printDetails);
-    navigate("/print");
+    navigate("/print", { details: printDetails });
   };
 
   const formatMoney = (amount) => {
@@ -60,121 +60,121 @@ const PendingOrders = () => {
       <div className="pending-heading">Pending Orders</div>
       {pendingList
         ? pendingList.map((order, index) => {
-            let drinkTotal = 0;
-            let foodTotal = 0;
-            order.order.drinks.map((drink) => {
-              drinkTotal += drink.price * drink.quantity;
-            });
-            order.order.food.map((food) => {
-              foodTotal += food.price * food.quantity;
-            });
-            return (
-              <div className="accordion-item" key={index}>
-                <h2 className="accordion-header" id="headingOne">
-                  <button
-                    className="accordion-button"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapseOne"
-                    aria-expanded="true"
-                    aria-controls="collapseOne"
-                  >
-                    Table number {order.order.table.id}
-                    {order.order.state === "ORDERED" ? (
-                      <span
-                        className="status"
-                        style={{ backgroundColor: "yellow", color: "grey" }}
-                      >
-                        {order.order.state}
-                      </span>
-                    ) : order.order.state === "SERVED" ? (
-                      <span
-                        className="status"
-                        style={{ backgroundColor: "blue", color: "white" }}
-                      >
-                        {order.order.state}
-                      </span>
-                    ) : (
-                      <span
-                        className="status"
-                        style={{ backgroundColor: "green", color: "white" }}
-                      >
-                        {order.order.state}
-                      </span>
-                    )}
-                  </button>
-                </h2>
-                <div
-                  id="collapseOne"
-                  className="accordion-collapse collapse"
-                  aria-labelledby="headingOne"
-                  data-bs-parent="#accordionExample"
+          let drinkTotal = 0;
+          let foodTotal = 0;
+          order.order.drinks.map((drink) => {
+            drinkTotal += drink.price * drink.quantity;
+          });
+          order.order.food.map((food) => {
+            foodTotal += food.price * food.quantity;
+          });
+          return (
+            <div className="accordion-item" key={index}>
+              <h2 className="accordion-header" id="headingOne">
+                <button
+                  className="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne"
+                  aria-expanded="true"
+                  aria-controls="collapseOne"
                 >
-                  <div id="printablediv" className="accordion-body">
-                    <ul>
-                      {order.order.food.length > 0
-                        ? order.order.food.map((item, index) => (
-                            <li key={index}>
-                              <span className="item">{item.itemName}</span>
-                              <span className="item">{item.quantity}</span>
-                              <span className="price">
-                                {formatMoney(item.price * item.quantity)} FCFA
-                              </span>
-                            </li>
-                          ))
-                        : "No Order Made"}
+                  Table number {order.order.table.id}
+                  {order.order.state === "ORDERED" ? (
+                    <span
+                      className="status"
+                      style={{ backgroundColor: "yellow", color: "grey" }}
+                    >
+                      {order.order.state}
+                    </span>
+                  ) : order.order.state === "SERVED" ? (
+                    <span
+                      className="status"
+                      style={{ backgroundColor: "blue", color: "white" }}
+                    >
+                      {order.order.state}
+                    </span>
+                  ) : (
+                    <span
+                      className="status"
+                      style={{ backgroundColor: "green", color: "white" }}
+                    >
+                      {order.order.state}
+                    </span>
+                  )}
+                </button>
+              </h2>
+              <div
+                id="collapseOne"
+                className="accordion-collapse collapse"
+                aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample"
+              >
+                <div id="printablediv" className="accordion-body">
+                  <ul>
+                    {order.order.food.length > 0
+                      ? order.order.food.map((item, index) => (
+                        <li key={index}>
+                          <span className="item">{item.itemName}</span>
+                          <span className="item">{item.quantity}</span>
+                          <span className="price">
+                            {formatMoney(item.price * item.quantity)} FCFA
+                          </span>
+                        </li>
+                      ))
+                      : "No Order Made"}
 
-                      <li className="mt-3 total-list">
-                        <span className="total">Total price</span>
-                        <span className="total-price">
-                          {formatMoney(foodTotal)} FCFA
-                        </span>
-                      </li>
-                    </ul>
+                    <li className="mt-3 total-list">
+                      <span className="total">Total price</span>
+                      <span className="total-price">
+                        {formatMoney(foodTotal)} FCFA
+                      </span>
+                    </li>
+                  </ul>
 
-                    <ul>
-                      {order.order.drinks.length > 0
-                        ? order.order.drinks.map((item, index) => (
-                            <li key={index}>
-                              <span className="item">{item.itemName}</span>
-                              <span className="item">{item.quantity}</span>
-                              <span className="price">
-                                {formatMoney(item.price * item.quantity)} FCFA
-                              </span>
-                            </li>
-                          ))
-                        : "No Order Made"}
-                      <li className="mt-3 total-list">
-                        <span className="total">Total price</span>
-                        <span className="total-price">
-                          {formatMoney(drinkTotal)} FCFA
-                        </span>
-                      </li>
-                    </ul>
-                    {order.order.state === "SERVED" ? (
-                      <button
-                        className="paid-btn"
-                        onClick={() => confirmPay(order)}
-                      >
-                        {loading ? "Loading..." : "PAID"}
-                      </button>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-
-                  <button
-                    className="paid-btn m-2"
-                    onClick={() =>
-                      PrintAction({ order, drinkTotal, foodTotal })
-                    }
-                  >
-                    PRINT
-                  </button>
+                  <ul>
+                    {order.order.drinks.length > 0
+                      ? order.order.drinks.map((item, index) => (
+                        <li key={index}>
+                          <span className="item">{item.itemName}</span>
+                          <span className="item">{item.quantity}</span>
+                          <span className="price">
+                            {formatMoney(item.price * item.quantity)} FCFA
+                          </span>
+                        </li>
+                      ))
+                      : "No Order Made"}
+                    <li className="mt-3 total-list">
+                      <span className="total">Total price</span>
+                      <span className="total-price">
+                        {formatMoney(drinkTotal)} FCFA
+                      </span>
+                    </li>
+                  </ul>
+                  {order.order.state === "SERVED" ? (
+                    <button
+                      className="paid-btn"
+                      onClick={() => confirmPay(order)}
+                    >
+                      {loading ? "Loading..." : "PAID"}
+                    </button>
+                  ) : (
+                    ""
+                  )}
                 </div>
+
+                <button
+                  className="paid-btn m-2"
+                  onClick={() =>
+                    PrintAction({ order, drinkTotal, foodTotal })
+                  }
+                >
+                  PRINT
+                </button>
               </div>
-            );
-          })
+            </div>
+          );
+        })
         : "No Pending Oders"}
       <Print order={print} />
     </div>

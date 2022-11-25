@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const Print = (props) => {
   const [drinkTotal, setDrinkTotal] = useState(0);
   const [foodTotal, setFoodTotal] = useState(0);
+  const [foodList, setFoodList] = useState([]);
+  const [drinksList, setDrinksList] = useState([]);
+  const [printDetails, setPrintDetails] = useState();
+  const location = useLocation();
 
   const PrintReceipt = () => {
     let printContents = document.getElementById("printablediv").innerHTML;
@@ -16,6 +21,13 @@ const Print = (props) => {
     let dollarUSLocale = Intl.NumberFormat("en-US");
     return dollarUSLocale.format(amount);
   };
+
+  useEffect(() => {
+    if (location.state) {
+      const details = location.state.details;
+      setPrintDetails(details);
+    }
+  }, [location]);
 
   return (
     <div>
