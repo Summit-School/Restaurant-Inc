@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Print = (props) => {
-  console.log(props.order.order);
   const [drinkTotal, setDrinkTotal] = useState(0);
   const [foodTotal, setFoodTotal] = useState(0);
-  const [foodList, setFoodList] = useState([]);
-  const [drinksList, setDrinksList] = useState([]);
   const [printDetails, setPrintDetails] = useState()
+
   const location = useLocation()
 
   const PrintReceipt = () => {
@@ -27,6 +25,22 @@ const Print = (props) => {
     if (location.state) {
       const details = location.state.details
       setPrintDetails(details)
+
+      let drinksSum = 0;
+      let foodSum = 0;
+
+
+      details.order.food.map((food, index) => {
+        drinksSum += food.price * food.quantity
+      })
+
+      details.order.drinks.map((drink, index) => {
+        foodSum += drink.price * drink.quantity
+      })
+
+      setDrinkTotal(drinksSum)
+      setFoodTotal(foodSum)
+
     }
   }, [location])
 
