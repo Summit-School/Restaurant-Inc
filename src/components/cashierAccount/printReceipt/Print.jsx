@@ -5,6 +5,8 @@ const Print = (props) => {
   const [drinkTotal, setDrinkTotal] = useState(0);
   const [foodTotal, setFoodTotal] = useState(0);
   const [printDetails, setPrintDetails] = useState()
+  const [drinks, setDrinks] = useState([])
+  const [food, setFood] = useState([])
 
   const location = useLocation()
 
@@ -31,12 +33,15 @@ const Print = (props) => {
 
 
       details.order.food.map((food, index) => {
-        drinksSum += food.price * food.quantity
+        foodSum += food.price * food.quantity
       })
 
       details.order.drinks.map((drink, index) => {
-        foodSum += drink.price * drink.quantity
+        drinksSum += drink.price * drink.quantity
       })
+
+      setDrinks(details.order.drinks)
+      setFood(details.order.food)
 
       setDrinkTotal(drinksSum)
       setFoodTotal(foodSum)
@@ -48,17 +53,17 @@ const Print = (props) => {
   return (
     <div>
       <ul>
-        {/* {props.order.order.food.length > 0
-          ? props.order.order.food.map((item, index) => (
-              <li key={index}>
-                <span className="item">{item.itemName}</span>
-                <span className="item">{item.quantity}</span>
-                <span className="price">
-                  {formatMoney(item.price * item.quantity)} FCFA
-                </span>
-              </li>
-            ))
-          : "No Orders On Food Made"} */}
+        {food.length > 0
+          ? food.map((item, index) => (
+            <li key={index}>
+              <span className="item">{item.itemName}</span>
+              <span className="item">{item.quantity}</span>
+              <span className="price">
+                {formatMoney(item.price * item.quantity)} FCFA
+              </span>
+            </li>
+          ))
+          : "No Orders On Food Made"}
 
         <li className="mt-3 total-list">
           <span className="total">Total price</span>
@@ -66,17 +71,17 @@ const Print = (props) => {
         </li>
       </ul>
       <ul>
-        {/* {props.order.order.drinks.length > 0
-          ? props.order.order.drinks.map((item, index) => (
-              <li key={index}>
-                <span className="item">{item.itemName}</span>
-                <span className="item">{item.quantity}</span>
-                <span className="price">
-                  {formatMoney(item.price * item.quantity)} FCFA
-                </span>
-              </li>
-            ))
-          : "No Order On Drinks Made"} */}
+        {drinks.length > 0
+          ? drinks.map((item, index) => (
+            <li key={index}>
+              <span className="item">{item.itemName}</span>
+              <span className="item">{item.quantity}</span>
+              <span className="price">
+                {formatMoney(item.price * item.quantity)} FCFA
+              </span>
+            </li>
+          ))
+          : "No Order On Drinks Made"}
         <li className="mt-3 total-list">
           <span className="total">Total price</span>
           <span className="total-price">{formatMoney(drinkTotal)} FCFA</span>
