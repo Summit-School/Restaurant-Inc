@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 const Print = (props) => {
-  console.log(props.order.order);
   const [drinkTotal, setDrinkTotal] = useState(0);
   const [foodTotal, setFoodTotal] = useState(0);
-  const [foodList, setFoodList] = useState([]);
-  const [drinksList, setDrinksList] = useState([]);
 
   const PrintReceipt = () => {
     let printContents = document.getElementById("printablediv").innerHTML;
