@@ -1,3 +1,4 @@
+import "./Print.css";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -5,7 +6,8 @@ const Print = (props) => {
   const [drinkTotal, setDrinkTotal] = useState(0);
   const [foodTotal, setFoodTotal] = useState(0);
   const [printDetails, setPrintDetails] = useState();
-  console.log(printDetails);
+  const [drinks, setDrinks] = useState([]);
+  const [food, setFood] = useState([]);
 
   const location = useLocation();
 
@@ -31,12 +33,18 @@ const Print = (props) => {
       let foodSum = 0;
 
       details.order.food.map((food, index) => {
-        drinksSum += food.price * food.quantity;
+        foodSum += food.price * food.quantity;
       });
 
       details.order.drinks.map((drink, index) => {
-        foodSum += drink.price * drink.quantity;
+        drinksSum += drink.price * drink.quantity;
       });
+
+      setDrinks(details.order.drinks);
+      setFood(details.order.food);
+
+      setDrinkTotal(drinksSum);
+      setFoodTotal(foodSum);
 
       setDrinkTotal(drinksSum);
       setFoodTotal(foodSum);
@@ -45,42 +53,67 @@ const Print = (props) => {
 
   return (
     <div>
-      <ul>
-        {printDetails.order.food.length > 0
-          ? printDetails.order.food.map((item, index) => (
-              <li key={index}>
-                <span className="item">{item.itemName}</span>
-                <span className="item">{item.quantity}</span>
-                <span className="price">
-                  {formatMoney(item.price * item.quantity)} FCFA
-                </span>
-              </li>
-            ))
-          : "No Orders On Food Made"}
+      <div id="printablediv">
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>Food</th>
+              <th>Quantity</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody className="foodlist">
+            {food.length > 0
+              ? food.map((item, index) => (
+                  <tr key={index}>
+                    <td className="item">{item.itemName}</td>
+                    <td className="item">{item.quantity}</td>
+                    <td className="price">
+                      {formatMoney(item.price * item.quantity)} FCFA
+                    </td>
+                  </tr>
+                ))
+              : "No Orders On Food Made"}
 
-        <li className="mt-3 total-list">
-          <span className="total">Total price</span>
-          <span className="total-price">{formatMoney(foodTotal)} FCFA</span>
-        </li>
-      </ul>
-      <ul>
-        {/* {props.order.order.drinks.length > 0
-          ? props.order.order.drinks.map((item, index) => (
-              <li key={index}>
-                <span className="item">{item.itemName}</span>
-                <span className="item">{item.quantity}</span>
-                <span className="price">
-                  {formatMoney(item.price * item.quantity)} FCFA
-                </span>
-              </li>
-            ))
-          : "No Order On Drinks Made"} */}
-        <li className="mt-3 total-list">
-          <span className="total">Total price</span>
-          <span className="total-price">{formatMoney(drinkTotal)} FCFA</span>
-        </li>
-      </ul>
-      <button to="/print">print</button>
+            <tr className="total-list">
+              <td className="total">Total price</td>
+              <td className="total-price">{formatMoney(foodTotal)} FCFA</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table className="table table-striped table-two">
+          <thead>
+            <tr>
+              <th>Drink</th>
+              <th>Quantity</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody className="drinklist">
+            {drinks.length > 0
+              ? drinks.map((item, index) => (
+                  <tr key={index}>
+                    <td className="item">{item.itemName}</td>
+                    <td className="item">{item.quantity}</td>
+                    <td className="price">
+                      {formatMoney(item.price * item.quantity)} FCFA
+                    </td>
+                  </tr>
+                ))
+              : "No Order On Drinks Made"}
+            <tr className="total-list">
+              <td className="total">Total price</td>
+              <td className="total-price">{formatMoney(drinkTotal)} FCFA</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div className="print-btn-div">
+        <button className="print-btn" onClick={PrintReceipt}>
+          print
+        </button>
+      </div>
     </div>
   );
 };
