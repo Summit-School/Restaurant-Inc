@@ -5,6 +5,7 @@ import { markOrderAsPaid } from "../../../api/firebase/cashier.api.ts";
 import Print from "../printReceipt/Print";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Accordion from "react-bootstrap/Accordion";
 
 const PendingOrders = () => {
   const [pendingList, setPendingList] = useState([]);
@@ -76,7 +77,7 @@ const PendingOrders = () => {
                     className="accordion-button"
                     type="button"
                     data-bs-toggle="collapse"
-                    data-bs-target="#collapseOne"
+                    data-bs-target={`#collapseOne${index}`}
                     aria-expanded="true"
                     aria-controls="collapseOne"
                   >
@@ -106,7 +107,7 @@ const PendingOrders = () => {
                   </button>
                 </h2>
                 <div
-                  id="collapseOne"
+                  id={`collapseOne${index}`}
                   className="accordion-collapse collapse"
                   aria-labelledby="headingOne"
                   data-bs-parent="#accordionExample"

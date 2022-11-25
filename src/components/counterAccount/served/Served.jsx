@@ -25,7 +25,7 @@ const Served = () => {
                     className="accordion-button"
                     type="button"
                     data-bs-toggle="collapse"
-                    data-bs-target="#collapseOne"
+                    data-bs-target={`#collapseOne${index}`}
                     aria-expanded="true"
                     aria-controls="collapseOne"
                   >
@@ -55,7 +55,7 @@ const Served = () => {
                   </button>
                 </h2>
                 <div
-                  id="collapseOne"
+                  id={`collapseOne${index}`}
                   className="accordion-collapse collapse"
                   aria-labelledby="headingOne"
                   data-bs-parent="#accordionExample"
