@@ -29,7 +29,7 @@ const Waiters = () => {
                   className="accordion-button"
                   type="button"
                   data-bs-toggle="collapse"
-                  data-bs-target={`#collapseOne${index}`}
+                  data-bs-target={`#collapseWaiter${index}`}
                   aria-expanded="true"
                   aria-controls="collapseOne"
                 >
@@ -37,7 +37,7 @@ const Waiters = () => {
                 </button>
               </h2>
               <div
-                id={`collapseOne${index}`}
+                id={`collapseWaiter${index}`}
                 className="accordion-collapse collapse"
                 aria-labelledby="headingOne"
                 data-bs-parent="#accordionExample"

@@ -70,7 +70,7 @@ const Login = () => {
     <div className="login-wrapper">
       <div className="login-form-wrapper">
         <div className="logo">
-          <img src="/images/logo.jpg" alt="" />
+          <img src="/images/logo.jpeg" alt="" />
         </div>
         <form>
           <div className="email-div">

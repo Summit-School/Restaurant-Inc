@@ -19,7 +19,7 @@ const Profile = () => {
             <span>Kitchen Account</span>
             <img
               className="thumbnail-image"
-              src="/images/logo.jpg"
+              src="/images/logo.jpeg"
               alt="user pic"
             />
           </div>

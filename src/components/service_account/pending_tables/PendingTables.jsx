@@ -5,10 +5,14 @@ const PendingTables = () => {
   const [pendingList, setPendingList] = useState([]);
 
   useEffect(() => {
+    const cashier = JSON.parse(localStorage.getItem("cashier"));
     onSnapshotGetAllTables((response) => {
+      console.log(response);
+      console.log(cashier.phone);
       let orders = response.filter(
         (order) =>
           order.order &&
+          order.order.service.phone === cashier.phone &&
           (order.order.state === "ORDERED") | (order.order.state === "SERVED")
       );
       setPendingList(orders.reverse());
@@ -46,6 +50,7 @@ const PendingTables = () => {
                       aria-controls="collapseOne"
                     >
                       Table number {order.order.table.id}
+                      {order.order.service.phone}
                       {order.order.state === "ORDERED" ? (
                         <span
                           className="status"

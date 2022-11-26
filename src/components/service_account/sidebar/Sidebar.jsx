@@ -26,7 +26,7 @@ const Sidebar = () => {
         <div className="offcanvas-header">
           <h5 className="offcanvas-title" id="offcanvasExampleLabel">
             <div>
-              <img src="/images/logo.jpg" className="logo" alt="logo" />
+              <img src="/images/logo.jpeg" className="logo" alt="logo" />
               <h5>CHEFF FOOD</h5>
             </div>
           </h5>

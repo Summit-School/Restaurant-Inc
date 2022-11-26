@@ -28,7 +28,7 @@ const Kitchen = () => {
                   className="accordion-button"
                   type="button"
                   data-bs-toggle="collapse"
-                  data-bs-target={`#collapseOne${index}`}
+                  data-bs-target={`#collapseKitchen${index}`}
                   aria-expanded="true"
                   aria-controls="collapseOne"
                 >
@@ -36,7 +36,7 @@ const Kitchen = () => {
                 </button>
               </h2>
               <div
-                id={`collapseOne${index}`}
+                id={`collapseKitchen${index}`}
                 className="accordion-collapse collapse"
                 aria-labelledby="headingOne"
                 data-bs-parent="#accordionExample"

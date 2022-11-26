@@ -28,7 +28,7 @@ const Counter = () => {
                   className="accordion-button"
                   type="button"
                   data-bs-toggle="collapse"
-                  data-bs-target={`#collapseOne${index}`}
+                  data-bs-target={`#collapseCounter${index}`}
                   aria-expanded="true"
                   aria-controls="collapseOne"
                 >
@@ -36,7 +36,7 @@ const Counter = () => {
                 </button>
               </h2>
               <div
-                id={`collapseOne${index}`}
+                id={`collapseCounter${index}`}
                 className="accordion-collapse collapse"
                 aria-labelledby="headingOne"
                 data-bs-parent="#accordionExample"
