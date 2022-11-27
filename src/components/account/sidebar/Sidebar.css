@@ -1,5 +1,6 @@
 .logo {
     width: 50px;
+    border-radius: 10px;
 }
 
 .offcanvas {
@@ -21,6 +22,7 @@
 .sidebar-body {
     width: 100%;
     background-color: white;
+    padding-left: 20px;
 }
 
 .offcanvas-title div {
@@ -35,6 +37,7 @@
 
 .sidebar-body li {
     width: 100%;
+    padding: 0 20px;
     text-align: left;
     list-style: none;
     font-weight: bold;
@@ -43,14 +46,14 @@
 }
 
 .sidebar-body li:hover {
-    background-color: whitesmoke;
-    border-left: 4px solid darkblue;
+    background-color: lightgrey;
+    border-radius: 10px;
 }
 
 .icon {
-    color: darkblue;
+    color: black;
     float: left;
-    margin: 20px 5px 0 0;
+    margin: 17px 15px 0 0;
 }
 
 .sidebar-body li a {
@@ -58,4 +61,8 @@
     text-decoration: none;
     color: black;
     padding: 20px 0;
+}
+
+.sidebar-body li a:hover {
+    color: white;
 }

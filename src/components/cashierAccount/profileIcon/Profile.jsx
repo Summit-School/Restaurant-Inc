@@ -1,4 +1,4 @@
-import "./Profile.css";
+// import "./Profile.css";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { GoSignOut } from "react-icons/go";
 import { Link, useNavigate } from "react-router-dom";

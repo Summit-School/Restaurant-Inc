@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { HiMenuAlt1 } from "react-icons/hi";
 import { MdDashboard } from "react-icons/md";
 import { AiOutlineTable } from "react-icons/ai";
-import "./Sidebar.css";
+// import "./Sidebar.css";
 
 const Sidebar = () => {
   return (

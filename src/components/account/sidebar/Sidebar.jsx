@@ -42,37 +42,37 @@ const Sidebar = () => {
           <div className="sidebar-body">
             <li>
               <span className="icon">
-                <MdDashboard size={35} />
+                <MdDashboard size={28} />
               </span>
               <Link to="/dashboard">DASHBOARD</Link>
             </li>
             <li>
               <span className="icon">
-                <FaUsers size={35} />
+                <FaUsers size={28} />
               </span>
               <Link to="/staff">STAFF</Link>
             </li>
             <li>
               <span className="icon">
-                <FaListAlt size={35} />
+                <FaListAlt size={28} />
               </span>
               <Link to="/menu">MENU</Link>
             </li>
             <li>
               <span className="icon">
-                <AiFillSetting size={35} />
+                <AiFillSetting size={28} />
               </span>
               <Link to="/settings">SETTINGS</Link>
             </li>
             <li>
               <span className="icon">
-                <AiOutlineHistory size={35} />
+                <AiOutlineHistory size={28} />
               </span>
               <Link to="/order_history">ORDER HISTORT</Link>
             </li>
             <li>
               <span className="icon">
-                <AiOutlineHistory size={35} />
+                <AiOutlineHistory size={28} />
               </span>
               <Link to="/attendance">ATTENDANCE</Link>
             </li>

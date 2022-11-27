@@ -37,7 +37,7 @@ const CompletedOrders = () => {
                     className="accordion-button"
                     type="button"
                     data-bs-toggle="collapse"
-                    data-bs-target={`#collapseOne${index}`}
+                    data-bs-target={`#collapseAdminCompleted${index}`}
                     aria-expanded="true"
                     aria-controls="collapseOne"
                   >
@@ -67,7 +67,7 @@ const CompletedOrders = () => {
                   </button>
                 </h2>
                 <div
-                  id={`collapseOne${index}`}
+                  id={`collapseAdminCompleted${index}`}
                   className="accordion-collapse collapse"
                   aria-labelledby="headingOne"
                   data-bs-parent="#accordionExample"

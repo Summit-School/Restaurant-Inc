@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { HiMenuAlt1 } from "react-icons/hi";
 import { MdDashboard, MdViewList } from "react-icons/md";
-import "./Sidebar.css";
+// import "./Sidebar.css";
 
 const Sidebar = () => {
   return (
