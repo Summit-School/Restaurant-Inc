@@ -5,7 +5,6 @@ import { markOrderAsPaid } from "../../../api/firebase/cashier.api.ts";
 import Print from "../printReceipt/Print";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import Accordion from "react-bootstrap/Accordion";
 
 const PendingOrders = () => {
   const [pendingList, setPendingList] = useState([]);

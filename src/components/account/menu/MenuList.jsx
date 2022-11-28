@@ -31,7 +31,7 @@ const MenuList = () => {
     try {
       const response = await changeDisableState(item.id, disable);
       if (response) {
-        toast.success("Item Disabled");
+        toast.success("Item Disabled state changed");
       }
     } catch (error) {
       toast.error("Failed");
@@ -118,12 +118,25 @@ const MenuList = () => {
                       >
                         Edit
                       </button>
-                      <button
-                        className="disable-btn"
-                        onClick={() => disableItem(item)}
-                      >
-                        {item.disabled === true ? "Enable" : "Disable"}
-                      </button>
+
+                      {item.disabled === true ? (
+                        <button
+                          className="disable-btn"
+                          style={{ backgroundColor: "orange" }}
+                          onClick={() => disableItem(item)}
+                        >
+                          Enable
+                        </button>
+                      ) : (
+                        <button
+                          className="disable-btn"
+                          style={{ backgroundColor: "blue" }}
+                          onClick={() => disableItem(item)}
+                        >
+                          Disable
+                        </button>
+                      )}
+
                       <button
                         className="delete-btn"
                         onClick={() => setDeleteItem(item)}

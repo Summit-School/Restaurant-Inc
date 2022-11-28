@@ -15,8 +15,12 @@ const Menu = (props) => {
 
   useEffect(() => {
     onSnapshotFetchMenuItems((response) => {
-      setMenulist(response.food);
-      setDrinksist(response.drinks);
+      let foodList = response.food.filter((food) => food.disabled === false);
+      let drinList = response.drinks.filter(
+        (drink) => drink.disabled === false
+      );
+      setMenulist(foodList);
+      setDrinksist(drinList);
     });
   }, []);
 
