@@ -1,24 +1,40 @@
 {
   "short_name": "Pablo restaurant",
-  "name": "Create React App Sample",
+  "name": "Pablo Restaurant",
   "icons": [
+    {
+      "src": "maskable.png",
+      "sizes": "643x643",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
     {
       "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
+      "src": "logo192.jpeg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
     },
     {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "src": "logo256.jpeg",
+      "sizes": "256x256",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "logo384.jpeg",
+      "sizes": "384x384",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "logo512.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
