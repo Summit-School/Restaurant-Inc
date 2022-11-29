@@ -35,7 +35,8 @@ export async function addItemToMenu(menuItem: MenuItem) {
     menuItem = {
         id: uuid.v4(),
         ...menuItem,
-        quantity: 0
+        quantity: 0,
+        disabled: false
     };
 
     const menuRef = doc(db, "menu", menuItem!.id + "");
