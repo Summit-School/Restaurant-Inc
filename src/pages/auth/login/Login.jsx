@@ -19,9 +19,9 @@ const Login = () => {
       const response = await loginAdmin(email, loginPassword);
       if (response.email === email) {
         localStorage.setItem("admin", JSON.stringify(response.email));
-        toast.success("Login Successful");
+        await navigate("/dashboard");
         setLoading(false);
-        navigate("/dashboard");
+        toast.success("Login Successful");
       }
     } catch (error) {
       setLoading(false);

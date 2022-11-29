@@ -2,21 +2,33 @@
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { GoSignOut } from "react-icons/go";
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Profile = () => {
+  const [username, setUsername] = useState("");
+
   const navigate = useNavigate();
   const handleLogout = async (e) => {
     e.preventDefault();
     await localStorage.removeItem("cashier");
-    navigate("/staff_login");
+    await navigate("/staff_login");
   };
+
+  const getUser = async () => {
+    const user = await JSON.parse(localStorage.getItem("cashier"));
+    setUsername(user.name);
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   return (
     <div className="user-profile-icon">
       <NavDropdown
         title={
           <div className="pull-left">
-            <span>Cashier Account</span>
+            <span>{username}</span>
             <img
               className="thumbnail-image"
               src="/images/logo.jpeg"
