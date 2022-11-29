@@ -54,7 +54,7 @@ function App() {
       <Router>
         <Routes>
           {/* UNPROTECTED ROUTES */}
-          <Route path="/" element={<Login />} />
+          <Route path="/admin" element={<Login />} />
           <Route
             path="/dashboard"
             element={
@@ -105,7 +105,7 @@ function App() {
           />
 
           {/*  STAFF LOGIN */}
-          <Route path="/staff_login" element={<StaffLogin />} />
+          <Route path="/" element={<StaffLogin />} />
 
           {/* ROUTES FOR WAITERS ACCOUNT */}
           <Route
