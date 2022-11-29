@@ -6,7 +6,7 @@ const service = JSON.parse(localStorage.getItem("service"));
 const ProtectService = ({ children }) => {
   if (!service) {
     toast.error("Inavlid User");
-    return <Navigate to="/staff_login" />;
+    return <Navigate to="/" />;
   }
   return <>{children}</>;
 };

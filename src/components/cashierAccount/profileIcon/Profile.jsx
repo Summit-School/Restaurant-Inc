@@ -11,7 +11,7 @@ const Profile = () => {
   const handleLogout = async (e) => {
     e.preventDefault();
     await localStorage.removeItem("cashier");
-    await navigate("/staff_login");
+    await navigate("/");
   };
 
   const getUser = async () => {

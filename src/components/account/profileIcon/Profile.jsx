@@ -14,7 +14,7 @@ const Profile = () => {
   const handleLogout = async (e) => {
     e.preventDefault();
     await localStorage.removeItem("admin");
-    navigate("/");
+    await navigate("/admin");
   };
 
   return (

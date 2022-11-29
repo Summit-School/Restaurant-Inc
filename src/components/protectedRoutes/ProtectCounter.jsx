@@ -6,7 +6,7 @@ const counter = JSON.parse(localStorage.getItem("counter"));
 const ProtectCounter = ({ children }) => {
   if (!counter) {
     toast.error("Inavlid User");
-    return <Navigate to="/staff_login" />;
+    return <Navigate to="/" />;
   }
   return <>{children}</>;
 };

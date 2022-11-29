@@ -1,4 +1,3 @@
-// import "./Profile.css";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { GoSignOut } from "react-icons/go";
 import { Link, useNavigate } from "react-router-dom";
@@ -11,7 +10,7 @@ const Profile = () => {
   const handleLogout = async (e) => {
     e.preventDefault();
     await localStorage.removeItem("kitchen");
-    await navigate("/staff_login");
+    await navigate("/");
   };
 
   const getUser = async () => {

@@ -6,7 +6,7 @@ const admin = JSON.parse(localStorage.getItem("admin"));
 const ProtectAdmin = ({ children }) => {
   if (!admin) {
     toast.error("Inavlid User");
-    return <Navigate to="/" />;
+    return <Navigate to="/admin" />;
   }
   return <>{children}</>;
 };

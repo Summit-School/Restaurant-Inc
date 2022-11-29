@@ -10,7 +10,7 @@ const Profile = () => {
   const handleLogout = async (e) => {
     e.preventDefault();
     await localStorage.removeItem("counter");
-    await navigate("/staff_login");
+    await navigate("/");
   };
 
   const getUser = async () => {

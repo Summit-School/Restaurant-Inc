@@ -6,7 +6,7 @@ const cashier = JSON.parse(localStorage.getItem("cashier"));
 const ProtectCashier = ({ children }) => {
   if (!cashier) {
     toast.error("Inavlid User");
-    return <Navigate to="/staff_login" />;
+    return <Navigate to="/" />;
   }
   return <>{children}</>;
 };
