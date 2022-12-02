@@ -7,6 +7,8 @@ import UpdateWaiter from "./UpdateWaiter";
 import DeleteWaiter from "./DeleteWaiter";
 import { getStaffByType } from "../../../api/firebase/staff.api.ts";
 
+import RecordBoard from "./recordBoard/RecordBoard";
+
 const Waiters = () => {
   const [updateWaiter, setUpdateWaiter] = useState("");
   const [deleteWaiter, setDeleteWaiter] = useState("");
@@ -43,6 +45,9 @@ const Waiters = () => {
                 data-bs-parent="#accordionExample"
               >
                 <div className="accordion-body">
+                  <div className="waiters-stats">
+                    <RecordBoard phoneNumber={waiter.phone} />
+                  </div>
                   <div className="name">
                     <div className="data-key">
                       <FaUserAlt />

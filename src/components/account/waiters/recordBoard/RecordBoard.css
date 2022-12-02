@@ -1,0 +1,11 @@
+.waiter-record-cards {
+    display: flex;
+    justify-content: space-between;
+}
+
+@media only screen and (max-width: 600px) {
+    .waiter-record-cards {
+        display: block;
+    }
+
+}
