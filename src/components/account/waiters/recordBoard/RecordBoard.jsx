@@ -31,7 +31,6 @@ const RecordBoard = ({ phoneNumber }) => {
 
   useEffect(() => {
     fetchAllOrders((response) => {
-      console.log(response);
       // DAILY ORDERS
       let dailyOrders = response.filter(
         (order) =>
@@ -47,7 +46,7 @@ const RecordBoard = ({ phoneNumber }) => {
         (order) =>
           order.order &&
           order.order.timestamp >= lastSunday &&
-          order.order.timestamp <= today &&
+          order.order.timestamp <= endOfToday &&
           order.order.service.phone === phoneNumber
       );
       setWeeklyOrder(weeklyOrders);
