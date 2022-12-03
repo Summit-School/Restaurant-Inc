@@ -1,8 +1,8 @@
-import React from "react";
+import "./Categories.css";
 
 const AddCategory = () => {
   return (
-    <form>
+    <form className="add-cat-form">
       <div className="category-name">
         <input
           type="text"

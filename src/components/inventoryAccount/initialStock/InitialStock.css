@@ -1,4 +1,8 @@
-.initial-stock-table {}
+.stock-table {
+    margin-top: 20px;
+    box-shadow: rgba(40, 22, 203, 0.24) 0px 3px 8px;
+    padding: 10px;
+}
 
 #stock-table {
     border-collapse: collapse;

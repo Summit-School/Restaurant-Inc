@@ -1,4 +1,4 @@
-import React from "react";
+import "./InitialStock.css";
 import InventoryLayout from "../../../components/inventoryLayout/InventoryLayout";
 import InitialStock from "../../../components/inventoryAccount/initialStock/InitialStock";
 

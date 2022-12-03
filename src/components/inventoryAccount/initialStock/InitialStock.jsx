@@ -11,7 +11,7 @@ const InitialStock = () => {
     return dollarUSLocale.format(amount);
   };
   return (
-    <div>
+    <div className="stock-table">
       <table id="stock-table">
         <thead>
           <tr>

@@ -26,7 +26,7 @@ const AddItem = () => {
       <div className="item-quantity">
         <input type="number" className="form-control" placeholder="Quantity" />
       </div>
-      <button>Submit</button>
+      <button className="add-item-btn">Submit</button>
     </form>
   );
 };

@@ -35,6 +35,20 @@ const InventoryDashboard = () => {
             bgColor="lightgrey"
             cardColor="grey"
           />
+          <DashboardCards
+            icon={<MdViewList size={35} />}
+            title="Total Stock Price"
+            value={formatMoney(30000)}
+            bgColor="lightgreen"
+            cardColor="grey"
+          />
+          <DashboardCards
+            icon={<MdViewList size={35} />}
+            title="Amount Sold"
+            value={formatMoney(30000)}
+            bgColor="orange"
+            cardColor="grey"
+          />
         </div>
         <div className="int-dash-cat">
           <div className="list-all-cats">

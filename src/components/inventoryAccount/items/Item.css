@@ -7,6 +7,21 @@
     margin-top: 200px;
 }
 
+.add-item-to-inventory h3 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.add-item-btn {
+    padding: 10px 20px;
+    border: none;
+    margin-top: 10px;
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
 @media only screen and (max-width: 600px) {
     .add-item-to-inventory {
         width: 98%;
