@@ -27,6 +27,11 @@ import Served from "./pages/kitchenAccount/served/Served";
 import CounterDashboard from "./pages/counterAccount/dashboard/CounterDashboard";
 import ServedDrinks from "./pages/counterAccount/served/Served";
 
+// Import For Inventory Account
+import InventoryDashboard from "./pages/inventoryAccount/dashboard/InventoryDashboard";
+import InitialStock from "./pages/inventoryAccount/initialStock/InitialStock";
+import AddItem from "./pages/inventoryAccount/item/AddItem";
+
 import PageError from "./pages/404/PageError";
 
 // bringing in the toastify for it to work everywhere
@@ -215,6 +220,32 @@ function App() {
             element={
               <ProtectCounter>
                 <ServedDrinks />
+              </ProtectCounter>
+            }
+          />
+
+          {/* ROUTES FOR INVENTORY ACCOUNT */}
+          <Route
+            path="/inventory"
+            element={
+              <ProtectCounter>
+                <InventoryDashboard />
+              </ProtectCounter>
+            }
+          />
+          <Route
+            path="/stock"
+            element={
+              <ProtectCounter>
+                <InitialStock />
+              </ProtectCounter>
+            }
+          />
+          <Route
+            path="/add_item_to_stock"
+            element={
+              <ProtectCounter>
+                <AddItem />
               </ProtectCounter>
             }
           />
