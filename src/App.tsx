@@ -225,30 +225,9 @@ function App() {
           />
 
           {/* ROUTES FOR INVENTORY ACCOUNT */}
-          <Route
-            path="/inventory"
-            element={
-              <ProtectCounter>
-                <InventoryDashboard />
-              </ProtectCounter>
-            }
-          />
-          <Route
-            path="/stock"
-            element={
-              <ProtectCounter>
-                <InitialStock />
-              </ProtectCounter>
-            }
-          />
-          <Route
-            path="/add_item_to_stock"
-            element={
-              <ProtectCounter>
-                <AddItem />
-              </ProtectCounter>
-            }
-          />
+          <Route path="/inventory" element={<InventoryDashboard />} />
+          <Route path="/stock" element={<InitialStock />} />
+          <Route path="/add_item_to_stock" element={<AddItem />} />
 
           {/* 404 ROUTE */}
           <Route path="*" element={<PageError />} />
