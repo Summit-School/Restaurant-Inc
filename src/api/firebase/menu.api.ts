@@ -44,6 +44,43 @@ export async function addItemToMenu(menuItem: MenuItem) {
     return menuItem;
 }
 
+
+
+/**
+ * fetches an item from the menu of the restaurant so it can be visible to the waiter
+ *
+ * @param id - the item id to be fetched
+ *
+ * @returns - A Promise resolved once the item has been successfully fetched to the backend (note that it won't resolve while you're offline).
+ */
+export async function fetchMenuItemById(id: string) {
+    const menuRef = doc(db, "menu", id);
+    return getDoc(menuRef).then((res) => res.data() as MenuItem);
+}
+
+
+/**
+ * fetches an item from the menu of the restaurant so it can be visible to the waiter
+ *
+ * @param id - the item id to be fetched
+ *
+ * @returns - A Promise resolved once the item has been successfully fetched to the backend (note that it won't resolve while you're offline).
+ */
+export async function updateInventory(items: MenuItem[]) {
+
+    for (let i = 0; i < items.length; i++) {
+        const item = await fetchMenuItemById(items[0].id!)
+        if (item && item.id) {
+            const menuRef = doc(db, "menu", item.id);
+            await updateDoc(menuRef, { inventory: item.inventory ? (item.inventory - 1) : 0 });
+        }
+
+    }
+}
+
+
+
+
 /**
  * removes an item from the menu of the restaurant so it is no longer visible to the waiter
  *
