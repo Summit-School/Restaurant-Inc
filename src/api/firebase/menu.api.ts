@@ -60,9 +60,9 @@ export async function fetchMenuItemById(id: string) {
 
 
 /**
- * fetches an item from the menu of the restaurant so it can be visible to the waiter
+ * updates the inventory number of a served menu item
  *
- * @param id - the item id to be fetched
+ * @param items - the items to be updated
  *
  * @returns - A Promise resolved once the item has been successfully fetched to the backend (note that it won't resolve while you're offline).
  */

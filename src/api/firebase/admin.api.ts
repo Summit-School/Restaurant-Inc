@@ -20,7 +20,7 @@ import { Admin, User } from "../../interfaces/auth.interface";
 import * as uuid from "uuid";
 import { sendNotification } from "../oneSignal/notifications.api.ts";
 import { loginAdmin } from "./auth.api.ts";
-import { updateInventory } from "./menu.api";
+import { updateInventory } from "./menu.api.ts";
 
 export function addToInventory(inventory: InventoryItem) { }
 
