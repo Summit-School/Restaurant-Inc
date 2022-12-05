@@ -26,7 +26,9 @@ const Tables = () => {
                 setShowMenu(true);
               }}
             >
-              {table.id}
+              {table.floor
+                ? "Table" + table.id + " (" + table.floor + ")"
+                : table.id}
             </button>
           ))
         : "<p>No tables Founds</p>"}
