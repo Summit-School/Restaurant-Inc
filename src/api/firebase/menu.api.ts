@@ -76,6 +76,7 @@ export async function updateInventory(items: MenuItem[]) {
         }
 
     }
+    return ({ message: "Successfully updated inventory" })
 }
 
 
