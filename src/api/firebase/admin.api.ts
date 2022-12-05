@@ -172,9 +172,10 @@ export async function changeOrderState(order: Order, newState: string) {
  * @returns {Promise<Table>} - A Promise resolved once the table is added
  */
 
-export async function createTable(tableNumber: number): Promise<Table> {
+export async function createTable(tableNumber: number, floor: number): Promise<Table> {
   const table: Table = {
     id: tableNumber + "",
+    floor: floor + ""
   };
   const tableRef = doc(db, "all_tables", tableNumber + "");
   await setDoc(tableRef, table);
