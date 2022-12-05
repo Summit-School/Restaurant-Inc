@@ -12,7 +12,7 @@ const AddTable = () => {
     setTableLoading(true);
 
     try {
-      const response = await createTable(tableNumber);
+      const response = await createTable(floorNumber, tableNumber);
       if (response) {
         toast.success("Table Added");
         setTableLoading(false);
