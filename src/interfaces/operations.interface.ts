@@ -17,6 +17,7 @@ export interface Table {
   id: string;
   order?: Order;
   floor?: string;
+  number: string
 }
 
 export interface MenuItem {
