@@ -20,7 +20,7 @@ import { Admin, User } from "../../interfaces/auth.interface";
 import * as uuid from "uuid";
 import { sendNotification } from "../oneSignal/notifications.api.ts";
 import { loginAdmin } from "./auth.api.ts";
-import { updateInventory } from "./menu.api.ts";
+import { updateInventory } from "./menu.api";
 
 export function addToInventory(inventory: InventoryItem) { }
 
@@ -33,7 +33,7 @@ export function addToInventory(inventory: InventoryItem) { }
  * @param callBack - called everytime a new order is added to pending orders
  */
 export function fetchPendingOrders(callBack: (orders: Order[]) => void) {
-  const adminRef = collection(db, "tables");
+  const adminRef = collection(db, "all_tables");
   onSnapshot(adminRef, (res) => {
     const orders = res.docs.map((doc) => doc.data() as Order);
     callBack(orders);

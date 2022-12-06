@@ -69,9 +69,12 @@ export async function updateInventory(items: MenuItem[]) {
 
     for (let i = 0; i < items.length; i++) {
         const item = await fetchMenuItemById(items[0].id!)
+        if (item.category != "DRINKS") {
+            continue;
+        }
         if (item && item.id) {
             const menuRef = doc(db, "menu", item.id);
-            await updateDoc(menuRef, { inventory: item.inventory ? (item.inventory - 1) : 0 });
+            await updateDoc(menuRef, { inventory: item.inventory ? (+item.inventory - item.quantity!) : 0 });
         }
 
     }
