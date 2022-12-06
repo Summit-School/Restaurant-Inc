@@ -41,6 +41,10 @@ export const getStaffByType = (
       onSnapshot(collection(getFirestore(), "kitchen"), (res) => {
         callBack(res.docs.map((doc) => doc.data() as User));
       });
+    case "INVENTORY":
+      onSnapshot(collection(getFirestore(), "inventory"), (res) => {
+        callBack(res.docs.map((doc) => doc.data() as User));
+      });
       return;
     case "COUNTER":
       onSnapshot(collection(getFirestore(), "counter"), (res) => {
