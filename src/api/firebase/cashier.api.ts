@@ -34,10 +34,13 @@ export async function markOrderAsPaid(order: Order, user: User) {
 
   const pendingOrderRef = doc(db, "all_tables", order.table.id);
   const orderRef = doc(db, "all_orders", order.id);
-  await setDoc(pendingOrderRef, { id: order.table.id, order });
+  await setDoc(pendingOrderRef, { ...order.table, order });
   await setDoc(orderRef, { id: order.id, order });
 
-  await sendNotification({ title: "order paid", description: `Table ${order.table.id}'s order has been paid` })
+  await sendNotification({
+    title: "order paid",
+    description: `Table ${order.table.id}'s order has been paid`,
+  });
 
   return { message: "successfully paid for order" };
 }

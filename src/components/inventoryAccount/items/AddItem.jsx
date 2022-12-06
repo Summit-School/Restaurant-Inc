@@ -107,7 +107,7 @@ const AddItem = () => {
         <input
           type="number"
           className="form-control"
-          placeholder="Quantity (Bags/Creates)"
+          placeholder="Quantity"
           value={itemQuantity}
           onChange={(e) => setItemQuantity(e.target.value)}
         />

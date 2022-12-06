@@ -1,10 +1,16 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { getAllReleasedItems } from "../../../api/firebase/inventory.api.ts";
 
 const ReleasedStock = () => {
-  const [stock, setStock] = useState([
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-  ]);
+  const [releasedStock, setReleasedStock] = useState([]);
+
+  useEffect(() => {
+    getAllReleasedItems((response) => {
+      console.log(response);
+      setReleasedStock(response);
+    });
+  }, []);
 
   const formatMoney = (amount) => {
     let dollarUSLocale = Intl.NumberFormat("en-US");
@@ -18,22 +24,18 @@ const ReleasedStock = () => {
           <tr>
             <th>Name</th>
             <th>Category</th>
-            <th>Initial Quantity(Creates/Bags)</th>
+            <th>Quantity Released</th>
             <th>Total Price</th>
-            <th>Final Quantity(Creates/Bags)</th>
-            <th>Amount Sold</th>
           </tr>
         </thead>
         <tbody>
-          {stock.length > 0
-            ? stock.map((item, index) => (
-                <tr>
-                  <td>Fanta</td>
-                  <td>Juice</td>
-                  <td>{formatMoney(30000)}</td>
-                  <td>{formatMoney(30000)}</td>
-                  <td>{formatMoney(30000)}</td>
-                  <td>{formatMoney(30000)}</td>
+          {releasedStock.length > 0
+            ? releasedStock.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.itemName}</td>
+                  <td>{item.subCategory.name}</td>
+                  <td>{formatMoney(item.itemQuantity)}</td>
+                  <td>{formatMoney(item.itemPrice * item.itemQuantity)}</td>
                 </tr>
               ))
             : "No Stock Item Found"}

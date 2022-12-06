@@ -1,37 +1,69 @@
-import React from "react";
+import Modal from "react-bootstrap/Modal";
+import { Button } from "react-bootstrap";
+import { useState } from "react";
+import { releaseInventoryItem } from "../../../api/firebase/inventory.api.ts";
+import { toast } from "react-toastify";
 
-const ReleaseStock = () => {
+const ReleaseStock = (props) => {
+  const [itemQuantity, setItemQuantity] = useState(0);
+  const [itemLoading, setItemLoading] = useState(false);
+
+  const releaseItemFromStore = async (e) => {
+    e.preventDefault();
+    setItemLoading(true);
+
+    console.log(props.stock.id, itemQuantity);
+
+    try {
+      const response = await releaseInventoryItem(props.stock.id, itemQuantity);
+      if (response) {
+        toast.success("Item Released");
+        setItemQuantity(0);
+        setItemLoading(false);
+      }
+    } catch (error) {
+      setItemLoading(false);
+      console.error(error);
+      toast.error("Failed");
+    }
+  };
+
   return (
-    <form className="add-item-to-inventory">
-      <h3>Add Item To Inventory</h3>
-      <div className="item-category">
-        <select className="form-control mt-2">
-          <option>Select Category</option>
-          <option value="FOOD">Food</option>
-          <option value="DRINKS">Drink</option>
-          <option value="ALCOHOLE">Boster</option>
-          <option value="WHISKEY">Citron</option>
-        </select>
-      </div>
-      <div className="item-name">
-        <input type="text" className="form-control" placeholder="Item name" />
-      </div>
-      <div className="item-price">
-        <input
-          type="number"
-          className="form-control"
-          placeholder="Item price"
-        />
-      </div>
-      <div className="item-quantity">
-        <input
-          type="number"
-          className="form-control"
-          placeholder="Quantity (Bags/Creates)"
-        />
-      </div>
-      <button className="add-item-btn">Submit</button>
-    </form>
+    <Modal
+      {...props}
+      size="sm"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      className="text-center "
+      // key={remount}
+    >
+      <Modal.Header className="change-password-header" closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          <h3>Release {props.stock.itemName} From Inventory</h3>
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body className="change-password-body">
+        <form className="">
+          <div className="item-quantity">
+            <input
+              type="number"
+              className="form-control"
+              placeholder="Quantity (Bags/Creates)"
+              value={itemQuantity}
+              onChange={(e) => setItemQuantity(e.target.value)}
+            />
+          </div>
+        </form>
+      </Modal.Body>
+      <Modal.Footer className="change-password-footer">
+        <Button
+          className="modal-btn form-control-sm"
+          onClick={releaseItemFromStore}
+        >
+          {itemLoading ? "Loading..." : "Submit"}
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 };
 

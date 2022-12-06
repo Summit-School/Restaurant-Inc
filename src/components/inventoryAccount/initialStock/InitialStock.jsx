@@ -1,14 +1,17 @@
 import "./InitialStock.css";
 import { useState, useEffect } from "react";
 import { getInventoryItems } from "../../../api/firebase/inventory.api.ts";
+import ReleasedStock from "../releaseStock/ReleaseStock";
 
 const InitialStock = () => {
   const [stock, setStock] = useState([]);
+  const [releaseStock, setReleaseStock] = useState("");
 
   useEffect(() => {
     getInventoryItems((response) => {
-      console.log(response);
-      setStock(response);
+      let sorted = response.sort();
+      console.log(sorted);
+      setStock(response.sort());
     });
   }, []);
 
@@ -23,23 +26,36 @@ const InitialStock = () => {
           <tr>
             <th>Name</th>
             <th>Category</th>
-            <th>Initial Quantity(Creates/Bags)</th>
+            <th>Quantity</th>
             <th>Total Price</th>
           </tr>
         </thead>
         <tbody>
           {stock.length > 0
             ? stock.map((item, index) => (
-                <tr>
+                <tr key={index}>
                   <td>{item.itemName}</td>
                   <td>{item.subCategory?.name}</td>
                   <td>{formatMoney(item.itemQuantity)}</td>
-                  <td>{formatMoney(item.itemPrice)}</td>
+                  <td>{formatMoney(item.itemPrice * item.itemQuantity)}</td>
+                  <td>
+                    <button
+                      className="edit-btn"
+                      onClick={() => setReleaseStock(item)}
+                    >
+                      Realease
+                    </button>
+                  </td>
                 </tr>
               ))
             : "No Stock Item Found"}
         </tbody>
       </table>
+      <ReleasedStock
+        stock={releaseStock}
+        show={!!releaseStock}
+        onHide={() => setReleaseStock(false)}
+      />
     </div>
   );
 };

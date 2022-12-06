@@ -22,7 +22,7 @@ import { sendNotification } from "../oneSignal/notifications.api.ts";
 import { loginAdmin } from "./auth.api.ts";
 import { updateInventory } from "./menu.api.ts";
 
-export function addToInventory(inventory: InventoryItem) { }
+export function addToInventory(inventory: InventoryItem) {}
 
 /**
  * Gets all orders that are currently pending
@@ -98,7 +98,7 @@ export async function serveOrder(order: Order, user: User) {
 
   const pendingOrderRef = doc(db, "all_tables", order.table.id);
 
-  await setDoc(pendingOrderRef, { id: order.table.id, order });
+  await setDoc(pendingOrderRef, { ...order.table, order });
   await updateInventory(order.drinks);
   await sendNotification({
     title: "served order",
@@ -139,7 +139,7 @@ export async function freeTable(order: Order) {
   // const ordersRef = doc(db, "all_orders", order.id);
   const alltablesRef = doc(db, "all_tables", order.table.id);
   // await setDoc(ordersRef, order);
-  await setDoc(alltablesRef, { id: order.table.id });
+  await setDoc(alltablesRef, { ...order.table });
   await sendNotification({
     title: "Table Freed",
     description: `Table ${order.table.id} has just been freed`,
