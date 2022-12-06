@@ -1,6 +1,6 @@
-import "./Item.css";
+import React from "react";
 
-const AddItem = () => {
+const ReleaseStock = () => {
   return (
     <form className="add-item-to-inventory">
       <h3>Add Item To Inventory</h3>
@@ -9,16 +9,9 @@ const AddItem = () => {
           <option>Select Category</option>
           <option value="FOOD">Food</option>
           <option value="DRINKS">Drink</option>
+          <option value="ALCOHOLE">Boster</option>
+          <option value="WHISKEY">Citron</option>
         </select>
-        <div className="item-category">
-          <select className="form-control mt-2">
-            <option>Sub Category</option>
-            <option value="FOOD">Food</option>
-            <option value="DRINKS">Drink</option>
-            <option value="ALCOHOLE">Boster</option>
-            <option value="WHISKEY">Citron</option>
-          </select>
-        </div>
       </div>
       <div className="item-name">
         <input type="text" className="form-control" placeholder="Item name" />
@@ -42,4 +35,4 @@ const AddItem = () => {
   );
 };
 
-export default AddItem;
+export default ReleaseStock;

@@ -1,43 +1,11 @@
 import "./MenuList.css";
-import { useState, useEffect } from "react";
-import EditItem from "./EditItem";
-import DeleteItem from "./DeleteItem";
-import { toast } from "react-toastify";
-import {
-  onSnapshotFetchMenuItems,
-  changeDisableState,
-} from "../../../api/firebase/menu.api.ts";
+import { useState } from "react";
+
+import Drinks from "./Drinks";
+import Foods from "./Foods";
 
 const MenuList = () => {
-  const [menuList, setMenulist] = useState([]);
-  const [drinksList, setDrinksist] = useState([]);
-
   const [showCategory, setShowCategory] = useState(true);
-  const [editItem, setEditItem] = useState("");
-  const [deleteItem, setDeleteItem] = useState("");
-
-  const [disable, setDisable] = useState(false);
-
-  useEffect(() => {
-    onSnapshotFetchMenuItems((response) => {
-      setMenulist(response.food);
-      setDrinksist(response.drinks);
-    });
-  }, []);
-
-  const disableItem = async (item) => {
-    setDisable(!disable);
-
-    try {
-      const response = await changeDisableState(item.id, disable);
-      if (response) {
-        toast.success("Item Disabled state changed");
-      }
-    } catch (error) {
-      toast.error("Failed");
-      console.error(error);
-    }
-  };
 
   function filterFunction() {
     var input, filter, table, tr, td, i, txtValue;
@@ -57,11 +25,6 @@ const MenuList = () => {
       }
     }
   }
-
-  const formatMoney = (amount) => {
-    let dollarUSLocale = Intl.NumberFormat("en-US");
-    return dollarUSLocale.format(amount);
-  };
 
   return (
     <div className="menu-list-table">
@@ -104,90 +67,8 @@ const MenuList = () => {
             {showCategory ? "" : <th>Inventory</th>}
           </tr>
         </thead>
-        <tbody id="menu-list">
-          {showCategory
-            ? menuList
-              ? menuList.map((item, index) => (
-                  <tr key={index}>
-                    <td>{item.itemName}</td>
-                    <td>{formatMoney(item.price)} FCFA</td>
-                    <td className="action-btns">
-                      <button
-                        className="edit-btn"
-                        onClick={() => setEditItem(item)}
-                      >
-                        Edit
-                      </button>
-
-                      {item.disabled === true ? (
-                        <button
-                          className="disable-btn"
-                          style={{ backgroundColor: "orange" }}
-                          onClick={() => disableItem(item)}
-                        >
-                          Enable
-                        </button>
-                      ) : (
-                        <button
-                          className="disable-btn"
-                          style={{ backgroundColor: "blue" }}
-                          onClick={() => disableItem(item)}
-                        >
-                          Disable
-                        </button>
-                      )}
-
-                      <button
-                        className="delete-btn"
-                        onClick={() => setDeleteItem(item)}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              : "<p>No Menu Item</p>"
-            : drinksList
-            ? drinksList.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.itemName}</td>
-                  <td>{formatMoney(item.price)} FCFA</td>
-                  <td>{item.inventory}</td>
-                  <td className="action-btns">
-                    <button
-                      className="edit-btn"
-                      onClick={() => setEditItem(item)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="disable-btn"
-                      onClick={() => disableItem(item)}
-                    >
-                      {item.disabled === true ? "Enable" : "Disable"}
-                    </button>
-                    <button
-                      className="delete-btn"
-                      onClick={() => setDeleteItem(item)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))
-            : "<p>No Menu Item</p>"}
-        </tbody>
+        <tbody id="menu-list">{showCategory ? <Foods /> : <Drinks />}</tbody>
       </table>
-      <EditItem
-        item={editItem}
-        show={!!editItem}
-        onHide={() => setEditItem(false)}
-      />
-      <DeleteItem
-        item={deleteItem}
-        show={!!deleteItem}
-        onHide={() => setDeleteItem(false)}
-      />
     </div>
   );
 };

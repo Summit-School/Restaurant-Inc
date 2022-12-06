@@ -46,6 +46,7 @@ const AddStaff = () => {
           <option value="CASHIER">Cashier</option>
           <option value="KITCHEN">Kitchen</option>
           <option value="COUNTER">Counter</option>
+          <option value="INVENTORY">Counter</option>
         </select>
         <input
           className="form-control"

@@ -1,7 +1,7 @@
-import "./InitialStock.css";
+import React from "react";
 import { useState, useEffect } from "react";
 
-const InitialStock = () => {
+const ReleasedStock = () => {
   const [stock, setStock] = useState([
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
   ]);
@@ -10,6 +10,7 @@ const InitialStock = () => {
     let dollarUSLocale = Intl.NumberFormat("en-US");
     return dollarUSLocale.format(amount);
   };
+
   return (
     <div className="stock-table">
       <table id="stock-table">
@@ -42,4 +43,4 @@ const InitialStock = () => {
   );
 };
 
-export default InitialStock;
+export default ReleasedStock;
