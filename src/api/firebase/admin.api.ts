@@ -175,8 +175,8 @@ export async function changeOrderState(order: Order, newState: string) {
 export async function createTable(tableNumber: number, floor: number): Promise<Table> {
   const table: Table = {
     number: tableNumber + "",
-    floor: floor + "",
-    id: floor + "" + tableNumber
+    floor: (floor ?? 0) + "",
+    id: (floor ?? 0) + "" + tableNumber
   };
   const tableRef = doc(db, "all_tables", tableNumber + "");
   await setDoc(tableRef, table);
