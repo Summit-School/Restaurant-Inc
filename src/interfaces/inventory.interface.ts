@@ -8,7 +8,7 @@ export interface InventoryItem {
     id?: string,
     name: string,
     category: "FOOD" | "DRINKS",
-    subcategory: string,
+    subcategory: InventorySubCategory,
     price: string | number,
     quantity: string | number,
 }

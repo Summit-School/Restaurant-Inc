@@ -148,3 +148,13 @@ export async function getReleasedItemById(inventoryId: string) {
 
 
 }
+
+export async function getAllReleasedItems(onSuccess: (subCategories: InventoryItem[]) => void) {
+
+    const subCatRef = collection(getFirestore(), "released_stock");
+
+    onSnapshot(subCatRef, (snapshot) => {
+        onSuccess(snapshot.docs.map((doc) => doc.data() as InventoryItem));
+    })
+
+}
