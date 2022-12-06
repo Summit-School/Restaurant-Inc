@@ -74,9 +74,9 @@ export async function AddOrderToPending(order: Order, user: User) {
   order.service = user;
   order.timestamp = Date.now();
 
-  const pendingOrderRef = doc(db, "all_tables", order.table.id);
+  const tableOrderRef = doc(db, "all_tables", order.table.id);
 
-  await setDoc(pendingOrderRef, { ...order.table, order });
+  await setDoc(tableOrderRef, { ...order.table, order });
   await sendNotification({
     title: "placed order",
     description: `An order has just been added to table ${order.table.id}`,
