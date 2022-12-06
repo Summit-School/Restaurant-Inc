@@ -4,6 +4,7 @@ import Waiters from "../../../components/account/waiters/Waiters";
 import Cashiers from "../../../components/account/cashiers/Cashiers";
 import Kitchen from "../../../components/account/kitchen/Kitchen";
 import Counter from "../../../components/account/counter/Counter";
+import Inventory from "../../../components/account/inventory/Inventory";
 
 const Users = () => {
   return (
@@ -23,6 +24,9 @@ const Users = () => {
             </div>
             <div className="kitchen">
               <Counter />
+            </div>
+            <div className="kitchen">
+              <Inventory />
             </div>
           </div>
         </div>

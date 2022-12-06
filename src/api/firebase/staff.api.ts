@@ -55,8 +55,6 @@ export const getStaffByType = (
   }
 };
 
-
-
 export const getStaffById = (
   id: string,
   type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER" | "INVENTORY"
@@ -64,12 +62,12 @@ export const getStaffById = (
   switch (type) {
     case "SERVICE":
       return getDoc(doc(getFirestore(), "service")).then((doc) => {
-        return doc.data() as User
+        return doc.data() as User;
       });
 
     case "CASHIER":
       return getDoc(doc(getFirestore(), "cashier")).then((doc) => {
-        return doc.data() as User
+        return doc.data() as User;
       });
     case "KITCHEN":
       return getDoc(doc(getFirestore(), "kitchen")).then((doc) => {
@@ -100,13 +98,22 @@ export const loginStaff = async (
   if (staff) {
     if (staff.password == password) {
       const id = uuid.v4();
-      await setDoc(doc(getFirestore(), "attendance", id), { staff, timestamp: Date.now(), id })
-      OneSignalReact.setExternalUserId(staff.id)
-      return { phone: staff.phone, password: "", id: staff.id, name: staff.name, type: staff.type };
-    }
-    else {
-      const error = new Error()
-      error.message = "Password is incorrect"
+      await setDoc(doc(getFirestore(), "attendance", id), {
+        staff,
+        timestamp: Date.now(),
+        id,
+      });
+      OneSignalReact.setExternalUserId(staff.id);
+      return {
+        phone: staff.phone,
+        password: "",
+        id: staff.id,
+        name: staff.name,
+        type: staff.type,
+      };
+    } else {
+      const error = new Error();
+      error.message = "Password is incorrect";
       throw error;
     }
   }
@@ -156,30 +163,30 @@ async function getStaffInformation(phone: string): Promise<User | null> {
     services.length > 0
       ? services[0]
       : cashier.length > 0
-        ? cashier[0]
-        : counter.length > 0
-          ? counter[0]
-          : kitchen.length > 0
-            ? kitchen[0]
-            : inventory.length > 0
-              ? inventory[0] :
-              null;
+      ? cashier[0]
+      : counter.length > 0
+      ? counter[0]
+      : kitchen.length > 0
+      ? kitchen[0]
+      : inventory.length > 0
+      ? inventory[0]
+      : null;
   return staff;
 }
 
-
-
-
-
-
-async function updateStaffInformation(staffInfo: User, type: "SERVICE" | "KITCHEN" | "CASHIER" | "COUNTER" | "INVENTORY") {
+async function updateStaffInformation(
+  staffInfo: User,
+  type: "SERVICE" | "KITCHEN" | "CASHIER" | "COUNTER" | "INVENTORY"
+) {
   const staff = await getStaffById(staffInfo.id, type);
   if (!staff) {
     const error = new Error();
-    error.message = "Sorry but the staff does not exist"
+    error.message = "Sorry but the staff does not exist";
     throw error;
   }
-  await setDoc(doc(getFirestore(), type.toLowerCase(), staffInfo.id), staffInfo);
+  await setDoc(
+    doc(getFirestore(), type.toLowerCase(), staffInfo.id),
+    staffInfo
+  );
   return staffInfo;
-
 }

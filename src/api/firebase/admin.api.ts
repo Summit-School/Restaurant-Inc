@@ -22,7 +22,7 @@ import { sendNotification } from "../oneSignal/notifications.api.ts";
 import { loginAdmin } from "./auth.api.ts";
 import { updateInventory } from "./menu.api.ts";
 
-export function addToInventory(inventory: InventoryItem) { }
+export function addToInventory(inventory: InventoryItem) {}
 
 /**
  * Gets all orders that are currently pending
@@ -172,13 +172,14 @@ export async function changeOrderState(order: Order, newState: string) {
  * @returns {Promise<Table>} - A Promise resolved once the table is added
  */
 
-export async function createTable(tableNumber: string, floor: string): Promise<Table> {
-
-
+export async function createTable(
+  tableNumber: string,
+  floor: string
+): Promise<Table> {
   const table: Table = {
     number: tableNumber,
     floor: floor || "",
-    id: (floor || "") + tableNumber
+    id: (floor || "") + tableNumber,
   };
   const tableRef = doc(db, "all_tables", table.id);
   await setDoc(tableRef, table);
