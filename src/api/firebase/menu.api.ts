@@ -45,7 +45,6 @@ export async function addItemToMenu(menuItem: MenuItem) {
 }
 
 
-
 /**
  * fetches an item from the menu of the restaurant so it can be visible to the waiter
  *

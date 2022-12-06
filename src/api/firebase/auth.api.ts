@@ -47,7 +47,7 @@ export const loginAdmin = async (
 
 export async function createStaff(
   staff: User,
-  type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"
+  type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER" | "INVENTORY"
 ): Promise<User | null> {
   const error = new Error();
   if (!staff.name) {
@@ -93,7 +93,7 @@ export async function createStaff(
  * Edits a particular staff's information
  *
  * @param staff The staff that is to be edited
- * @param type The type of the staff that is to be edited could be "SERVICE"| "CASHIER" | "KITCHEN" | "COUNTER"
+ * @param type The type of the staff that is to be edited could be "SERVICE"| "CASHIER" | "KITCHEN" | "COUNTER" | "INVENTORY"
  *
  * @return {Promise<User>} A promise that resolves with the updated staff information
  */
@@ -118,14 +118,14 @@ export async function editStaffInfo(
  *Verifies if a particular staff exists in the Firestore
  *
  * @param staff The staff that is to be verified
- * @param type The type of the staff that is to be verified could be "SERVICE"| "CASHIER" | "KITCHEN" | "COUNTER"
+ * @param type The type of the staff that is to be verified could be "SERVICE"| "CASHIER" | "KITCHEN" | "COUNTER" | "INVENTORY"
  *
  * @return {Promise<boolean>} A promise that resolves with true if the staff exists in the Firestore else false
  */
 
 export async function verifyStaffExists(
   staff: User,
-  type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"
+  type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER" | "INVENTORY"
 ): Promise<boolean> {
   switch (type) {
     case "SERVICE":
@@ -146,6 +146,12 @@ export async function verifyStaffExists(
       ).data();
       return !!counter;
 
+    case "INVENTORY":
+      const inventory = (
+        await getDoc(doc(getFirestore(), "inventory", staff.id))
+      ).data();
+      return !!inventory;
+
     case "KITCHEN":
       const kitchen = (
         await getDoc(doc(getFirestore(), "kitchen", staff.id))
@@ -163,14 +169,14 @@ export async function verifyStaffExists(
  * Deletes a particular staff's information
  *
  * @param staff The staff that is to be deleted
- * @param type The type of the staff that is to be deleted could be "SERVICE"| "CASHIER" | "KITCHEN" | "COUNTER"
+ * @param type The type of the staff that is to be deleted could be "SERVICE"| "CASHIER" | "KITCHEN" | "COUNTER" | "INVENTORY"
  *
  * @return {Promise<{message:string}>} A promise that resolves with a message
  */
 
 export async function deleteStaff(
   staff: User,
-  type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"
+  type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER" | "INVENTORY"
 ): Promise<{ message: string }> {
   const staffExists = await verifyStaffExists(staff, type);
   if (staffExists) {

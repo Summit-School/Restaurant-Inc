@@ -18,7 +18,7 @@ import { TYPE } from "react-toastify/dist/utils";
 /**
  * gets all staff depending on the type of service they provide
  *
- * @param type the type of staff to get from the database could be either "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"
+ * @param type the type of staff to get from the database could be either "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER" | "INVENTORY"
  * @param callBack  the callback function called when the staff data is retrieved successfully.
  *
  */
@@ -59,7 +59,7 @@ export const getStaffByType = (
 
 export const getStaffById = (
   id: string,
-  type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"
+  type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER" | "INVENTORY"
 ) => {
   switch (type) {
     case "SERVICE":
@@ -77,6 +77,10 @@ export const getStaffById = (
       });
     case "COUNTER":
       return getDoc(doc(getFirestore(), "counter")).then((doc) => {
+        return doc.data() as User;
+      });
+    case "INVENTORY":
+      return getDoc(doc(getFirestore(), "inventory")).then((doc) => {
         return doc.data() as User;
       });
 
@@ -123,6 +127,10 @@ async function getStaffInformation(phone: string): Promise<User | null> {
     collection(getFirestore(), "counter"),
     where("phone", "==", phone)
   );
+  const possibleInventory = query(
+    collection(getFirestore(), "inventory"),
+    where("phone", "==", phone)
+  );
   const possibleKitchen = query(
     collection(getFirestore(), "kitchen"),
     where("phone", "==", phone)
@@ -137,6 +145,9 @@ async function getStaffInformation(phone: string): Promise<User | null> {
   const counter = (await getDocs(possibleCounter)).docs.map(
     (doc) => ({ ...doc.data(), type: "COUNTER" } as User)
   );
+  const inventory = (await getDocs(possibleInventory)).docs.map(
+    (doc) => ({ ...doc.data(), type: "INVENTORY" } as User)
+  );
   const kitchen = (await getDocs(possibleKitchen)).docs.map(
     (doc) => ({ ...doc.data(), type: "KITCHEN" } as User)
   );
@@ -150,7 +161,9 @@ async function getStaffInformation(phone: string): Promise<User | null> {
           ? counter[0]
           : kitchen.length > 0
             ? kitchen[0]
-            : null;
+            : inventory.length > 0
+              ? inventory[0] :
+              null;
   return staff;
 }
 
@@ -159,7 +172,7 @@ async function getStaffInformation(phone: string): Promise<User | null> {
 
 
 
-async function updateStaffInformation(staffInfo: User, type: "SERVICE" | "KITCHEN" | "CASHIER" | "COUNTER") {
+async function updateStaffInformation(staffInfo: User, type: "SERVICE" | "KITCHEN" | "CASHIER" | "COUNTER" | "INVENTORY") {
   const staff = await getStaffById(staffInfo.id, type);
   if (!staff) {
     const error = new Error();
