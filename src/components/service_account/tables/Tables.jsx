@@ -27,8 +27,8 @@ const Tables = () => {
               }}
             >
               {table.floor
-                ? "Table" + table.id + " (" + table.floor + ")"
-                : table.id}
+                ? "Table" + table.number + " (" + table.floor + ")"
+                : table.number}
             </button>
           ))
         : "<p>No tables Founds</p>"}
