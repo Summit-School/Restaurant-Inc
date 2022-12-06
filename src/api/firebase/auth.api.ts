@@ -82,6 +82,9 @@ export async function createStaff(
     case "COUNTER":
       await setDoc(doc(getFirestore(), "counter", staff.id), staff);
       return staff;
+    case "INVENTORY":
+      await setDoc(doc(getFirestore(), "inventory", staff.id), staff);
+      return staff;
     default:
       error.message = "Unknown staff type provided: " + type;
       throw error;
