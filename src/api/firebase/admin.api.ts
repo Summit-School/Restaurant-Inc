@@ -178,7 +178,7 @@ export async function createTable(tableNumber: number, floor: number): Promise<T
     floor: (floor ?? 0) + "",
     id: (floor ?? 0) + "" + tableNumber
   };
-  const tableRef = doc(db, "all_tables", tableNumber + "");
+  const tableRef = doc(db, "all_tables", table.id);
   await setDoc(tableRef, table);
   return table;
 }
