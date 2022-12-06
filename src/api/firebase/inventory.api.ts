@@ -1,7 +1,8 @@
 import { uuidv4 } from "@firebase/util";
-import { collection, deleteDoc, doc, getFirestore, onSnapshot, setDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, getFirestore, onSnapshot, setDoc } from "firebase/firestore";
 import { InventoryItem, InventorySubCategory } from "../../interfaces/inventory.interface";
 
+let error = new Error();
 
 export async function getSubCategories(onSuccess: (subCategories: InventorySubCategory[]) => void) {
 
@@ -88,4 +89,62 @@ export async function getInventoryItems(onSuccess: (items: InventoryItem[]) => v
     onSnapshot(inventoryRef, (snapshot) => {
         onSuccess(snapshot.docs.map((doc) => doc.data() as InventoryItem));
     })
+}
+
+
+export async function releaseInventoryItem(inventoryId: string, releaseQuantity: number | string) {
+
+    releaseQuantity = +releaseQuantity;
+
+    const inventoryItem = await getInventoryItemById(inventoryId);
+    if (!inventoryItem.id) {
+        error.message = "Sorry but the inventory item doesn't exist"
+        throw error;
+    }
+    if (inventoryItem.quantity <= 0 || releaseQuantity > inventoryItem.quantity) {
+        error.message = "Not enough items in stock to release"
+        throw error;
+    }
+
+    let previousRelease = await getReleasedItemById(inventoryId);
+
+    const inventoryQuantity = +inventoryItem.quantity
+    const balanceInventoryQuantity = inventoryQuantity - releaseQuantity;
+
+    if (!previousRelease) {
+        previousRelease = inventoryItem;
+        previousRelease.quantity = 0;
+    }
+    previousRelease.quantity = releaseQuantity + +previousRelease.quantity;
+    inventoryItem.quantity = balanceInventoryQuantity;
+
+
+    const inventoryRef = doc(getFirestore(), "inventory", inventoryItem.id);
+    const released_stockRef = doc(getFirestore(), "released_stock", inventoryItem.id);
+
+    await setDoc(inventoryRef, inventoryItem);
+    await setDoc(released_stockRef, previousRelease);
+
+    return ({ message: "Successfully updated inventory" })
+
+}
+
+
+export async function getInventoryItemById(inventoryId: string) {
+
+    const inventoryRef = doc(getFirestore(), "inventory", inventoryId);
+
+    return await getDoc(inventoryRef).then((doc) => doc.data() as InventoryItem);
+
+
+}
+
+
+export async function getReleasedItemById(inventoryId: string) {
+
+    const inventoryRef = doc(getFirestore(), "released_stock", inventoryId);
+
+    return await getDoc(inventoryRef).then((doc) => doc.data() as InventoryItem);
+
+
 }
