@@ -72,10 +72,12 @@ const Menu = (props) => {
     const user = await JSON.parse(localStorage.getItem("service"));
 
     let order = {
-      table: { id: props.tablenumber },
+      table: props.table,
       food: [],
       drinks: [],
     };
+
+    console.log(props.table, order);
 
     let userData = {
       name: user.name,

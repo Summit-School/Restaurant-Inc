@@ -5,7 +5,7 @@ import { onSnapshotGetAllTables } from "../../../api/firebase/admin.api.ts";
 
 const Tables = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const [tableNumber, setTableNumber] = useState(0);
+  const [table, setTable] = useState({});
 
   const [tables, setTables] = useState([]);
   useEffect(() => {
@@ -22,7 +22,7 @@ const Tables = () => {
               key={index}
               className="table-btn"
               onClick={() => {
-                setTableNumber(table.id);
+                setTable(table);
                 setShowMenu(true);
               }}
             >
@@ -32,11 +32,7 @@ const Tables = () => {
             </button>
           ))
         : "<p>No tables Founds</p>"}
-      <Menu
-        show={showMenu}
-        tablenumber={tableNumber}
-        onHide={() => setShowMenu(false)}
-      />
+      <Menu show={showMenu} table={table} onHide={() => setShowMenu(false)} />
     </div>
   );
 };

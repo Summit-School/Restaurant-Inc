@@ -69,7 +69,7 @@ export async function AddOrderToPending(order: Order, user: User) {
       "Table is already occupied please free table before placing order";
     throw error;
   }
-
+  order = { ...order, ...order.table };
   order.id = uuid.v4();
   order.state = "ORDERED";
   order.service = user;

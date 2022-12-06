@@ -103,7 +103,7 @@ export async function createStaff(
 
 export async function editStaffInfo(
   staff: User,
-  type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"
+  type: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER" | "INVENTORY"
 ): Promise<User> {
   const staffExists = await verifyStaffExists(staff, type);
   if (staffExists) {
