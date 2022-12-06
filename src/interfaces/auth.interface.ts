@@ -3,7 +3,7 @@ export interface User {
     name: string,
     phone: string,
     password: string,
-    type?: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER"
+    type?: "SERVICE" | "CASHIER" | "KITCHEN" | "COUNTER" | "INVENTORY"
 }
 
 export interface Admin {
