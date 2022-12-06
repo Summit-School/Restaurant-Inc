@@ -22,7 +22,7 @@ import { sendNotification } from "../oneSignal/notifications.api.ts";
 import { loginAdmin } from "./auth.api.ts";
 import { updateInventory } from "./menu.api.ts";
 
-export function addToInventory(inventory: InventoryItem) { }
+export function addToInventory(inventory: InventoryItem) {}
 
 /**
  * Gets all orders that are currently pending
@@ -100,7 +100,7 @@ export async function serveOrder(order: Order, user: User) {
   const pendingOrderRef = doc(db, "all_tables", order.table.id);
 
   await setDoc(pendingOrderRef, { id: order.table.id, order });
-  await updateInventory(order.drinks)
+  await updateInventory(order.drinks);
   await sendNotification({
     title: "served order",
     description: `Table ${order.table.id} has just been served`,
