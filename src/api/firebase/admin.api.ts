@@ -22,7 +22,7 @@ import { sendNotification } from "../oneSignal/notifications.api.ts";
 import { loginAdmin } from "./auth.api.ts";
 import { updateInventory } from "./menu.api.ts";
 
-export function addToInventory(inventory: InventoryItem) {}
+export function addToInventory(inventory: InventoryItem) { }
 
 /**
  * Gets all orders that are currently pending
@@ -69,7 +69,6 @@ export async function AddOrderToPending(order: Order, user: User) {
       "Table is already occupied please free table before placing order";
     throw error;
   }
-  order = { ...order, ...order.table };
   order.id = uuid.v4();
   order.state = "ORDERED";
   order.service = user;
@@ -77,7 +76,7 @@ export async function AddOrderToPending(order: Order, user: User) {
 
   const pendingOrderRef = doc(db, "all_tables", order.table.id);
 
-  await setDoc(pendingOrderRef, { id: order.table.id, order });
+  await setDoc(pendingOrderRef, { ...order.table, order });
   await sendNotification({
     title: "placed order",
     description: `An order has just been added to table ${order.table.id}`,
