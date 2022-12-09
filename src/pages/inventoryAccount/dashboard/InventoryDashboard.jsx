@@ -6,11 +6,37 @@ import DashboardCards from "../../../components/account/dashboardCards/Dashboard
 import Categories from "../../../components/inventoryAccount/categories/Categories";
 import AddCategory from "../../../components/inventoryAccount/categories/AddCategory";
 import { MdViewList } from "react-icons/md";
-// import { onSnapshotGetAllTables } from "../../../api/firebase/admin.api.ts";
+import {
+  getInventoryItems,
+  getAllReleasedItems,
+} from "../../../api/firebase/inventory.api.ts";
 
 const InventoryDashboard = () => {
+  const [stock, setStock] = useState(0);
+  const [stockPrice, setStockPrice] = useState(0);
+  const [releasedStock, setReleasedStock] = useState(0);
+  const [releasedStockPrice, setReleasedStockPrice] = useState(0);
+
   useEffect(() => {
-    console.log("hello word");
+    getInventoryItems((response) => {
+      let count = 0;
+      response.map((item) => (count += parseInt(item.itemQuantity)));
+      setStock(count);
+
+      let price = 0;
+      response.map((item) => (price += parseInt(item.itemPrice)));
+      setStockPrice(price);
+    });
+
+    getAllReleasedItems((response) => {
+      let count = 0;
+      response.map((item) => (count += parseInt(item.itemQuantity)));
+      setReleasedStock(count);
+
+      let price = 0;
+      response.map((item) => (price += parseInt(item.itemPrice)));
+      setReleasedStockPrice(price);
+    });
   }, []);
 
   const formatMoney = (amount) => {
@@ -24,28 +50,29 @@ const InventoryDashboard = () => {
           <DashboardCards
             icon={<MdViewList size={35} />}
             title="Total Stock"
-            value={formatMoney(10000)}
+            value={formatMoney(stock)}
             bgColor="khaki"
             cardColor="orange"
           />
           <DashboardCards
             icon={<MdViewList size={35} />}
-            title="Total Stock Sold"
-            value={formatMoney(30000)}
-            bgColor="lightgrey"
-            cardColor="grey"
-          />
-          <DashboardCards
-            icon={<MdViewList size={35} />}
             title="Total Stock Price"
-            value={formatMoney(30000)}
+            value={formatMoney(stockPrice)}
             bgColor="lightgreen"
             cardColor="grey"
           />
           <DashboardCards
             icon={<MdViewList size={35} />}
-            title="Amount Sold"
-            value={formatMoney(30000)}
+            title="Total Released Stock"
+            value={formatMoney(releasedStock)}
+            bgColor="lightgrey"
+            cardColor="grey"
+          />
+
+          <DashboardCards
+            icon={<MdViewList size={35} />}
+            title="Total Released Stock Price"
+            value={formatMoney(releasedStockPrice)}
             bgColor="orange"
             cardColor="grey"
           />

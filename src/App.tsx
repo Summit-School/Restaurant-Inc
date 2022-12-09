@@ -32,7 +32,6 @@ import InventoryDashboard from "./pages/inventoryAccount/dashboard/InventoryDash
 import InitialStock from "./pages/inventoryAccount/initialStock/InitialStock";
 import AddItem from "./pages/inventoryAccount/item/AddItem";
 import ReleasedStock from "./pages/inventoryAccount/releasedStock/ReleasedStock";
-import ReleaseStock from "./pages/inventoryAccount/releaseStock/ReleaseStock";
 
 import PageError from "./pages/404/PageError";
 
@@ -231,7 +230,6 @@ function App() {
           <Route path="/stock" element={<InitialStock />} />
           <Route path="/add_item_to_stock" element={<AddItem />} />
           <Route path="/released_stock" element={<ReleasedStock />} />
-          <Route path="/release_stock" element={<ReleaseStock />} />
 
           {/* 404 ROUTE */}
           <Route path="*" element={<PageError />} />

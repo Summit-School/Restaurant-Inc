@@ -5,9 +5,9 @@ export interface InventorySubCategory {
 
 export interface InventoryItem {
   id?: string;
-  name: string;
+  itemName: string;
   category: "FOOD" | "DRINKS";
   subcategory: InventorySubCategory;
-  price: string | number;
-  quantity: string | number;
+  itemPrice: string | number;
+  itemQuantity: string | number;
 }

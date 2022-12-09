@@ -63,12 +63,6 @@ const Sidebar = () => {
               </span>
               <Link to="/released_stock">RELEASED STOCK</Link>
             </li>
-            <li>
-              <span className="icon">
-                <MdViewList size={35} />
-              </span>
-              <Link to="/release_stock">RELEASE STOCK</Link>
-            </li>
           </div>
         </div>
       </div>

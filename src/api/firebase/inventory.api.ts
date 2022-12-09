@@ -100,24 +100,29 @@ export async function releaseInventoryItem(
         error.message = "Sorry but the inventory item doesn't exist";
         throw error;
     }
-    if (inventoryItem.quantity <= 0 || releaseQuantity > inventoryItem.quantity) {
+    if (
+        inventoryItem.itemQuantity <= 0 ||
+        releaseQuantity > inventoryItem.itemQuantity
+    ) {
         error.message = "Not enough items in stock to release";
         throw error;
     }
 
     let previousRelease = await getReleasedItemById(inventoryId);
 
-    const inventoryQuantity = +inventoryItem.quantity;
+    const inventoryQuantity = +inventoryItem.itemQuantity;
     const balanceInventoryQuantity = inventoryQuantity - releaseQuantity;
 
     if (!previousRelease) {
         previousRelease = inventoryItem;
-        previousRelease.quantity = 0;
+        previousRelease.itemQuantity = 0;
     }
-    previousRelease.quantity = releaseQuantity + +previousRelease.quantity;
-    inventoryItem.quantity = balanceInventoryQuantity;
 
-    const inventoryRef = doc(getFirestore(), "inventory-record", inventoryItem.id);
+    previousRelease.itemQuantity =
+        releaseQuantity + +previousRelease.itemQuantity;
+    inventoryItem.itemQuantity = balanceInventoryQuantity;
+
+    const inventoryRef = doc(getFirestore(), "inventory", inventoryItem.id);
     const released_stockRef = doc(
         getFirestore(),
         "released_stock",
