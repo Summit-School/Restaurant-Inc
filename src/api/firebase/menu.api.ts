@@ -68,10 +68,10 @@ export async function updateInventory(items: MenuItem[]) {
     const item = await fetchMenuItemById(items[0].id!);
     if (item && item.id) {
       const menuRef = doc(db, "menu", item.id);
-      console.log(item.itemQuantity);
-      //   await updateDoc(menuRef, {
-      //     inventory: item.inventory ? item.inventory - item.itemQuantity : 0,
-      //   });
+      // console.log(item.itemQuantity);
+      await updateDoc(menuRef, {
+        inventory: item.inventory ? item.inventory - (item.quantity || -1) : 0,
+      });
     }
   }
   return { message: "Successfully updated inventory" };
