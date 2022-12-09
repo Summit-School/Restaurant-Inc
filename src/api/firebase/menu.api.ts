@@ -66,11 +66,12 @@ export async function fetchMenuItemById(id: string) {
 export async function updateInventory(items: MenuItem[]) {
   for (let i = 0; i < items.length; i++) {
     const item = await fetchMenuItemById(items[0].id!);
+    const incomingItem = items[i]
     if (item && item.id) {
       const menuRef = doc(db, "menu", item.id);
       // console.log(item.itemQuantity);
       await updateDoc(menuRef, {
-        inventory: item.inventory ? item.inventory - (item.quantity || -1) : 0,
+        inventory: item.inventory ? item.inventory - (incomingItem.quantity || 1) : 0,
       });
     }
   }
