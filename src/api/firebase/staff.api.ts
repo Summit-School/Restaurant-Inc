@@ -41,6 +41,7 @@ export const getStaffByType = (
       onSnapshot(collection(getFirestore(), "kitchen"), (res) => {
         callBack(res.docs.map((doc) => doc.data() as User));
       });
+      return;
     case "INVENTORY":
       onSnapshot(collection(getFirestore(), "inventory"), (res) => {
         callBack(res.docs.map((doc) => doc.data() as User));
@@ -167,14 +168,14 @@ async function getStaffInformation(phone: string): Promise<User | null> {
     services.length > 0
       ? services[0]
       : cashier.length > 0
-      ? cashier[0]
-      : counter.length > 0
-      ? counter[0]
-      : kitchen.length > 0
-      ? kitchen[0]
-      : inventory.length > 0
-      ? inventory[0]
-      : null;
+        ? cashier[0]
+        : counter.length > 0
+          ? counter[0]
+          : kitchen.length > 0
+            ? kitchen[0]
+            : inventory.length > 0
+              ? inventory[0]
+              : null;
   return staff;
 }
 
