@@ -15,7 +15,8 @@ export interface Order {
 
 export interface Table {
   id: string;
-  order?: Order;
+  orders?: Order[];
+  state?: "ORDERED" | "AVAILABLE" | "SERVED" | "PAID";
   floor?: string;
   number: string
 }

@@ -22,7 +22,7 @@ import { sendNotification } from "../oneSignal/notifications.api.ts";
 import { loginAdmin } from "./auth.api.ts";
 import { updateInventory } from "./menu.api.ts";
 
-export function addToInventory(inventory: InventoryItem) {}
+export function addToInventory(inventory: InventoryItem) { }
 
 /**
  * Gets all orders that are currently pending
@@ -47,7 +47,7 @@ export function fetchPendingOrders(callBack: (orders: Order[]) => void) {
  */
 
 export function fetchAllOrders(callBack: (orders: Order[]) => void) {
-  const adminRef = collection(db, "all_orders");
+  const adminRef = collection(db, "all_tables");
   onSnapshot(adminRef, (res) => {
     const orders = res.docs.map((doc) => doc.data() as Order);
     callBack(orders);
@@ -62,8 +62,8 @@ export function fetchAllOrders(callBack: (orders: Order[]) => void) {
  */
 
 export async function AddOrderToPending(order: Order, user: User) {
-  const tableOrder = await isTableOccupied(order.table.id);
-  if (tableOrder) {
+  const tableOrders = await isTableOccupied(order.table.id);
+  if (tableOrders) {
     const error = new Error();
     error.message =
       "Table is already occupied please free table before placing order";
@@ -76,7 +76,7 @@ export async function AddOrderToPending(order: Order, user: User) {
 
   const tableOrderRef = doc(db, "all_tables", order.table.id);
 
-  await setDoc(tableOrderRef, { ...order.table, order });
+  await setDoc(tableOrderRef, { ...order.table, orders: [order] } as Table);
   await sendNotification({
     title: "placed order",
     description: `An order has just been added to table ${order.table.id}`,
@@ -84,6 +84,31 @@ export async function AddOrderToPending(order: Order, user: User) {
 
   return { message: "successfully placed order" };
 }
+
+
+
+
+export async function AddOrderToTable(order: Order, user: User) {
+  const tableOrders = await isTableOccupied(order.table.id);
+
+  order.id = uuid.v4();
+  order.state = "ORDERED";
+  order.service = user;
+  order.timestamp = Date.now();
+
+  const tableOrderRef = doc(db, "all_tables", order.table.id);
+
+  await setDoc(tableOrderRef, { ...order.table, orders: [...(tableOrders || []), order] } as Table);
+  await sendNotification({
+    title: "placed order",
+    description: `An order has just been added to table ${order.table.id}`,
+  });
+
+  return { message: "successfully placed order" };
+}
+
+
+
 
 /**
  * Get adds an order for a table
@@ -95,15 +120,32 @@ export async function AddOrderToPending(order: Order, user: User) {
 export async function serveOrder(order: Order, user: User) {
   order.state = "SERVED";
   order.kitchen = user;
+  let tableOrders = await isTableOccupied(order.table.id);
 
-  const pendingOrderRef = doc(db, "all_tables", order.table.id);
+  if (!tableOrders) {
+    const error = new Error();
+    error.message = "there are no orders on this table"
+    throw error;
+  }
 
-  await setDoc(pendingOrderRef, { ...order.table, order });
-  await updateInventory(order.drinks);
-  await sendNotification({
-    title: "served order",
-    description: `Table ${order.table.id} has just been served`,
-  });
+  const matchedIndex = tableOrders.findIndex(thisOrder => {
+    return thisOrder.id == order.id;
+  })
+
+  if (matchedIndex >= 0) {
+    tableOrders[matchedIndex] = order;
+
+    const pendingOrderRef = doc(db, "all_tables", order.table.id);
+
+    await setDoc(pendingOrderRef, { ...order.table, orders: tableOrders } as Table);
+    await updateInventory(order.drinks);
+    await sendNotification({
+      title: "served order",
+      description: `Table ${order.table.id} has just been served`,
+    });
+  }
+
+
 
   return { message: "successfully served order" };
 }
@@ -115,11 +157,11 @@ export async function serveOrder(order: Order, user: User) {
  * @returns the order if the table is occupied or null otherwise
  */
 
-export async function isTableOccupied(tableId: string): Promise<Order | null> {
+export async function isTableOccupied(tableId: string): Promise<Order[] | null> {
   const tableRef = doc(db, "all_tables", tableId);
   return getDoc(tableRef).then((res) => {
-    const data = res.data();
-    return data ? (data as Table).order! : null;
+    const data = res.data() as Table;
+    return data.orders || null;
   });
 }
 
