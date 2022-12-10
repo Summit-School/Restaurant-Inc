@@ -5,7 +5,7 @@ import { BiMoney } from "react-icons/bi";
 import { AiOutlineTransaction } from "react-icons/ai";
 import DashboardCards from "../../../components/account/dashboardCards/DashboardCards";
 import PendingOrders from "../../../components/account/pendingOrders/PendingOrders";
-import CompletedOrders from "../../../components/account/completedOrders/CompletedOrders";
+// import CompletedOrders from "../../../components/account/completedOrders/CompletedOrders";
 import { useState, useEffect } from "react";
 import {
   fetchAllOrders,
@@ -132,9 +132,9 @@ const Dashboard = () => {
             <div className="pending-order">
               <PendingOrders />
             </div>
-            <div className="completed-order">
+            {/* <div className="completed-order">
               <CompletedOrders />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

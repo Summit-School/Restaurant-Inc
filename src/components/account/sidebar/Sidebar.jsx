@@ -60,6 +60,12 @@ const Sidebar = () => {
             </li>
             <li>
               <span className="icon">
+                <FaListAlt size={28} />
+              </span>
+              <Link to="/tables">TABLES</Link>
+            </li>
+            <li>
+              <span className="icon">
                 <AiFillSetting size={28} />
               </span>
               <Link to="/settings">SETTINGS</Link>

@@ -5,6 +5,7 @@ import Dashboard from "./pages/account/dashboard/Dashboard";
 import Settings from "./pages/account/settings/Settings";
 import Users from "./pages/account/users/Users";
 import Menu from "./pages/account/menu/Menu";
+import AllTables from "./pages/account/tables/Tables";
 import OrderHistory from "./pages/account/history/OrderHistory";
 import Attendance from "./pages/account/attendance/Attendance";
 
@@ -90,6 +91,14 @@ function App() {
             element={
               <ProtectAdmin>
                 <Menu />
+              </ProtectAdmin>
+            }
+          />
+          <Route
+            path="/tables"
+            element={
+              <ProtectAdmin>
+                <AllTables />
               </ProtectAdmin>
             }
           />

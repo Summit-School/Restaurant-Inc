@@ -28,7 +28,7 @@ const Inventory = () => {
                   className="accordion-button"
                   type="button"
                   data-bs-toggle="collapse"
-                  data-bs-target={`#collapseCashier${index}`}
+                  data-bs-target={`#collapseInventory${index}`}
                   aria-expanded="true"
                   aria-controls="collapseOne"
                 >
@@ -36,7 +36,7 @@ const Inventory = () => {
                 </button>
               </h2>
               <div
-                id={`collapseCashier${index}`}
+                id={`collapseInventory${index}`}
                 className="accordion-collapse collapse"
                 aria-labelledby="headingOne"
                 data-bs-parent="#accordionExample"
