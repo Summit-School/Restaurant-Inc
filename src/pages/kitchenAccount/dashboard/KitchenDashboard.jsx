@@ -7,20 +7,36 @@ import { MdViewList, MdPendingActions } from "react-icons/md";
 import { onSnapshotGetAllTables } from "../../../api/firebase/admin.api.ts";
 
 const KitchenDashboard = () => {
-  const [pendingList, setPendingList] = useState([]);
-  const [waitedList, setWaitedList] = useState([]);
+  const [numberOfOrdered, setNumberOfOrdered] = useState(0);
+  const [numberOfServed, setNumberOfServed] = useState(0);
 
   useEffect(() => {
     onSnapshotGetAllTables((response) => {
-      let orders = response.filter(
-        (order) => order.order && order.order.state === "ORDERED"
-      );
-      setPendingList(orders);
+      // Get all tables with orders
+      let output = response.filter((output) => output.orders);
 
-      let waited = response.filter(
-        (order) => order.order && order.order.state === "SERVED"
+      // Filter tables and return the orders array
+      let orders = [];
+      output.map((order) => orders.push(order.orders));
+
+      // Filter orders according to state
+      let ordered = orders.map(
+        (order) =>
+          order.filter((orderObj) => orderObj.state === "ORDERED").length
       );
-      setWaitedList(waited);
+
+      let served = orders.map(
+        (order) =>
+          order.filter((orderObj) => orderObj.state === "SERVED").length
+      );
+
+      let sumOfOrderedTables = 0;
+      ordered.map((sum) => (sumOfOrderedTables += sum));
+      setNumberOfOrdered(sumOfOrderedTables);
+
+      let sumOfServedTables = 0;
+      served.map((sum) => (sumOfServedTables += sum));
+      setNumberOfServed(sumOfServedTables);
     });
   }, []);
 
@@ -35,14 +51,14 @@ const KitchenDashboard = () => {
           <DashboardCards
             icon={<MdPendingActions size={35} />}
             title="Total pending delivery"
-            value={formatMoney(pendingList.length)}
+            value={formatMoney(numberOfOrdered)}
             bgColor="khaki"
             cardColor="orange"
           />
           <DashboardCards
             icon={<MdViewList size={35} />}
             title="Total tables served"
-            value={formatMoney(waitedList.length)}
+            value={formatMoney(numberOfServed)}
             bgColor="lightgrey"
             cardColor="grey"
           />

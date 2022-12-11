@@ -12,17 +12,29 @@ const TablesPage = () => {
 
   useEffect(() => {
     onSnapshotGetAllTables((response) => {
-      let orders = response.filter(
-        (order) =>
-          order.order &&
-          (order.order.state === "ORDERED") | (order.order.state === "SERVED")
-      );
-      setPendingList(orders);
+      // Get all tables with orders
+      let output = response.filter((output) => output.orders);
 
-      let waited = response.filter(
-        (order) => order.order && order.order.state === "PAID"
+      // Filter tables and return the orders array
+      let orders = [];
+      output.map((order) => orders.push(order.orders));
+
+      // Filter orders according to state
+      let pending = orders.map((order) =>
+        order.filter(
+          (orderObj) =>
+            (orderObj.state === "ORDERED") | (orderObj.state === "SERVED")
+        )
       );
-      setWaitedList(waited);
+      setPendingList(pending);
+
+      let waited = orders.map(
+        (order) => order.filter((orderObj) => orderObj.state === "PAID").length
+      );
+
+      let sumOfWaitedTables = 0;
+      waited.map((sum) => (sumOfWaitedTables += sum));
+      setWaitedList(sumOfWaitedTables);
     });
   }, []);
 
@@ -44,7 +56,7 @@ const TablesPage = () => {
           <DashboardCards
             icon={<AiOutlineTable size={35} />}
             title="Total waited tables"
-            value={formatMoney(waitedList.length)}
+            value={formatMoney(waitedList)}
             bgColor="cornflowerblue"
             cardColor="blue"
           />

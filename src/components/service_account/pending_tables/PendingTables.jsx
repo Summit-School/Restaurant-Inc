@@ -1,44 +1,32 @@
 import { useState, useEffect } from "react";
 import { onSnapshotGetAllTables } from "../../../api/firebase/admin.api.ts";
+import FoodList from "./FoodList";
+import DrinkList from "./DrinkList";
 
 const PendingTables = () => {
-  const [sorted, setSorted] = useState([]);
   const [allOrders, setAllOrders] = useState([]);
-  const [pendingList, setPendingList] = useState([]);
 
   useEffect(() => {
-    const cashier = JSON.parse(localStorage.getItem("cashier"));
+    const service = JSON.parse(localStorage.getItem("service"));
     onSnapshotGetAllTables((response) => {
-      console.log("Tables", response);
-
       // Get all tables with orders
       let output = response.filter((output) => output.orders);
-      setSorted(output);
 
       // Filter tables and return the orders array
       let orders = [];
       output.map((order) => orders.push(order.orders));
-      setAllOrders(orders);
 
       // Filter orders according to state
-      // let finalOrders = [];
       let finalOrders = orders.map((order) =>
-        order.map(
+        order.filter(
           (orderObj) =>
-            orderObj.service.phone === cashier.phone &&
+            orderObj.service.phone === service.phone &&
             (orderObj.state === "ORDERED") | (orderObj.state === "SERVED")
         )
       );
-
-      console.log("sorted", orders);
-      console.log("orders", finalOrders);
+      setAllOrders(finalOrders);
     });
   }, []);
-
-  const formatMoney = (amount) => {
-    let dollarUSLocale = Intl.NumberFormat("en-US");
-    return dollarUSLocale.format(amount);
-  };
 
   return (
     <div className="container service-pending-tables">
@@ -47,14 +35,6 @@ const PendingTables = () => {
         {allOrders.length > 0
           ? allOrders.map((pendingList) =>
               pendingList.map((order, index) => {
-                let drinkTotal = 0;
-                let foodTotal = 0;
-                order.drinks.map((drink) => {
-                  drinkTotal += drink.price * drink.quantity;
-                });
-                order.food.map((food) => {
-                  foodTotal += food.price * food.quantity;
-                });
                 return (
                   <div className="accordion-item" key={index}>
                     <h2 className="accordion-header" id="headingOne">
@@ -98,42 +78,8 @@ const PendingTables = () => {
                       data-bs-parent="#accordionExample"
                     >
                       <div className="accordion-body">
-                        <ul>
-                          {order.food.map((item, index) => (
-                            <li key={index}>
-                              <span className="item">{item.itemName}</span>
-                              <span className="item">{item.quantity}</span>
-                              <span className="price">
-                                {formatMoney(item.price * item.quantity)} FCFA
-                              </span>
-                            </li>
-                          ))}
-
-                          <li className="mt-3 total-list">
-                            <span className="total">Total price</span>
-                            <span className="total-price">
-                              {formatMoney(foodTotal)} FCFA
-                            </span>
-                          </li>
-                        </ul>
-
-                        <ul>
-                          {order.drinks.map((item, index) => (
-                            <li key={index}>
-                              <span className="item">{item.itemName}</span>
-                              <span className="item">{item.quantity}</span>
-                              <span className="price">
-                                {formatMoney(item.price * item.quantity)} FCFA
-                              </span>
-                            </li>
-                          ))}
-                          <li className="mt-3 total-list">
-                            <span className="total">Total price</span>
-                            <span className="total-price">
-                              {formatMoney(drinkTotal)} FCFA
-                            </span>
-                          </li>
-                        </ul>
+                        <FoodList order={order} />
+                        <DrinkList order={order} />
                       </div>
                     </div>
                   </div>
