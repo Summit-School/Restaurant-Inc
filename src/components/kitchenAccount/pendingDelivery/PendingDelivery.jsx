@@ -64,9 +64,12 @@ const PendingDelivery = () => {
                       data-bs-toggle="collapse"
                       data-bs-target={`#collapseKitchenPending${index}`}
                       aria-expanded="true"
-                      aria-controls="collapseOne"
+                      aria-controls="collapseKitchenPending"
                     >
-                      Table number {order.table.id}
+                      Table number{" "}
+                      {order.table.floor
+                        ? order.table.number + " (" + order.table.floor + ")"
+                        : order.table.number}
                       {order.state === "ORDERED" ? (
                         <span
                           className="status"

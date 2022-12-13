@@ -29,65 +29,66 @@ const PendingOrders = () => {
       <div className="pending-heading">Orders</div>
       {allOrders.length > 0
         ? allOrders.map((pendingList) =>
-            pendingList.map((order, index) => {
-              return (
-                <div className="accordion-item" key={index}>
-                  <h2 className="accordion-header" id="headingOne">
-                    <button
-                      className="accordion-button"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target={`#collapseCounterOne${index}`}
-                      aria-expanded="true"
-                      aria-controls="collapseOne"
-                    >
-                      Table number {order.table.id}
-                      {order.state === "ORDERED" ? (
-                        <span
-                          className="status"
-                          style={{ backgroundColor: "yellow", color: "grey" }}
-                        >
-                          {order.state}
-                        </span>
-                      ) : order.state === "SERVED" ? (
-                        <span
-                          className="status"
-                          style={{ backgroundColor: "blue", color: "white" }}
-                        >
-                          {order.state}
-                        </span>
-                      ) : (
-                        <span
-                          className="status"
-                          style={{ backgroundColor: "green", color: "white" }}
-                        >
-                          {order.state}
-                        </span>
-                      )}
-                    </button>
-                  </h2>
-                  <div
-                    id={`collapseCounterOne${index}`}
-                    className="accordion-collapse collapse"
-                    aria-labelledby="headingOne"
-                    data-bs-parent="#accordionExample"
+            pendingList.map((order, index) => (
+              <div className="accordion-item" key={index}>
+                <h2 className="accordion-header" id="headingOne">
+                  <button
+                    className="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target={`#counterOne${index}`}
+                    aria-expanded="true"
+                    aria-controls="collapseOne"
                   >
-                    <div className="accordion-body">
-                      <ul>
-                        {order.drinks.map((item, index) => (
-                          <li key={index}>
-                            <span className="item">{item.itemName}</span>
-                            <span className="item">
-                              {item.quantity} Bottle(s)
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                    Table number{" "}
+                    {order.table.floor
+                      ? order.table.number + " (" + order.table.floor + ")"
+                      : order.table.number}
+                    {order.state === "ORDERED" ? (
+                      <span
+                        className="status"
+                        style={{ backgroundColor: "yellow", color: "grey" }}
+                      >
+                        {order.state}
+                      </span>
+                    ) : order.state === "SERVED" ? (
+                      <span
+                        className="status"
+                        style={{ backgroundColor: "blue", color: "white" }}
+                      >
+                        {order.state}
+                      </span>
+                    ) : (
+                      <span
+                        className="status"
+                        style={{ backgroundColor: "green", color: "white" }}
+                      >
+                        {order.state}
+                      </span>
+                    )}
+                  </button>
+                </h2>
+                <div
+                  id={`counterOne${index}`}
+                  className="accordion-collapse collapse"
+                  aria-labelledby="headingOne"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div className="accordion-body">
+                    <ul>
+                      {order.drinks.map((item, index) => (
+                        <li key={index}>
+                          <span className="item">{item.itemName}</span>
+                          <span className="item">
+                            {item.quantity} Bottle(s)
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
-              );
-            })
+              </div>
+            ))
           )
         : "No Pending Oders"}
     </div>

@@ -45,7 +45,10 @@ const PendingOrders = () => {
                       aria-expanded="true"
                       aria-controls="collapseOne"
                     >
-                      Table number {order.table.id}
+                      Table number{" "}
+                      {order.table.floor
+                        ? order.table.number + " (" + order.table.floor + ")"
+                        : order.table.number}
                       {order.state === "ORDERED" ? (
                         <span
                           className="status"

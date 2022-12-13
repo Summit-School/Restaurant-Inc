@@ -1,13 +1,19 @@
 import { useState, useEffect } from "react";
 import Moment from "react-moment";
-import { fetchAllOrders } from "../../../api/firebase/admin.api.ts";
+import { getPaidOrders } from "../../../api/firebase/cashier.api.ts";
 
 const OrderHistory = () => {
-  const [pendingList, setPendingList] = useState([]);
+  const [allOrders, setAllOrders] = useState([]);
 
   useEffect(() => {
-    fetchAllOrders((response) => {
-      setPendingList(response);
+    getPaidOrders((response) => {
+      // Get all tables with orders
+      let output = response.filter((output) => output.order);
+
+      // Filter tables and return the orders array
+      let orders = [];
+      output.map((order) => orders.push(order.order));
+      setAllOrders(orders);
     });
   }, []);
 
@@ -19,14 +25,14 @@ const OrderHistory = () => {
   return (
     <div className="accordion" id="accordionExample">
       <div className="pending-heading">Order History</div>
-      {pendingList
-        ? pendingList.map((order, index) => {
+      {allOrders.length > 0
+        ? allOrders.map((order, index) => {
             let drinkTotal = 0;
             let foodTotal = 0;
-            order.order.drinks.map((drink) => {
+            order.drinks.map((drink) => {
               drinkTotal += drink.price * drink.quantity;
             });
-            order.order.food.map((food) => {
+            order.food.map((food) => {
               foodTotal += food.price * food.quantity;
             });
             return (
@@ -40,27 +46,30 @@ const OrderHistory = () => {
                     aria-expanded="true"
                     aria-controls="collapseOne"
                   >
-                    Table number {order.order.table.id}
-                    {order.order.state === "ORDERED" ? (
+                    Table number{" "}
+                    {order.table.floor
+                      ? order.table.number + " (" + order.table.floor + ")"
+                      : order.table.number}
+                    {order.state === "ORDERED" ? (
                       <span
                         className="status"
                         style={{ backgroundColor: "yellow", color: "grey" }}
                       >
-                        {order.order.state}
+                        {order.state}
                       </span>
-                    ) : order.order.state === "SERVED" ? (
+                    ) : order.state === "SERVED" ? (
                       <span
                         className="status"
                         style={{ backgroundColor: "blue", color: "white" }}
                       >
-                        {order.order.state}
+                        {order.state}
                       </span>
                     ) : (
                       <span
                         className="status"
                         style={{ backgroundColor: "green", color: "white" }}
                       >
-                        {order.order.state}
+                        {order.state}
                       </span>
                     )}
                   </button>
@@ -73,13 +82,13 @@ const OrderHistory = () => {
                 >
                   <div className="accordion-body">
                     <p>
-                      Order From {order.order.service.name} on{" "}
+                      Order From {order.service.name} on{" "}
                       <Moment format="HH:mm - DD:MM:YYYY ">
-                        {order.order.timestamp}
+                        {order.timestamp}
                       </Moment>
                     </p>
                     <ul>
-                      {order.order.food.map((item, index) => (
+                      {order.food.map((item, index) => (
                         <li key={index}>
                           <span className="item">{item.itemName}</span>
                           <span className="item">{item.quantity}</span>
@@ -98,7 +107,7 @@ const OrderHistory = () => {
                     </ul>
 
                     <ul>
-                      {order.order.drinks.map((item, index) => (
+                      {order.drinks.map((item, index) => (
                         <li key={index}>
                           <span className="item">{item.itemName}</span>
                           <span className="item">{item.quantity}</span>

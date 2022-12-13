@@ -5,10 +5,15 @@ import DashboardCards from "../../../components/account/dashboardCards/Dashboard
 import Tables from "../../../components/service_account/tables/Tables";
 import { AiOutlineTable } from "react-icons/ai";
 import { onSnapshotGetAllTables } from "../../../api/firebase/admin.api.ts";
+import { getPaidOrders } from "../../../api/firebase/cashier.api.ts";
 
 const TablesPage = () => {
   const [pendingList, setPendingList] = useState([]);
   const [waitedList, setWaitedList] = useState([]);
+
+  // GET THE TIMESTAMPS OF THE START AND END OF THE CURRENT DAY
+  const startOfToday = new Date().setHours(0, 0, 0, 0);
+  const endOfToday = new Date().setHours(23, 59, 59, 999);
 
   useEffect(() => {
     onSnapshotGetAllTables((response) => {
@@ -27,14 +32,21 @@ const TablesPage = () => {
         )
       );
       setPendingList(pending);
+    });
 
-      let waited = orders.map(
-        (order) => order.filter((orderObj) => orderObj.state === "PAID").length
+    getPaidOrders((response) => {
+      // Get all tables with orders
+      let output = response.filter(
+        (output) =>
+          output.order &&
+          output.order.timestamp >= startOfToday &&
+          output.order.timestamp <= endOfToday
       );
 
-      let sumOfWaitedTables = 0;
-      waited.map((sum) => (sumOfWaitedTables += sum));
-      setWaitedList(sumOfWaitedTables);
+      // Filter tables and return the orders array
+      let orders = [];
+      output.map((order) => orders.push(order.order));
+      setWaitedList(orders);
     });
   }, []);
 
@@ -56,7 +68,7 @@ const TablesPage = () => {
           <DashboardCards
             icon={<AiOutlineTable size={35} />}
             title="Total waited tables"
-            value={formatMoney(waitedList)}
+            value={formatMoney(waitedList.length)}
             bgColor="cornflowerblue"
             cardColor="blue"
           />

@@ -5,10 +5,15 @@ import DashboardCards from "../../../components/account/dashboardCards/Dashboard
 import PendingOrders from "../../../components/cashierAccount/pendingOrders/PendingOrders";
 import { MdViewList } from "react-icons/md";
 import { onSnapshotGetAllTables } from "../../../api/firebase/admin.api.ts";
+import { getPaidOrders } from "../../../api/firebase/cashier.api.ts";
 
 const CashierDashboard = () => {
   const [numberOfPending, setNumberOfPending] = useState(0);
   const [numberOfPaid, setNumberOfPaid] = useState(0);
+
+  // GET THE TIMESTAMPS OF THE START AND END OF THE CURRENT DAY
+  const startOfToday = new Date().setHours(0, 0, 0, 0);
+  const endOfToday = new Date().setHours(23, 59, 59, 999);
 
   useEffect(() => {
     onSnapshotGetAllTables((response) => {
@@ -28,17 +33,24 @@ const CashierDashboard = () => {
           ).length
       );
 
-      let paid = orders.map(
-        (order) => order.filter((orderObj) => orderObj.state === "PAID").length
-      );
-
       let sumOfOrderedTables = 0;
       ordered.map((sum) => (sumOfOrderedTables += sum));
       setNumberOfPending(sumOfOrderedTables);
 
-      let sumOfServedTables = 0;
-      paid.map((sum) => (sumOfServedTables += sum));
-      setNumberOfPaid(sumOfServedTables);
+      getPaidOrders((response) => {
+        // Get all tables with orders
+        let output = response.filter(
+          (output) =>
+            output.order &&
+            output.order.timestamp >= startOfToday &&
+            output.order.timestamp <= endOfToday
+        );
+
+        // Filter tables and return the orders array
+        let orders = [];
+        output.map((order) => orders.push(order.order));
+        setNumberOfPaid(orders);
+      });
     });
   }, []);
   const formatMoney = (amount) => {
@@ -59,7 +71,7 @@ const CashierDashboard = () => {
           <DashboardCards
             icon={<MdViewList size={35} />}
             title="Total completed orders"
-            value={formatMoney(numberOfPaid)}
+            value={formatMoney(numberOfPaid.length)}
             bgColor="lightgrey"
             cardColor="grey"
           />
