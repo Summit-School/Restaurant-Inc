@@ -10,7 +10,7 @@ const Tables = () => {
   const [tables, setTables] = useState([]);
   useEffect(() => {
     onSnapshotGetAllTables((response) => {
-      console.log(response);
+      // console.log(response);
       setTables(response);
     });
   }, []);
@@ -18,19 +18,19 @@ const Tables = () => {
     <div>
       {tables
         ? tables.map((table, index) => (
-            <button
-              key={index}
-              className="table-btn"
-              onClick={() => {
-                setTable(table);
-                setShowMenu(true);
-              }}
-            >
-              {table.floor
-                ? "Table" + table.number + " (" + table.floor + ")"
-                : table.number}
-            </button>
-          ))
+          <button
+            key={index}
+            className="table-btn"
+            onClick={() => {
+              setTable(table);
+              setShowMenu(true);
+            }}
+          >
+            {table.floor
+              ? "Table" + table.number + " (" + table.floor + ")"
+              : table.number}
+          </button>
+        ))
         : "<p>No tables Founds</p>"}
       <Menu show={showMenu} table={table} onHide={() => setShowMenu(false)} />
     </div>
