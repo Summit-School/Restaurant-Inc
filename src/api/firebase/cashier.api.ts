@@ -54,3 +54,12 @@ export async function markOrderAsPaid(order: Order, user: User) {
 
   return { message: "successfully paid for order" };
 }
+
+
+export async function getPaidOrders(onSuccess: (orders: Order[]) => void) {
+
+  const orderRef = collection(db, "all_orders");
+  onSnapshot(orderRef, (res) => {
+    onSuccess(res.docs.map((doc) => doc.data() as Order));
+  });
+}
