@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import {
   onSnapshotGetAllTables,
+  fetchAllOrders,
   // freeTable,
 } from "../../../api/firebase/admin.api.ts";
 // import { toast } from "react-toastify";
@@ -10,9 +11,11 @@ import DrinkList from "./DrinkList";
 const CompletedTables = () => {
   const [allOrders, setAllOrders] = useState([]);
   // const [loading, setLoading] = useState(false);
+  console.log(allOrders);
 
   useEffect(() => {
-    onSnapshotGetAllTables((response) => {
+    fetchAllOrders((response) => {
+      console.log(response);
       // Get all tables with orders
       let output = response.filter((output) => output.orders);
 
@@ -21,7 +24,8 @@ const CompletedTables = () => {
       output.map((order) => orders.push(order.orders));
 
       // Filter orders according to state
-      let finalOrders = orders.map((order) =>
+      let finalOrders = [];
+      orders.map((order) =>
         order.filter((orderObj) => orderObj.state === "PAID")
       );
       setAllOrders(finalOrders);

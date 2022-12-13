@@ -4,7 +4,7 @@ import { onSnapshotGetAllTables } from "../../../api/firebase/admin.api.ts";
 const Served = () => {
   const [allOrders, setAllOrders] = useState([]);
   const [numberOfServed, setNumberOfServed] = useState(0);
-  console.log(allOrders);
+  console.log(numberOfServed);
 
   useEffect(() => {
     onSnapshotGetAllTables((response) => {
@@ -34,7 +34,7 @@ const Served = () => {
   return (
     <div className="accordion" id="accordionExample">
       <div className="pending-heading">Served</div>
-      {numberOfServed > 0
+      {numberOfServed
         ? allOrders.map((served) =>
             served.map((order, index) => {
               let drinkTotal = 0;
