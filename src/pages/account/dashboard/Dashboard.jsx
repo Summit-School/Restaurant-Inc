@@ -7,10 +7,8 @@ import DashboardCards from "../../../components/account/dashboardCards/Dashboard
 import PendingOrders from "../../../components/account/pendingOrders/PendingOrders";
 // import CompletedOrders from "../../../components/account/completedOrders/CompletedOrders";
 import { useState, useEffect } from "react";
-import {
-  fetchAllOrders,
-  onSnapshotGetAllTables,
-} from "../../../api/firebase/admin.api.ts";
+import { onSnapshotGetAllTables } from "../../../api/firebase/admin.api.ts";
+import { getPaidOrders } from "../../../api/firebase/cashier.api.ts";
 
 const Dashboard = () => {
   const [dailyOrder, setDailyOrder] = useState([]);
@@ -32,7 +30,7 @@ const Dashboard = () => {
   );
 
   useEffect(() => {
-    fetchAllOrders((response) => {
+    getPaidOrders((response) => {
       // DAILY ORDERS
       let dailyOrders = response.filter(
         (order) =>
