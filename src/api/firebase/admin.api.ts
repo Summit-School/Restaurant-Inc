@@ -22,7 +22,7 @@ import { sendNotification } from "../oneSignal/notifications.api.ts";
 import { loginAdmin } from "./auth.api.ts";
 import { updateInventory } from "./menu.api.ts";
 
-export function addToInventory(inventory: InventoryItem) {}
+export function addToInventory(inventory: InventoryItem) { }
 
 /**
  * Gets all orders that are currently pending
@@ -63,20 +63,37 @@ export function fetchAllOrders(callBack: (orders: Order[]) => void) {
 
 export async function AddOrderToPending(order: Order, user: User) {
   const tableOrders = await isTableOccupied(order.table.id);
-  // if (tableOrders) {
-  //   const error = new Error();
-  //   error.message =
-  //     "Table is already occupied please free table before placing order";
-  //   throw error;
-  // }
-  order.id = uuid.v4();
-  order.state = "ORDERED";
-  order.service = user;
-  order.timestamp = Date.now();
+
+
+  order = {
+    id: uuid.v4(),
+    state: "ORDERED",
+    service: user,
+    timestamp: Date.now(),
+    drinks: order.drinks,
+    food: order.food,
+    table: {
+      id: order.table.id,
+      number: order.table.number,
+      floor: order.table.floor || ""
+    },
+  }
 
   const tableOrderRef = doc(db, "all_tables", order.table.id);
 
-  await setDoc(tableOrderRef, { ...order.table, orders: [order] } as Table);
+  const table: Table = {
+    id: order.table.id,
+    number: order.table.number,
+    floor: order.table.floor || "",
+    state: order.state,
+    orders: tableOrders,
+  }
+  table.orders?.push(order)
+
+  console.log(table, "TABLE")
+  console.log(order, "ORDERS")
+
+  await setDoc(tableOrderRef, table as Table);
   await sendNotification({
     title: "placed order",
     description: `An order has just been added to table ${order.table.id}`,
@@ -85,27 +102,34 @@ export async function AddOrderToPending(order: Order, user: User) {
   return { message: "successfully placed order" };
 }
 
-export async function AddOrderToTable(order: Order, user: User) {
-  const tableOrders = await isTableOccupied(order.table.id);
+// export async function AddOrderToTable(order: Order, user: User) {
+//   const tableOrders = await isTableOccupied(order.table.id);
 
-  order.id = uuid.v4();
-  order.state = "ORDERED";
-  order.service = user;
-  order.timestamp = Date.now();
+//   order.id = uuid.v4();
+//   order.state = "ORDERED";
+//   order.service = user;
+//   order.timestamp = Date.now();
 
-  const tableOrderRef = doc(db, "all_tables", order.table.id);
+//   const tableOrderRef = doc(db, "all_tables", order.table.id);
 
-  await setDoc(tableOrderRef, {
-    ...order.table,
-    orders: [...(tableOrders || []), order],
-  } as Table);
-  await sendNotification({
-    title: "placed order",
-    description: `An order has just been added to table ${order.table.id}`,
-  });
+//   const table: Table = {
+//     id: order.table.id,
+//     number: order.table.number,
+//     floor: order.table.floor || "",
+//     state: order.state,
+//     orders: [...tableOrders, order]
+//   }
 
-  return { message: "successfully placed order" };
-}
+//   console.log(table)
+
+//   await setDoc(tableOrderRef, table as Table);
+//   await sendNotification({
+//     title: "placed order",
+//     description: `An order has just been added to table ${order.table.id}`,
+//   });
+
+//   return { message: "successfully placed order" };
+// }
 
 /**
  * Get adds an order for a table
@@ -157,11 +181,11 @@ export async function serveOrder(order: Order, user: User) {
 
 export async function isTableOccupied(
   tableId: string
-): Promise<Order[] | null> {
+): Promise<Order[]> {
   const tableRef = doc(db, "all_tables", tableId);
   return getDoc(tableRef).then((res) => {
     const data = res.data() as Table;
-    return data.orders || null;
+    return data.orders || [];
   });
 }
 
