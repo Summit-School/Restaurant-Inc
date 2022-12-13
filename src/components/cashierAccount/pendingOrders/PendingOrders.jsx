@@ -34,6 +34,7 @@ const PendingOrders = () => {
   }, []);
 
   const confirmPay = async (order) => {
+    console.log(order);
     setLoading(true);
     const user = await JSON.parse(localStorage.getItem("cashier"));
 
@@ -43,7 +44,7 @@ const PendingOrders = () => {
     };
 
     try {
-      const response = await markOrderAsPaid(order.order, userData);
+      const response = await markOrderAsPaid(order, userData);
       if (response) {
         setLoading(false);
         toast.success("Order Paid");
