@@ -7,6 +7,7 @@ import DrinkList from "./DrinkList";
 
 const PendingOrders = () => {
   const [allOrders, setAllOrders] = useState([]);
+  console.log(allOrders);
 
   useEffect(() => {
     onSnapshotGetAllTables((response) => {
@@ -32,7 +33,7 @@ const PendingOrders = () => {
     <div className="accordion" id="accordionExample">
       <div className="pending-heading">Pending Orders</div>
       {allOrders.length > 0
-        ? allOrders.map((pendingList) =>
+        ? allOrders.map((pendingList, indexKey) =>
             pendingList.map((order, index) => {
               return (
                 <div className="accordion-item" key={index}>
@@ -41,7 +42,7 @@ const PendingOrders = () => {
                       className="accordion-button"
                       type="button"
                       data-bs-toggle="collapse"
-                      data-bs-target={`#collapseAdminPending${index}`}
+                      data-bs-target={`#collapseOne${indexKey}`}
                       aria-expanded="true"
                       aria-controls="collapseOne"
                     >
@@ -74,7 +75,7 @@ const PendingOrders = () => {
                     </button>
                   </h2>
                   <div
-                    id={`collapseAdminPending${index}`}
+                    id={`collapseOne${indexKey}`}
                     className="accordion-collapse collapse"
                     aria-labelledby="headingOne"
                     data-bs-parent="#accordionExample"

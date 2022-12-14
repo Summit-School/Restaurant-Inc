@@ -5,6 +5,7 @@ const PaidOrders = () => {
   const [allOrders, setAllOrders] = useState([]);
   const [foodTotal, setFoodTotal] = useState([]);
   const [drinkTotal, setDrinkTotal] = useState([]);
+  console.log(allOrders);
 
   // GET THE TIMESTAMPS OF THE START AND END OF THE CURRENT DAY
   const startOfToday = new Date().setHours(0, 0, 0, 0);

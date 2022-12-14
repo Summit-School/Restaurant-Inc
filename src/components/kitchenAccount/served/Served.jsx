@@ -35,7 +35,7 @@ const Served = () => {
     <div className="accordion" id="accordionExample">
       <div className="pending-heading">Served</div>
       {numberOfServed
-        ? allOrders.map((served) =>
+        ? allOrders.map((served, indexKey) =>
             served.map((order, index) => {
               let drinkTotal = 0;
               let foodTotal = 0;
@@ -52,7 +52,7 @@ const Served = () => {
                       className="accordion-button"
                       type="button"
                       data-bs-toggle="collapse"
-                      data-bs-target={`#collapseOne${index}`}
+                      data-bs-target={`#collapseOne${indexKey}`}
                       aria-expanded="true"
                       aria-controls="collapseOne"
                     >
@@ -85,7 +85,7 @@ const Served = () => {
                     </button>
                   </h2>
                   <div
-                    id={`collapseOne${index}`}
+                    id={`collapseOne${indexKey}`}
                     className="accordion-collapse collapse"
                     aria-labelledby="headingOne"
                     data-bs-parent="#accordionExample"

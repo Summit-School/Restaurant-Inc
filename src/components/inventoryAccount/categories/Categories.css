@@ -34,3 +34,8 @@
 .category-name {
     width: 350px;
 }
+
+.delete-cat {
+    cursor: pointer;
+    color: red;
+}
