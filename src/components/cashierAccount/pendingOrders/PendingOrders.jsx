@@ -56,9 +56,8 @@ const PendingOrders = () => {
     }
   };
   const PrintAction = async (printDetails) => {
-    // await setPrint(printDetails);
-    console.log(printDetails.order);
-    navigate("/print", { state: { details: printDetails.order } });
+    console.log(printDetails);
+    navigate("/print", { state: { details: printDetails } });
   };
 
   const formatMoney = (amount) => {
