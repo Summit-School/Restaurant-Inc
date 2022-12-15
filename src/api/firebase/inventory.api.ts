@@ -122,14 +122,15 @@ export async function releaseInventoryItem(
         releaseQuantity + +previousRelease.itemQuantity;
     inventoryItem.itemQuantity = balanceInventoryQuantity;
 
-    const inventoryRef = doc(getFirestore(), "inventory", inventoryItem.id);
+    const inventoryRef = doc(getFirestore(), "inventory-record", inventoryItem.id);
     const released_stockRef = doc(
         getFirestore(),
         "released_stock",
         inventoryItem.id
     );
 
-    await setDoc(inventoryRef, inventoryItem);
+    balanceInventoryQuantity > 0 && await setDoc(inventoryRef, inventoryItem);
+    balanceInventoryQuantity <= 0 && await deleteDoc(inventoryRef);
     await setDoc(released_stockRef, previousRelease);
 
     return { message: "Successfully updated inventory" };
