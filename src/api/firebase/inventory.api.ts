@@ -65,6 +65,7 @@ export async function editToInventory(
     inventoryItem: InventoryItem,
     id: string
 ) {
+    inventoryItem.initialQuantity = inventoryItem.itemQuantity;
     const inventoryRef = doc(getFirestore(), "inventory-record", id);
 
     await setDoc(inventoryRef, inventoryItem);
