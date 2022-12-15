@@ -16,15 +16,9 @@ const CompletedTables = () => {
       // Get all tables with orders
       let output = response.filter(
         (output) =>
-          output.order &&
-          output.order.timestamp >= startOfToday &&
-          output.order.timestamp <= endOfToday
+          output.timestamp >= startOfToday && output.timestamp <= endOfToday
       );
-
-      // Filter tables and return the orders array
-      let orders = [];
-      output.map((order) => orders.push(order.order));
-      setAllOrders(orders);
+      setAllOrders(output);
     });
   }, []);
 

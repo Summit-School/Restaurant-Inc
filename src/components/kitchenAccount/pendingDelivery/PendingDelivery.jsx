@@ -53,7 +53,7 @@ const PendingDelivery = () => {
     <div className="accordion" id="accordionExample">
       <div className="pending-heading">Pending Delivery</div>
       {allOrders.length > 0
-        ? allOrders.map((pendingList) =>
+        ? allOrders.map((pendingList, indexKey) =>
             pendingList.map((order, index) => {
               return (
                 <div className="accordion-item" key={index}>
@@ -62,7 +62,7 @@ const PendingDelivery = () => {
                       className="accordion-button"
                       type="button"
                       data-bs-toggle="collapse"
-                      data-bs-target={`#collapseKitchenPending${index}`}
+                      data-bs-target={`#collapseKitchenPending${indexKey}`}
                       aria-expanded="true"
                       aria-controls="collapseKitchenPending"
                     >
@@ -95,7 +95,7 @@ const PendingDelivery = () => {
                     </button>
                   </h2>
                   <div
-                    id={`collapseKitchenPending${index}`}
+                    id={`collapseKitchenPending${indexKey}`}
                     className="accordion-collapse collapse"
                     aria-labelledby="headingOne"
                     data-bs-parent="#accordionExample"
@@ -104,7 +104,7 @@ const PendingDelivery = () => {
                       <ul>
                         {order.food.map((item, index) => (
                           <li key={index}>
-                            <span className="item">{item.itemName} Plates</span>
+                            <span className="item">{item.itemName}</span>
                             <span className="item">{item.quantity} Plates</span>
                           </li>
                         ))}

@@ -27,6 +27,7 @@ const InitialStock = () => {
             <th>Name</th>
             <th>Category</th>
             <th>Quantity</th>
+            <th>Single Price</th>
             <th>Total Price</th>
           </tr>
         </thead>
@@ -37,6 +38,7 @@ const InitialStock = () => {
                   <td>{item.itemName}</td>
                   <td>{item.subCategory?.name}</td>
                   <td>{formatMoney(item.itemQuantity)}</td>
+                  <td>{formatMoney(item.itemPrice)}</td>
                   <td>{formatMoney(item.itemPrice * item.itemQuantity)}</td>
                   <td>
                     <button

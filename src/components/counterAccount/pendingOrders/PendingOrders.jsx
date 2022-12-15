@@ -28,7 +28,7 @@ const PendingOrders = () => {
     <div className="accordion" id="accordionExample">
       <div className="pending-heading">Orders</div>
       {allOrders.length > 0
-        ? allOrders.map((pendingList) =>
+        ? allOrders.map((pendingList, indexKey) =>
             pendingList.map((order, index) => (
               <div className="accordion-item" key={index}>
                 <h2 className="accordion-header" id="headingOne">
@@ -36,7 +36,7 @@ const PendingOrders = () => {
                     className="accordion-button"
                     type="button"
                     data-bs-toggle="collapse"
-                    data-bs-target={`#counterOne${index}`}
+                    data-bs-target={`#counterOne${indexKey}`}
                     aria-expanded="true"
                     aria-controls="collapseOne"
                   >
@@ -69,7 +69,7 @@ const PendingOrders = () => {
                   </button>
                 </h2>
                 <div
-                  id={`counterOne${index}`}
+                  id={`counterOne${indexKey}`}
                   className="accordion-collapse collapse"
                   aria-labelledby="headingOne"
                   data-bs-parent="#accordionExample"
