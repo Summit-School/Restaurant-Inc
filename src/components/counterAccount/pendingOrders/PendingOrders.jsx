@@ -44,7 +44,7 @@ const PendingOrders = () => {
                     {order.table.floor
                       ? order.table.number + " (" + order.table.floor + ")"
                       : order.table.number}
-                    {order.state === "ORDERED" ? (
+                    {/* {order.state === "ORDERED" ? (
                       <span
                         className="status"
                         style={{ backgroundColor: "yellow", color: "grey" }}
@@ -65,7 +65,7 @@ const PendingOrders = () => {
                       >
                         {order.state}
                       </span>
-                    )}
+                    )} */}
                   </button>
                 </h2>
                 <div

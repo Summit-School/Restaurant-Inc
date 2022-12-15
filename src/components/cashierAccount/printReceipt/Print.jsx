@@ -54,6 +54,13 @@ const Print = (props) => {
   return (
     <div>
       <div id="printablediv">
+        <div className="print-logo">
+          <img src="/images/logo.jpeg" alt="" />
+        </div>
+        <p className="print-title">
+          PABLO LOUNGE BUEA: +237677522236/+237681796710{" "}
+        </p>
+        <hr />
         <table className="table table-striped">
           <thead>
             <tr>

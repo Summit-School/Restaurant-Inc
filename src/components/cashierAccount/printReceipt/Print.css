@@ -47,3 +47,19 @@
     border: none;
     font-weight: bold;
 }
+
+.print-logo {
+    width: 100%;
+}
+
+.print-logo img {
+    width: 15%;
+    margin-left: 40%;
+    border-radius: 10px;
+}
+
+.print-title {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+}
