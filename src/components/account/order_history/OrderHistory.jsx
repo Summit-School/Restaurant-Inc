@@ -7,14 +7,7 @@ const OrderHistory = () => {
 
   useEffect(() => {
     getPaidOrders((response) => {
-      console.log(response);
-      // Get all tables with orders
-      let output = response.filter((output) => output.order);
-
-      // Filter tables and return the orders array
-      let orders = [];
-      output.map((order) => orders.push(order.order));
-      setAllOrders(orders);
+      setAllOrders(response);
     });
   }, []);
 

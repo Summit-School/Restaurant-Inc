@@ -26,7 +26,7 @@ const Login = () => {
           };
           localStorage.setItem("cashier", JSON.stringify(cashier));
           setLoading(false);
-          await navigate("/cashier");
+          navigate("/cashier");
         }
         if (response.type === "SERVICE") {
           let service = {
@@ -36,7 +36,7 @@ const Login = () => {
           };
           localStorage.setItem("service", JSON.stringify(service));
           setLoading(false);
-          await navigate("/service");
+          navigate("/service");
         }
         if (response.type === "KITCHEN") {
           let kitchen = {
@@ -46,7 +46,7 @@ const Login = () => {
           };
           localStorage.setItem("kitchen", JSON.stringify(kitchen));
           setLoading(false);
-          await navigate("/kitchen");
+          navigate("/kitchen");
         }
         if (response.type === "COUNTER") {
           let counter = {
@@ -56,7 +56,7 @@ const Login = () => {
           };
           localStorage.setItem("counter", JSON.stringify(counter));
           setLoading(false);
-          await navigate("/counter");
+          navigate("/counter");
         }
       }
       console.log(response);

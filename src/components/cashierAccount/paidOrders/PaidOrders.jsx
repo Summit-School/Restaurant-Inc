@@ -5,7 +5,6 @@ const PaidOrders = () => {
   const [allOrders, setAllOrders] = useState([]);
   const [foodTotal, setFoodTotal] = useState([]);
   const [drinkTotal, setDrinkTotal] = useState([]);
-  console.log(allOrders);
 
   // GET THE TIMESTAMPS OF THE START AND END OF THE CURRENT DAY
   const startOfToday = new Date().setHours(0, 0, 0, 0);
@@ -13,29 +12,13 @@ const PaidOrders = () => {
 
   useEffect(() => {
     getPaidOrders((response) => {
-      // Get all tables with orders
+      // Get all for today
       let output = response.filter(
         (output) =>
-          output.order &&
-          output.order.timestamp >= startOfToday &&
-          output.order.timestamp <= endOfToday
+          output.timestamp >= startOfToday && output.timestamp <= endOfToday
       );
-
-      // Filter tables and return the orders array
-      let orders = [];
-      output.map((order) => orders.push(order.order));
-      setAllOrders(orders);
-
-      let drinkTotal = 0;
-      let foodTotal = 0;
-      orders.drinks.map((drink) => {
-        drinkTotal += drink.price * drink.quantity;
-      });
-      setDrinkTotal(drinkTotal);
-      orders.food.map((food) => {
-        foodTotal += food.price * food.quantity;
-      });
-      setFoodTotal(foodTotal);
+      setAllOrders(output);
+      console.log(output);
     });
   }, []);
 
@@ -48,6 +31,14 @@ const PaidOrders = () => {
       <div className="pending-heading">Completed Orders</div>
       {allOrders.length > 0
         ? allOrders.map((order, index) => {
+            let drinkTotal = 0;
+            let foodTotal = 0;
+            order.drinks.map((drink) => {
+              drinkTotal += drink.price * drink.quantity;
+            });
+            order.food.map((food) => {
+              foodTotal += food.price * food.quantity;
+            });
             return (
               <div className="accordion-item" key={index}>
                 <h2 className="accordion-header" id="headingOne">

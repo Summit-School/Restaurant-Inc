@@ -104,7 +104,7 @@ const PendingDelivery = () => {
                       <ul>
                         {order.food.map((item, index) => (
                           <li key={index}>
-                            <span className="item">{item.itemName} Plates</span>
+                            <span className="item">{item.itemName}</span>
                             <span className="item">{item.quantity} Plates</span>
                           </li>
                         ))}

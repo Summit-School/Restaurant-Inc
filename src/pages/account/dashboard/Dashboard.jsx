@@ -34,19 +34,17 @@ const Dashboard = () => {
       // DAILY ORDERS
       let dailyOrders = response.filter(
         (order) =>
-          order.order &&
-          order.order.timestamp >= startOfToday &&
-          order.order.timestamp <= endOfToday
+          order.timestamp >= startOfToday && order.timestamp <= endOfToday
       );
       setDailyOrder(dailyOrders);
       // GET DAILY PRICE
       let drinksPrice = 0;
       let foodPrice = 0;
       dailyOrders.map((order, index) => {
-        order.order.drinks.map((drink) => {
+        order.drinks.map((drink) => {
           drinksPrice += drink.price * drink.quantity;
         });
-        order.order.food.map((food) => {
+        order.food.map((food) => {
           foodPrice += food.price * food.quantity;
         });
       });
@@ -54,20 +52,17 @@ const Dashboard = () => {
 
       // MONTHLY ORDERS
       let monthlyOrders = response.filter(
-        (order) =>
-          order.order &&
-          order.order.timestamp >= firstDay &&
-          order.order.timestamp <= lastDay
+        (order) => order.timestamp >= firstDay && order.timestamp <= lastDay
       );
       setMonthlyOrder(monthlyOrders);
       // GET MONTHLY PRICE
       let monthlyDrinksPrice = 0;
       let monthlyFoodPrice = 0;
       monthlyOrders.map((order, index) => {
-        order.order.drinks.map((drink) => {
+        order.drinks.map((drink) => {
           monthlyDrinksPrice += drink.price * drink.quantity;
         });
-        order.order.food.map((food) => {
+        order.food.map((food) => {
           monthlyFoodPrice += food.price * food.quantity;
         });
       });

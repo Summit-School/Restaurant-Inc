@@ -31,22 +31,18 @@ const TablesPage = () => {
             (orderObj.state === "ORDERED") | (orderObj.state === "SERVED")
         )
       );
-      setPendingList(pending);
+      let numberOfPending = 0;
+      pending.map((orderArr) => (numberOfPending += orderArr.length));
+      setPendingList(numberOfPending);
     });
 
     getPaidOrders((response) => {
       // Get all tables with orders
       let output = response.filter(
         (output) =>
-          output.order &&
-          output.order.timestamp >= startOfToday &&
-          output.order.timestamp <= endOfToday
+          output.timestamp >= startOfToday && output.timestamp <= endOfToday
       );
-
-      // Filter tables and return the orders array
-      let orders = [];
-      output.map((order) => orders.push(order.order));
-      setWaitedList(orders);
+      setWaitedList(output);
     });
   }, []);
 
@@ -61,7 +57,7 @@ const TablesPage = () => {
           <DashboardCards
             icon={<AiOutlineTable size={35} />}
             title="Total pending tables"
-            value={formatMoney(pendingList.length)}
+            value={formatMoney(pendingList)}
             bgColor="lightgreen"
             cardColor="green"
           />
