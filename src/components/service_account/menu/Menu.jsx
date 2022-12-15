@@ -86,7 +86,7 @@ const Menu = (props) => {
 
     order.food = menuList.filter((menu) => menu.quantity > 0);
     order.drinks = drinksList.filter((drink) => drink.quantity > 0);
-    console.log(order);
+    // console.log(order);
     try {
       const response = await AddOrderToPending(order, userData);
       if (response) {
@@ -107,7 +107,7 @@ const Menu = (props) => {
       aria-labelledby="contained-modal-title-vcenter"
       centered
       className="text-center "
-      // key={remount}
+    // key={remount}
     >
       <Modal.Header className="change-password-header" closeButton>
         <Modal.Title
@@ -161,29 +161,29 @@ const Menu = (props) => {
               {showCategory
                 ? menuList
                   ? menuList.map((item, index) => (
-                      <tr key={index}>
-                        <td>{item.itemName}</td>
-                        <td>{formatMoney(item.price)} FCFA</td>
-                        <td>{item.quantity}</td>
-                        <td>
-                          <button
-                            className="minus"
-                            onClick={() => actionFood("remove", index)}
-                          >
-                            <AiOutlineMinus />
-                          </button>
-                          <button
-                            className="plus"
-                            onClick={() => actionFood("add", index)}
-                          >
-                            <AiOutlinePlus />
-                          </button>
-                        </td>
-                      </tr>
-                    ))
+                    <tr key={index}>
+                      <td>{item.itemName}</td>
+                      <td>{formatMoney(item.price)} FCFA</td>
+                      <td>{item.quantity}</td>
+                      <td>
+                        <button
+                          className="minus"
+                          onClick={() => actionFood("remove", index)}
+                        >
+                          <AiOutlineMinus />
+                        </button>
+                        <button
+                          className="plus"
+                          onClick={() => actionFood("add", index)}
+                        >
+                          <AiOutlinePlus />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
                   : "<p>No Menu Item</p>"
                 : drinksList
-                ? drinksList.map((item, index) => (
+                  ? drinksList.map((item, index) => (
                     <tr key={index}>
                       <td>{item.itemName}</td>
                       <td>{formatMoney(item.price)} FCFA</td>
@@ -204,7 +204,7 @@ const Menu = (props) => {
                       </td>
                     </tr>
                   ))
-                : "<p>No Menu Item</p>"}
+                  : "<p>No Menu Item</p>"}
             </tbody>
           </table>
         </div>

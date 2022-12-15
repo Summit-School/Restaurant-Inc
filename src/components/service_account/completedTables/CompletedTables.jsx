@@ -1,148 +1,91 @@
 import { useState, useEffect } from "react";
-import {
-  onSnapshotGetAllTables,
-  freeTable,
-} from "../../../api/firebase/admin.api.ts";
-import { toast } from "react-toastify";
+import { getPaidOrders } from "../../../api/firebase/cashier.api.ts";
+import FoodList from "./FoodList";
+import DrinkList from "./DrinkList";
 
 const CompletedTables = () => {
-  const [pendingList, setPendingList] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [allOrders, setAllOrders] = useState([]);
+  console.log(allOrders);
+
+  // GET THE TIMESTAMPS OF THE START AND END OF THE CURRENT DAY
+  const startOfToday = new Date().setHours(0, 0, 0, 0);
+  const endOfToday = new Date().setHours(23, 59, 59, 999);
 
   useEffect(() => {
-    onSnapshotGetAllTables((response) => {
-      let orders = response.filter(
-        (order) => order.order && order.order.state === "PAID"
+    getPaidOrders((response) => {
+      // Get all tables with orders
+      let output = response.filter(
+        (output) =>
+          output.order &&
+          output.order.timestamp >= startOfToday &&
+          output.order.timestamp <= endOfToday
       );
-      setPendingList(orders.reverse());
+
+      // Filter tables and return the orders array
+      let orders = [];
+      output.map((order) => orders.push(order.order));
+      setAllOrders(orders);
     });
   }, []);
-
-  const freeTableAction = async (order) => {
-    console.log(order.order);
-    try {
-      const response = await freeTable(order.order);
-      if (response) {
-        setLoading(false);
-        toast.success("Table Freed");
-      }
-    } catch (error) {
-      setLoading(false);
-      toast.error("Failed");
-      console.error(error);
-    }
-  };
-
-  const formatMoney = (amount) => {
-    let dollarUSLocale = Intl.NumberFormat("en-US");
-    return dollarUSLocale.format(amount);
-  };
 
   return (
     <div className="container service-pending-tables">
       <div className="accordion" id="accordionExample">
         <div className="pending-heading">Paid Orders</div>
-        {pendingList
-          ? pendingList.map((order, index) => {
-              let drinkTotal = 0;
-              let foodTotal = 0;
-              order.order.drinks.map((drink) => {
-                drinkTotal += drink.price * drink.quantity;
-              });
-              order.order.food.map((food) => {
-                foodTotal += food.price * food.quantity;
-              });
-              return (
-                <div className="accordion-item" key={index}>
-                  <h2 className="accordion-header" id="headingOne">
-                    <button
-                      className="accordion-button"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target={`#collapseOne${index}`}
-                      aria-expanded="true"
-                      aria-controls="collapseOne"
-                    >
-                      Table number {order.order.table.id}
-                      {order.order.state === "ORDERED" ? (
-                        <span
-                          className="status"
-                          style={{ backgroundColor: "yellow", color: "grey" }}
-                        >
-                          {order.order.state}
-                        </span>
-                      ) : order.order.state === "SERVED" ? (
-                        <span
-                          className="status"
-                          style={{ backgroundColor: "blue", color: "white" }}
-                        >
-                          {order.order.state}
-                        </span>
-                      ) : (
-                        <span
-                          className="status"
-                          style={{ backgroundColor: "green", color: "white" }}
-                        >
-                          {order.order.state}
-                        </span>
-                      )}
-                    </button>
-                  </h2>
-                  <div
-                    id={`collapseOne${index}`}
-                    className="accordion-collapse collapse"
-                    aria-labelledby="headingOne"
-                    data-bs-parent="#accordionExample"
+        {allOrders
+          ? allOrders.map((order, index) => (
+              <div className="accordion-item" key={index}>
+                <h2 className="accordion-header" id="headingOne">
+                  <button
+                    className="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target={`#collapseOne${index}`}
+                    aria-expanded="true"
+                    aria-controls="collapseOne"
                   >
-                    <div className="accordion-body">
-                      <ul>
-                        {order.order.food.map((item, index) => (
-                          <li key={index}>
-                            <span className="item">{item.itemName}</span>
-                            <span className="item">{item.quantity}</span>
-                            <span className="price">
-                              {formatMoney(item.price * item.quantity)} FCFA
-                            </span>
-                          </li>
-                        ))}
-
-                        <li className="mt-3 total-list">
-                          <span className="total">Total price</span>
-                          <span className="total-price">
-                            {formatMoney(foodTotal)} FCFA
-                          </span>
-                        </li>
-                      </ul>
-
-                      <ul>
-                        {order.order.drinks.map((item, index) => (
-                          <li key={index}>
-                            <span className="item">{item.itemName}</span>
-                            <span className="item">{item.quantity}</span>
-                            <span className="price">
-                              {formatMoney(item.price * item.quantity)} FCFA
-                            </span>
-                          </li>
-                        ))}
-                        <li className="mt-3 total-list">
-                          <span className="total">Total price</span>
-                          <span className="total-price">
-                            {formatMoney(drinkTotal)} FCFA
-                          </span>
-                        </li>
-                      </ul>
-                      <button
-                        className="paid-btn"
-                        onClick={() => freeTableAction(order)}
+                    Table number{" "}
+                    {order.table.floor
+                      ? order.table.number + " (" + order.table.floor + ")"
+                      : order.table.number}
+                    {order.state === "ORDERED" ? (
+                      <span
+                        className="status"
+                        style={{ backgroundColor: "yellow", color: "grey" }}
                       >
-                        {loading ? "Loading..." : "Free Table"}
-                      </button>
-                    </div>
+                        {order.state}
+                      </span>
+                    ) : order.state === "SERVED" ? (
+                      <span
+                        className="status"
+                        style={{ backgroundColor: "blue", color: "white" }}
+                      >
+                        {order.state}
+                      </span>
+                    ) : (
+                      <span
+                        className="status"
+                        style={{ backgroundColor: "green", color: "white" }}
+                      >
+                        {order.state}
+                      </span>
+                    )}
+                  </button>
+                </h2>
+                <div
+                  id={`collapseOne${index}`}
+                  className="accordion-collapse collapse"
+                  aria-labelledby="headingOne"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div className="accordion-body">
+                    <FoodList order={order} />
+                    <DrinkList order={order} />
                   </div>
                 </div>
-              );
-            })
-          : "No Pending Oders"}
+              </div>
+            ))
+          : "No Completed Oders"}
       </div>
     </div>
   );

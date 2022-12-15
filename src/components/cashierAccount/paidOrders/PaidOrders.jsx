@@ -1,15 +1,40 @@
 import { useState, useEffect } from "react";
-import { onSnapshotGetAllTables } from "../../../api/firebase/admin.api.ts";
+import { getPaidOrders } from "../../../api/firebase/cashier.api.ts";
 
 const PaidOrders = () => {
-  const [pendingList, setPendingList] = useState([]);
+  const [allOrders, setAllOrders] = useState([]);
+  const [foodTotal, setFoodTotal] = useState([]);
+  const [drinkTotal, setDrinkTotal] = useState([]);
+
+  // GET THE TIMESTAMPS OF THE START AND END OF THE CURRENT DAY
+  const startOfToday = new Date().setHours(0, 0, 0, 0);
+  const endOfToday = new Date().setHours(23, 59, 59, 999);
 
   useEffect(() => {
-    onSnapshotGetAllTables((response) => {
-      let orders = response.filter(
-        (order) => order.order && order.order.state === "PAID"
+    getPaidOrders((response) => {
+      // Get all tables with orders
+      let output = response.filter(
+        (output) =>
+          output.order &&
+          output.order.timestamp >= startOfToday &&
+          output.order.timestamp <= endOfToday
       );
-      setPendingList(orders.reverse());
+
+      // Filter tables and return the orders array
+      let orders = [];
+      output.map((order) => orders.push(order.order));
+      setAllOrders(orders);
+
+      let drinkTotal = 0;
+      let foodTotal = 0;
+      orders.drinks.map((drink) => {
+        drinkTotal += drink.price * drink.quantity;
+      });
+      setDrinkTotal(drinkTotal);
+      orders.food.map((food) => {
+        foodTotal += food.price * food.quantity;
+      });
+      setFoodTotal(foodTotal);
     });
   }, []);
 
@@ -20,16 +45,8 @@ const PaidOrders = () => {
   return (
     <div className="accordion" id="accordionExample">
       <div className="pending-heading">Completed Orders</div>
-      {pendingList
-        ? pendingList.map((order, index) => {
-            let drinkTotal = 0;
-            let foodTotal = 0;
-            order.order.drinks.map((drink) => {
-              drinkTotal += drink.price * drink.quantity;
-            });
-            order.order.food.map((food) => {
-              foodTotal += food.price * food.quantity;
-            });
+      {allOrders.length > 0
+        ? allOrders.map((order, index) => {
             return (
               <div className="accordion-item" key={index}>
                 <h2 className="accordion-header" id="headingOne">
@@ -41,27 +58,30 @@ const PaidOrders = () => {
                     aria-expanded="true"
                     aria-controls="collapseOne"
                   >
-                    Table number {order.order.table.id}
-                    {order.order.state === "ORDERED" ? (
+                    Table number{" "}
+                    {order.table.floor
+                      ? order.table.number + " (" + order.table.floor + ")"
+                      : order.table.number}
+                    {order.state === "ORDERED" ? (
                       <span
                         className="status"
                         style={{ backgroundColor: "yellow", color: "grey" }}
                       >
-                        {order.order.state}
+                        {order.state}
                       </span>
-                    ) : order.order.state === "SERVED" ? (
+                    ) : order.state === "SERVED" ? (
                       <span
                         className="status"
                         style={{ backgroundColor: "blue", color: "white" }}
                       >
-                        {order.order.state}
+                        {order.state}
                       </span>
                     ) : (
                       <span
                         className="status"
                         style={{ backgroundColor: "green", color: "white" }}
                       >
-                        {order.order.state}
+                        {order.state}
                       </span>
                     )}
                   </button>
@@ -74,7 +94,7 @@ const PaidOrders = () => {
                 >
                   <div className="accordion-body">
                     <ul>
-                      {order.order.food.map((item, index) => (
+                      {order.food.map((item, index) => (
                         <li key={index}>
                           <span className="item">{item.itemName}</span>
                           <span className="item">{item.quantity}</span>
@@ -93,7 +113,7 @@ const PaidOrders = () => {
                     </ul>
 
                     <ul>
-                      {order.order.drinks.map((item, index) => (
+                      {order.drinks.map((item, index) => (
                         <li key={index}>
                           <span className="item">{item.itemName}</span>
                           <span className="item">{item.quantity}</span>
@@ -114,7 +134,7 @@ const PaidOrders = () => {
               </div>
             );
           })
-        : "No Pending Oders"}
+        : "No Completed Oders"}
     </div>
   );
 };
