@@ -52,6 +52,7 @@ export async function deleteCategory(id: string) {
 
 export async function addToInventory(inventoryItem: InventoryItem) {
     inventoryItem.id = uuidv4();
+    inventoryItem.initialQuantity = inventoryItem.itemQuantity;
 
     const inventoryRef = doc(getFirestore(), "inventory-record", inventoryItem.id);
 
