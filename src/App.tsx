@@ -31,6 +31,7 @@ import ServedDrinks from "./pages/counterAccount/served/Served";
 // Import For Inventory Account
 import InventoryDashboard from "./pages/inventoryAccount/dashboard/InventoryDashboard";
 import InitialStock from "./pages/inventoryAccount/initialStock/InitialStock";
+import Stock from "./pages/inventoryAccount/stock/Stock";
 import AddItem from "./pages/inventoryAccount/item/AddItem";
 import ReleasedStock from "./pages/inventoryAccount/releasedStock/ReleasedStock";
 
@@ -236,8 +237,9 @@ function App() {
 
           {/* ROUTES FOR INVENTORY ACCOUNT */}
           <Route path="/inventory" element={<InventoryDashboard />} />
-          <Route path="/stock" element={<InitialStock />} />
           <Route path="/add_item_to_stock" element={<AddItem />} />
+          <Route path="/initial_stock" element={<InitialStock />} />
+          <Route path="/stock" element={<Stock />} />
           <Route path="/released_stock" element={<ReleasedStock />} />
 
           {/* 404 ROUTE */}

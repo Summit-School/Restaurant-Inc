@@ -48,13 +48,19 @@ const Sidebar = () => {
               <span className="icon">
                 <MdViewList size={35} />
               </span>
-              <Link to="/stock">STOCK</Link>
+              <Link to="/add_item_to_stock">ADD ITEM</Link>
             </li>
             <li>
               <span className="icon">
                 <MdViewList size={35} />
               </span>
-              <Link to="/add_item_to_stock">ADD ITEM</Link>
+              <Link to="/initial_stock">INITIAL STOCK</Link>
+            </li>
+            <li>
+              <span className="icon">
+                <MdViewList size={35} />
+              </span>
+              <Link to="/stock">STOCK</Link>
             </li>
 
             <li>

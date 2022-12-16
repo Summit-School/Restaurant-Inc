@@ -1,13 +1,11 @@
-import "./InitialStock.css";
+import "./Stock.css";
 import { useState, useEffect } from "react";
 import { getInventoryItems } from "../../../api/firebase/inventory.api.ts";
-import EditStock from "../editStock/EditStock";
-import DeleteStock from "../deleteStock/DeleteStock";
+import ReleasedStock from "../releaseStock/ReleaseStock";
 
 const Stock = () => {
   const [stock, setStock] = useState([]);
-  const [editStock, setEditStock] = useState("");
-  const [deleteStock, setDeleteStock] = useState("");
+  const [releaseStock, setReleaseStock] = useState("");
 
   useEffect(() => {
     getInventoryItems((response) => {
@@ -39,21 +37,15 @@ const Stock = () => {
                 <tr key={index}>
                   <td>{item.itemName}</td>
                   <td>{item.subCategory?.name}</td>
-                  <td>{formatMoney(item.initialQuantity)}</td>
+                  <td>{formatMoney(item.itemQuantity)}</td>
                   <td>{formatMoney(item.itemPrice)}</td>
-                  <td>{formatMoney(item.itemPrice * item.initialQuantity)}</td>
+                  <td>{formatMoney(item.itemPrice * item.itemQuantity)}</td>
                   <td>
-                    {/* <button
-                      className="edit-btn"
-                      onClick={() => setEditStock(item)}
-                    >
-                      Edit
-                    </button> */}
                     <button
-                      className="delete-btn"
-                      onClick={() => setDeleteStock(item)}
+                      className="edit-btn"
+                      onClick={() => setReleaseStock(item)}
                     >
-                      Delete
+                      Realease
                     </button>
                   </td>
                 </tr>
@@ -61,15 +53,10 @@ const Stock = () => {
             : "No Stock Item Found"}
         </tbody>
       </table>
-      <EditStock
-        stock={editStock}
-        show={!!editStock}
-        onHide={() => setEditStock(false)}
-      />
-      <DeleteStock
-        stock={deleteStock}
-        show={!!deleteStock}
-        onHide={() => setDeleteStock(false)}
+      <ReleasedStock
+        stock={releaseStock}
+        show={!!releaseStock}
+        onHide={() => setReleaseStock(false)}
       />
     </div>
   );
