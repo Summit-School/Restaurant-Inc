@@ -4,7 +4,6 @@
 
 .table-striped>thead>tr:nth-of-type(odd)>* {
     color: black;
-    font-size: 18px;
     padding-bottom: 20px;
     font-weight: bold;
 }
@@ -21,12 +20,13 @@
 }
 
 #printablediv {
-    width: 600px;
+    width: 500px;
     margin: auto;
     border: 1px solid black;
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
     margin-top: 50px;
+    font-size: 10px;
 }
 
 .total-list {
@@ -62,4 +62,11 @@
     text-align: center;
     margin-top: 10px;
     font-weight: bold;
+}
+
+.powered-by {
+    font-weight: bold;
+    font-size: 12px;
+    margin-top: 50px;
+    text-align: center;
 }

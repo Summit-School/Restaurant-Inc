@@ -20,8 +20,11 @@ const PendingDelivery = () => {
 
       // Filter orders according to state
       let finalOrders = orders.map((order) =>
-        order.filter((orderObj) => orderObj.state === "ORDERED")
+        order.filter(
+          (orderObj) => orderObj.state === "ORDERED" && orderObj.food.length > 0
+        )
       );
+      console.log(finalOrders);
       setAllOrders(finalOrders);
     });
   }, []);

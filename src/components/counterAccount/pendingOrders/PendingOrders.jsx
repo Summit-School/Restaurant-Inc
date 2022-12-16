@@ -17,6 +17,7 @@ const PendingOrders = () => {
       let finalOrders = orders.map((order) =>
         order.filter(
           (orderObj) =>
+            orderObj.drinks.length > 0 &&
             (orderObj.state === "ORDERED") | (orderObj.state === "SERVED")
         )
       );

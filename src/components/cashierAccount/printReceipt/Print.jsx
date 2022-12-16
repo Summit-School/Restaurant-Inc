@@ -115,6 +115,9 @@ const Print = (props) => {
             </tr>
           </tbody>
         </table>
+        <p className="powered-by">
+          POWERED BY SUMMITTECH LTD | www.summittech-eng.org
+        </p>
       </div>
       <div className="print-btn-div">
         <button className="print-btn" onClick={PrintReceipt}>
