@@ -24,7 +24,6 @@ const PendingDelivery = () => {
           (orderObj) => orderObj.state === "ORDERED" && orderObj.food.length > 0
         )
       );
-      console.log(finalOrders);
       setAllOrders(finalOrders);
     });
   }, []);

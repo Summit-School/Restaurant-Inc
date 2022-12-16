@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
-import { onSnapshotGetAllTables } from "../../../api/firebase/admin.api.ts";
+import {
+  onSnapshotGetAllTables,
+  serveOrder,
+} from "../../../api/firebase/admin.api.ts";
+import { toast } from "react-toastify";
 
 const PendingOrders = () => {
   const [allOrders, setAllOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     onSnapshotGetAllTables((response) => {
@@ -24,6 +29,29 @@ const PendingOrders = () => {
       setAllOrders(finalOrders);
     });
   }, []);
+
+  const servedOrder = async (order) => {
+    console.log(order);
+    setLoading(true);
+    const user = await JSON.parse(localStorage.getItem("kitchen"));
+
+    let userData = {
+      name: user.name,
+      phone: user.phone,
+    };
+
+    try {
+      const response = await serveOrder(order, userData);
+      if (response) {
+        setLoading(false);
+        toast.success("Order Served");
+      }
+    } catch (error) {
+      setLoading(false);
+      toast.error("Failed");
+      console.error(error);
+    }
+  };
 
   return (
     <div className="accordion" id="accordionExample">
@@ -86,6 +114,16 @@ const PendingOrders = () => {
                         </li>
                       ))}
                     </ul>
+                    {order.food.length <= 0 ? (
+                      <button
+                        className="paid-btn"
+                        onClick={() => servedOrder(order)}
+                      >
+                        {loading ? "Loading..." : "SERVED"}
+                      </button>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               </div>

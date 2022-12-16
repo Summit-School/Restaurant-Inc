@@ -61,7 +61,7 @@ const Print = (props) => {
           PABLO LOUNGE BUEA: +237677522236/+237681796710{" "}
         </p>
         <hr />
-        <table className="table table-striped">
+        <table className="table">
           <thead>
             <tr>
               <th>Food</th>
@@ -89,7 +89,7 @@ const Print = (props) => {
           </tbody>
         </table>
 
-        <table className="table table-striped table-two">
+        <table className="table  table-two">
           <thead>
             <tr>
               <th>Drink</th>

@@ -4,29 +4,29 @@
 
 .table-striped>thead>tr:nth-of-type(odd)>* {
     color: black;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     font-weight: bold;
 }
 
 .table-striped>tbody>tr:nth-child(odd)>td,
 .table-striped>tbody>tr:nth-child(odd)>th {
     color: black;
-    background-color: whitesmoke;
+    /* background-color: whitesmoke; */
 }
 
 
 .table-two {
-    margin-top: 60px;
+    margin-top: 30px;
 }
 
 #printablediv {
-    width: 500px;
+    width: 300px;
     margin: auto;
     border: 1px solid black;
     border-radius: 10px;
-    padding: 10px;
+    padding: 10px 0;
     margin-top: 50px;
-    font-size: 10px;
+    font-size: 12px;
 }
 
 .total-list {
