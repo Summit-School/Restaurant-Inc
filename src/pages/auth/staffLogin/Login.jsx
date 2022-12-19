@@ -58,6 +58,16 @@ const Login = () => {
           setLoading(false);
           navigate("/counter");
         }
+        if (response.type === "INVENTORY") {
+          let inventory = {
+            name: response.name,
+            phone: response.phone,
+            type: response.type,
+          };
+          localStorage.setItem("inventory", JSON.stringify(inventory));
+          setLoading(false);
+          navigate("/inventory");
+        }
       }
       console.log(response);
     } catch (error) {

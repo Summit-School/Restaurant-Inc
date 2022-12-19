@@ -49,6 +49,7 @@ import ProtectCashier from "./components/protectedRoutes/ProtectCashier";
 import ProtectCounter from "./components/protectedRoutes/ProtectCounter";
 import ProtectService from "./components/protectedRoutes/ProtectService";
 import ProtectKitchen from "./components/protectedRoutes/ProtectKitchen";
+import ProtectInventory from "./components/protectedRoutes/ProtectInventory";
 import Print from "./components/cashierAccount/printReceipt/Print";
 
 function App() {
@@ -236,11 +237,46 @@ function App() {
           />
 
           {/* ROUTES FOR INVENTORY ACCOUNT */}
-          <Route path="/inventory" element={<InventoryDashboard />} />
-          <Route path="/add_item_to_stock" element={<AddItem />} />
-          <Route path="/initial_stock" element={<InitialStock />} />
-          <Route path="/stock" element={<Stock />} />
-          <Route path="/released_stock" element={<ReleasedStock />} />
+          <Route
+            path="/inventory"
+            element={
+              <ProtectInventory>
+                <InventoryDashboard />
+              </ProtectInventory>
+            }
+          />
+          <Route
+            path="/add_item_to_stock"
+            element={
+              <ProtectInventory>
+                <AddItem />
+              </ProtectInventory>
+            }
+          />
+          <Route
+            path="/initial_stock"
+            element={
+              <ProtectInventory>
+                <InitialStock />
+              </ProtectInventory>
+            }
+          />
+          <Route
+            path="/stock"
+            element={
+              <ProtectInventory>
+                <Stock />
+              </ProtectInventory>
+            }
+          />
+          <Route
+            path="/released_stock"
+            element={
+              <ProtectInventory>
+                <ReleasedStock />
+              </ProtectInventory>
+            }
+          />
 
           {/* 404 ROUTE */}
           <Route path="*" element={<PageError />} />
