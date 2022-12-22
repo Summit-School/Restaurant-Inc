@@ -64,7 +64,7 @@ const PendingDelivery = () => {
                       className="accordion-button"
                       type="button"
                       data-bs-toggle="collapse"
-                      data-bs-target={`#collapseKitchenPending${indexKey}`}
+                      data-bs-target={`#collapseKitchenPending${indexKey}${index}`}
                       aria-expanded="true"
                       aria-controls="collapseKitchenPending"
                     >
@@ -97,7 +97,7 @@ const PendingDelivery = () => {
                     </button>
                   </h2>
                   <div
-                    id={`collapseKitchenPending${indexKey}`}
+                    id={`collapseKitchenPending${indexKey}${index}`}
                     className="accordion-collapse collapse"
                     aria-labelledby="headingOne"
                     data-bs-parent="#accordionExample"

@@ -65,7 +65,7 @@ const PendingOrders = () => {
                     className="accordion-button"
                     type="button"
                     data-bs-toggle="collapse"
-                    data-bs-target={`#counterOne${indexKey}`}
+                    data-bs-target={`#counterOne${indexKey}${index}`}
                     aria-expanded="true"
                     aria-controls="collapseOne"
                   >
@@ -98,7 +98,7 @@ const PendingOrders = () => {
                   </button>
                 </h2>
                 <div
-                  id={`counterOne${indexKey}`}
+                  id={`counterOne${indexKey}${index}`}
                   className="accordion-collapse collapse"
                   aria-labelledby="headingOne"
                   data-bs-parent="#accordionExample"

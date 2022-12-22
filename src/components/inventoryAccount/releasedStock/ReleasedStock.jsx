@@ -34,8 +34,15 @@ const ReleasedStock = () => {
                 <tr key={index}>
                   <td>{item.itemName}</td>
                   <td>{item.subCategory.name}</td>
-                  <td>{formatMoney(item.itemQuantity)}</td>
-                  <td>{formatMoney(item.itemPrice * item.itemQuantity)}</td>
+                  <td>
+                    {formatMoney(item.initialQuantity - item.itemQuantity)}
+                  </td>
+                  <td>
+                    {formatMoney(
+                      item.itemPrice *
+                        (item.initialQuantity - item.itemQuantity)
+                    )}
+                  </td>
                 </tr>
               ))
             : "No Stock Item Found"}
