@@ -60,7 +60,7 @@ const Sidebar = () => {
               <span className="icon">
                 <MdViewList size={35} />
               </span>
-              <Link to="/stock">STOCK</Link>
+              <Link to="/stock">BALANCE STOCK</Link>
             </li>
 
             <li>

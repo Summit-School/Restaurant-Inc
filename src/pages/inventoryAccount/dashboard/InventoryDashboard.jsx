@@ -20,21 +20,31 @@ const InventoryDashboard = () => {
   useEffect(() => {
     getInventoryItems((response) => {
       let count = 0;
-      response.map((item) => (count += parseInt(item.itemQuantity)));
+      response.map((item) => (count += parseInt(item.initialQuantity)));
       setStock(count);
 
       let price = 0;
-      response.map((item) => (price += parseInt(item.itemPrice)));
-      setStockPrice(price);
+      response.map((item) => {
+        setStockPrice(
+          (price += parseInt(item.itemPrice * item.initialQuantity))
+        );
+      });
     });
 
     getAllReleasedItems((response) => {
       let count = 0;
-      response.map((item) => (count += parseInt(item.itemQuantity)));
+      response.map(
+        (item) => (count += parseInt(item.initialQuantity - item.itemQuantity))
+      );
       setReleasedStock(count);
 
       let price = 0;
-      response.map((item) => (price += parseInt(item.itemPrice)));
+      response.map(
+        (item) =>
+          (price += parseInt(
+            item.itemPrice * (item.initialQuantity - item.itemQuantity)
+          ))
+      );
       setReleasedStockPrice(price);
     });
   }, []);

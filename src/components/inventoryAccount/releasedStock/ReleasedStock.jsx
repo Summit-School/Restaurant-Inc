@@ -7,7 +7,6 @@ const ReleasedStock = () => {
 
   useEffect(() => {
     getAllReleasedItems((response) => {
-      console.log(response);
       setReleasedStock(response);
     });
   }, []);
