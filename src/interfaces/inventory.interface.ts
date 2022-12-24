@@ -10,4 +10,6 @@ export interface InventoryItem {
   subcategory: InventorySubCategory;
   itemPrice: string | number;
   itemQuantity: string | number;
+  initialQuantity: number | string;
+
 }

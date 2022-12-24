@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
-import { onSnapshotGetAllTables } from "../../../api/firebase/admin.api.ts";
+import {
+  onSnapshotGetAllTables,
+  serveOrder,
+} from "../../../api/firebase/admin.api.ts";
+import { toast } from "react-toastify";
 
 const PendingOrders = () => {
   const [allOrders, setAllOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     onSnapshotGetAllTables((response) => {
@@ -17,12 +22,36 @@ const PendingOrders = () => {
       let finalOrders = orders.map((order) =>
         order.filter(
           (orderObj) =>
+            orderObj.drinks.length > 0 &&
             (orderObj.state === "ORDERED") | (orderObj.state === "SERVED")
         )
       );
       setAllOrders(finalOrders);
     });
   }, []);
+
+  const servedOrder = async (order) => {
+    console.log(order);
+    setLoading(true);
+    const user = await JSON.parse(localStorage.getItem("kitchen"));
+
+    let userData = {
+      name: user.name,
+      phone: user.phone,
+    };
+
+    try {
+      const response = await serveOrder(order, userData);
+      if (response) {
+        setLoading(false);
+        toast.success("Order Served");
+      }
+    } catch (error) {
+      setLoading(false);
+      toast.error("Failed");
+      console.error(error);
+    }
+  };
 
   return (
     <div className="accordion" id="accordionExample">
@@ -36,7 +65,7 @@ const PendingOrders = () => {
                     className="accordion-button"
                     type="button"
                     data-bs-toggle="collapse"
-                    data-bs-target={`#counterOne${indexKey}`}
+                    data-bs-target={`#counterOne${indexKey}${index}`}
                     aria-expanded="true"
                     aria-controls="collapseOne"
                   >
@@ -44,7 +73,7 @@ const PendingOrders = () => {
                     {order.table.floor
                       ? order.table.number + " (" + order.table.floor + ")"
                       : order.table.number}
-                    {order.state === "ORDERED" ? (
+                    {/* {order.state === "ORDERED" ? (
                       <span
                         className="status"
                         style={{ backgroundColor: "yellow", color: "grey" }}
@@ -65,11 +94,11 @@ const PendingOrders = () => {
                       >
                         {order.state}
                       </span>
-                    )}
+                    )} */}
                   </button>
                 </h2>
                 <div
-                  id={`counterOne${indexKey}`}
+                  id={`counterOne${indexKey}${index}`}
                   className="accordion-collapse collapse"
                   aria-labelledby="headingOne"
                   data-bs-parent="#accordionExample"
@@ -85,6 +114,16 @@ const PendingOrders = () => {
                         </li>
                       ))}
                     </ul>
+                    {order.food.length <= 0 ? (
+                      <button
+                        className="paid-btn"
+                        onClick={() => servedOrder(order)}
+                      >
+                        {loading ? "Loading..." : "SERVED"}
+                      </button>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               </div>

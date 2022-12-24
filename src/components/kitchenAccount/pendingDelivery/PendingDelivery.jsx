@@ -20,7 +20,9 @@ const PendingDelivery = () => {
 
       // Filter orders according to state
       let finalOrders = orders.map((order) =>
-        order.filter((orderObj) => orderObj.state === "ORDERED")
+        order.filter(
+          (orderObj) => orderObj.state === "ORDERED" && orderObj.food.length > 0
+        )
       );
       setAllOrders(finalOrders);
     });
@@ -62,7 +64,7 @@ const PendingDelivery = () => {
                       className="accordion-button"
                       type="button"
                       data-bs-toggle="collapse"
-                      data-bs-target={`#collapseKitchenPending${indexKey}`}
+                      data-bs-target={`#collapseKitchenPending${indexKey}${index}`}
                       aria-expanded="true"
                       aria-controls="collapseKitchenPending"
                     >
@@ -95,7 +97,7 @@ const PendingDelivery = () => {
                     </button>
                   </h2>
                   <div
-                    id={`collapseKitchenPending${indexKey}`}
+                    id={`collapseKitchenPending${indexKey}${index}`}
                     className="accordion-collapse collapse"
                     aria-labelledby="headingOne"
                     data-bs-parent="#accordionExample"

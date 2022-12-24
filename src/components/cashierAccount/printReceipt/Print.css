@@ -4,29 +4,29 @@
 
 .table-striped>thead>tr:nth-of-type(odd)>* {
     color: black;
-    font-size: 18px;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     font-weight: bold;
 }
 
 .table-striped>tbody>tr:nth-child(odd)>td,
 .table-striped>tbody>tr:nth-child(odd)>th {
     color: black;
-    background-color: whitesmoke;
+    /* background-color: whitesmoke; */
 }
 
 
 .table-two {
-    margin-top: 60px;
+    margin-top: 30px;
 }
 
 #printablediv {
-    width: 600px;
+    width: 300px;
     margin: auto;
     border: 1px solid black;
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px 0;
     margin-top: 50px;
+    font-size: 12px;
 }
 
 .total-list {
@@ -46,4 +46,27 @@
     border-radius: 5px;
     border: none;
     font-weight: bold;
+}
+
+.print-logo {
+    width: 100%;
+}
+
+.print-logo img {
+    width: 15%;
+    margin-left: 40%;
+    border-radius: 10px;
+}
+
+.print-title {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.powered-by {
+    font-weight: bold;
+    font-size: 12px;
+    margin-top: 50px;
+    text-align: center;
 }

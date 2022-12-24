@@ -31,6 +31,7 @@ import ServedDrinks from "./pages/counterAccount/served/Served";
 // Import For Inventory Account
 import InventoryDashboard from "./pages/inventoryAccount/dashboard/InventoryDashboard";
 import InitialStock from "./pages/inventoryAccount/initialStock/InitialStock";
+import Stock from "./pages/inventoryAccount/stock/Stock";
 import AddItem from "./pages/inventoryAccount/item/AddItem";
 import ReleasedStock from "./pages/inventoryAccount/releasedStock/ReleasedStock";
 
@@ -48,6 +49,7 @@ import ProtectCashier from "./components/protectedRoutes/ProtectCashier";
 import ProtectCounter from "./components/protectedRoutes/ProtectCounter";
 import ProtectService from "./components/protectedRoutes/ProtectService";
 import ProtectKitchen from "./components/protectedRoutes/ProtectKitchen";
+import ProtectInventory from "./components/protectedRoutes/ProtectInventory";
 import Print from "./components/cashierAccount/printReceipt/Print";
 
 function App() {
@@ -235,10 +237,46 @@ function App() {
           />
 
           {/* ROUTES FOR INVENTORY ACCOUNT */}
-          <Route path="/inventory" element={<InventoryDashboard />} />
-          <Route path="/stock" element={<InitialStock />} />
-          <Route path="/add_item_to_stock" element={<AddItem />} />
-          <Route path="/released_stock" element={<ReleasedStock />} />
+          <Route
+            path="/inventory"
+            element={
+              <ProtectInventory>
+                <InventoryDashboard />
+              </ProtectInventory>
+            }
+          />
+          <Route
+            path="/add_item_to_stock"
+            element={
+              <ProtectInventory>
+                <AddItem />
+              </ProtectInventory>
+            }
+          />
+          <Route
+            path="/initial_stock"
+            element={
+              <ProtectInventory>
+                <InitialStock />
+              </ProtectInventory>
+            }
+          />
+          <Route
+            path="/stock"
+            element={
+              <ProtectInventory>
+                <Stock />
+              </ProtectInventory>
+            }
+          />
+          <Route
+            path="/released_stock"
+            element={
+              <ProtectInventory>
+                <ReleasedStock />
+              </ProtectInventory>
+            }
+          />
 
           {/* 404 ROUTE */}
           <Route path="*" element={<PageError />} />

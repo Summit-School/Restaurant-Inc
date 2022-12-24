@@ -42,7 +42,7 @@ const PendingTables = () => {
                         className="accordion-button"
                         type="button"
                         data-bs-toggle="collapse"
-                        data-bs-target={`#collapseOne${indexKey}`}
+                        data-bs-target={`#collapseOne${indexKey}${index}`}
                         aria-expanded="true"
                         aria-controls="collapseOne"
                       >
@@ -75,7 +75,7 @@ const PendingTables = () => {
                       </button>
                     </h2>
                     <div
-                      id={`collapseOne${indexKey}`}
+                      id={`collapseOne${indexKey}${index}`}
                       className="accordion-collapse collapse"
                       aria-labelledby="headingOne"
                       data-bs-parent="#accordionExample"

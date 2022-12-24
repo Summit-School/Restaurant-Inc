@@ -1,12 +1,12 @@
-import "./InitialStock.css";
+import "./Stock.css";
 import InventoryLayout from "../../../components/inventoryLayout/InventoryLayout";
-import InitialStock from "../../../components/inventoryAccount/initialStock/InitialStock";
+import Stock from "../../../components/inventoryAccount/stock/Stock";
 
 const StockPage = () => {
   return (
     <InventoryLayout>
       <div className="stock-page p-2">
-        <InitialStock />
+        <Stock />
       </div>
     </InventoryLayout>
   );

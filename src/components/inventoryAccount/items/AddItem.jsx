@@ -20,6 +20,8 @@ const AddItem = () => {
     getSubCategories((response) => {
       setAllCategory(response);
       setSubCategory(response.length > 0 ? response[0].id : "");
+
+      console.log(response);
     });
   }, []);
 
@@ -28,7 +30,7 @@ const AddItem = () => {
     setItemLoading(true);
 
     const subcat = allCategory.find((catr) => {
-      return catr.id == subCategory;
+      return catr.id === subCategory;
     });
 
     const itemData = {
@@ -40,6 +42,7 @@ const AddItem = () => {
     };
 
     try {
+      console.log(itemData);
       const response = await addToInventory(itemData);
       if (response) {
         toast.success("Item Added");

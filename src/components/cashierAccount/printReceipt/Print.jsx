@@ -54,7 +54,14 @@ const Print = (props) => {
   return (
     <div>
       <div id="printablediv">
-        <table className="table table-striped">
+        <div className="print-logo">
+          <img src="/images/logo.jpeg" alt="" />
+        </div>
+        <p className="print-title">
+          PABLO LOUNGE BUEA: +237677522236/+237681796710{" "}
+        </p>
+        <hr />
+        <table className="table">
           <thead>
             <tr>
               <th>Food</th>
@@ -82,7 +89,7 @@ const Print = (props) => {
           </tbody>
         </table>
 
-        <table className="table table-striped table-two">
+        <table className="table  table-two">
           <thead>
             <tr>
               <th>Drink</th>
@@ -108,6 +115,9 @@ const Print = (props) => {
             </tr>
           </tbody>
         </table>
+        <p className="powered-by">
+          POWERED BY SUMMITTECH LTD | www.summittech-eng.org
+        </p>
       </div>
       <div className="print-btn-div">
         <button className="print-btn" onClick={PrintReceipt}>
