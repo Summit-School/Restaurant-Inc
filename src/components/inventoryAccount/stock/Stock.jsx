@@ -9,8 +9,6 @@ const Stock = () => {
 
   useEffect(() => {
     getInventoryItems((response) => {
-      let sorted = response.sort();
-      console.log(sorted);
       setStock(response.sort());
     });
   }, []);

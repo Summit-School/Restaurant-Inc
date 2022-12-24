@@ -34,7 +34,6 @@ const PendingOrders = () => {
   }, []);
 
   const confirmPay = async (order) => {
-    console.log(order);
     setLoading(true);
     const user = await JSON.parse(localStorage.getItem("cashier"));
 
@@ -56,7 +55,6 @@ const PendingOrders = () => {
     }
   };
   const PrintAction = async (printDetails) => {
-    console.log(printDetails);
     navigate("/print", { state: { details: printDetails } });
   };
 

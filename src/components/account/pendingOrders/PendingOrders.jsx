@@ -7,7 +7,6 @@ import DrinkList from "./DrinkList";
 
 const PendingOrders = () => {
   const [allOrders, setAllOrders] = useState([]);
-  console.log(allOrders);
 
   useEffect(() => {
     onSnapshotGetAllTables((response) => {

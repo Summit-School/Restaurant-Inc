@@ -65,17 +65,31 @@ export async function addToInventory(inventoryItem: InventoryItem) {
   return { message: "Successfully updated inventory" };
 }
 
+// // edit inventory item
+// export async function editToInventory(
+//     inventoryItem: InventoryItem,
+//     id: string
+//   ) {
+//     inventoryItem.initialQuantity = inventoryItem.itemQuantity;
+//     const inventoryRef = doc(getFirestore(), "inventory-record", id);
+
+//     await setDoc(inventoryRef, inventoryItem);
+
+//     return { message: "Successfully updated inventory" };
+//   }
+//   // end of edit inventory item
+
+// edit inventory item
 export async function editToInventory(
   inventoryItem: InventoryItem,
   id: string
 ) {
-  inventoryItem.initialQuantity = inventoryItem.itemQuantity;
   const inventoryRef = doc(getFirestore(), "inventory-record", id);
-
   await setDoc(inventoryRef, inventoryItem);
 
   return { message: "Successfully updated inventory" };
 }
+// end of edit inventory item
 
 export async function deleteInventory(id: string) {
   const inventoryRef = doc(getFirestore(), "inventory-record", id);

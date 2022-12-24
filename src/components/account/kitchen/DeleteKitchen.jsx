@@ -18,7 +18,6 @@ const DeleteKitchen = (props) => {
 
     try {
       const response = await deleteStaff(staffData, props.kitchen.type);
-      console.log(response);
       if (response) {
         toast.success("User Deleted");
         setLoading(false);

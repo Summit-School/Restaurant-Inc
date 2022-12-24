@@ -18,7 +18,6 @@ const PaidOrders = () => {
           output.timestamp >= startOfToday && output.timestamp <= endOfToday
       );
       setAllOrders(output);
-      console.log(output);
     });
   }, []);
 

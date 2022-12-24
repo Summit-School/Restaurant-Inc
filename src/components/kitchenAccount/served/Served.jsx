@@ -4,7 +4,6 @@ import { onSnapshotGetAllTables } from "../../../api/firebase/admin.api.ts";
 const Served = () => {
   const [allOrders, setAllOrders] = useState([]);
   const [numberOfServed, setNumberOfServed] = useState(0);
-  console.log(numberOfServed);
 
   useEffect(() => {
     onSnapshotGetAllTables((response) => {

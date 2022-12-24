@@ -11,9 +11,7 @@ const Stock = () => {
 
   useEffect(() => {
     getInventoryItems((response) => {
-      let sorted = response.sort();
-      console.log(sorted);
-      setStock(response.sort());
+      setStock(response);
     });
   }, []);
 
@@ -43,12 +41,12 @@ const Stock = () => {
                   <td>{formatMoney(item.itemPrice)}</td>
                   <td>{formatMoney(item.itemPrice * item.initialQuantity)}</td>
                   <td>
-                    {/* <button
+                    <button
                       className="edit-btn"
                       onClick={() => setEditStock(item)}
                     >
                       Edit
-                    </button> */}
+                    </button>
                     <button
                       className="delete-btn"
                       onClick={() => setDeleteStock(item)}

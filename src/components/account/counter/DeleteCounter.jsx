@@ -18,7 +18,6 @@ const DeleteCounter = (props) => {
 
     try {
       const response = await deleteStaff(staffData, props.counter.type);
-      console.log(response);
       if (response) {
         toast.success("User Deleted");
         setLoading(false);

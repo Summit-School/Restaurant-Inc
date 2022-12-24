@@ -11,5 +11,4 @@ export interface InventoryItem {
   itemPrice: string | number;
   itemQuantity: string | number;
   initialQuantity: number | string;
-
 }

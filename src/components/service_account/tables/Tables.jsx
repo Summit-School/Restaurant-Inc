@@ -10,7 +10,6 @@ const Tables = () => {
   const [tables, setTables] = useState([]);
   useEffect(() => {
     onSnapshotGetAllTables((response) => {
-      // console.log(response);
       setTables(response);
     });
   }, []);

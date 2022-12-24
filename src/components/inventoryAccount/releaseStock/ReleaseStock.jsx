@@ -12,8 +12,6 @@ const ReleaseStock = (props) => {
     e.preventDefault();
     setItemLoading(true);
 
-    console.log(props.stock.id, itemQuantity);
-
     try {
       const response = await releaseInventoryItem(props.stock.id, itemQuantity);
       if (response) {

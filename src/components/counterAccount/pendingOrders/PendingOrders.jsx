@@ -31,7 +31,6 @@ const PendingOrders = () => {
   }, []);
 
   const servedOrder = async (order) => {
-    console.log(order);
     setLoading(true);
     const user = await JSON.parse(localStorage.getItem("kitchen"));
 

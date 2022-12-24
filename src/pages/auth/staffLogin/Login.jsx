@@ -69,7 +69,6 @@ const Login = () => {
           navigate("/inventory");
         }
       }
-      console.log(response);
     } catch (error) {
       setLoading(false);
       toast.error("Login Failed");

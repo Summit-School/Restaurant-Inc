@@ -11,7 +11,6 @@ const Categories = () => {
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     getSubCategories((response) => {
-      console.log(response);
       setCategories(response);
     });
   }, []);

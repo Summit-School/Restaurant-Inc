@@ -5,7 +5,6 @@ import DrinkList from "./DrinkList";
 
 const CompletedTables = () => {
   const [allOrders, setAllOrders] = useState([]);
-  console.log(allOrders);
 
   // GET THE TIMESTAMPS OF THE START AND END OF THE CURRENT DAY
   const startOfToday = new Date().setHours(0, 0, 0, 0);

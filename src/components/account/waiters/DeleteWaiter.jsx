@@ -19,7 +19,6 @@ const DeleteWaiter = (props) => {
 
     try {
       const response = await deleteStaff(staffData, props.waiter.type);
-      console.log(response);
       if (response) {
         toast.success("User Deleted");
         setLoading(false);

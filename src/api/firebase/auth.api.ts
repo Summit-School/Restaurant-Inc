@@ -32,8 +32,6 @@ export const loginAdmin = async (
   return null;
 };
 
-
-
 /**
  * Creates a staff account
  *
@@ -65,8 +63,6 @@ export async function createStaff(
   if (!staff.id) {
     staff = { ...staff, id: uuid.v4() };
   }
-
-  console.log(staff);
 
   switch (type) {
     case "SERVICE":

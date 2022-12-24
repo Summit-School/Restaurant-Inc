@@ -8,8 +8,6 @@ const Attendance = () => {
 
   useEffect(() => {
     onSnapshotGetAttendance((response) => {
-      console.log(response);
-
       // ✅ Sort in Descending order (high to low)
       const sortedDesc = response.sort(
         (objA, objB) => Number(objB.timestamp) - Number(objA.timestamp)

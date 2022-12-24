@@ -19,7 +19,6 @@ const UpdatePassword = (props) => {
     }
 
     const user = await JSON.parse(localStorage.getItem("admin"));
-    console.log(user);
     try {
       const response = await changeAdminPassword(
         user,
@@ -28,7 +27,6 @@ const UpdatePassword = (props) => {
       );
       if (response) {
         toast.success("Password changed successfully");
-        console.log(response);
         setLoading(false);
       }
     } catch (error) {
