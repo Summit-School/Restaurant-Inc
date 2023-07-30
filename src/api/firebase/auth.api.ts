@@ -24,15 +24,13 @@ export const loginAdmin = async (
   const adminRef = doc(getFirestore(), "admin", email.toLowerCase());
   const admin = (await getDoc(adminRef)).data() as Admin;
   if (admin) {
-    if (admin.password == password) {
+    if (admin.password === password) {
       return { email: admin.email, password: "" };
     }
   }
 
   return null;
 };
-
-
 
 /**
  * Creates a staff account

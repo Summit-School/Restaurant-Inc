@@ -34,14 +34,14 @@ export async function markOrderAsPaid(order: Order, user: User) {
   order.state = "PAID";
   order.cashier = user;
 
-  const orders = tableOrders.filter((o: Order) => o.id != order.id)
+  const orders = tableOrders.filter((o: Order) => o.id != order.id);
   const table: Table = {
     id: order.table.id,
     number: order.table.number,
     floor: order.table.floor || "",
     state: order.state,
     orders: tableOrders,
-  }
+  };
   const pendingOrderRef = doc(db, "all_tables", order.table.id);
   const orderRef = doc(db, "all_orders", order.id);
   await setDoc(pendingOrderRef, { ...table, orders } as Table);
@@ -55,9 +55,7 @@ export async function markOrderAsPaid(order: Order, user: User) {
   return { message: "successfully paid for order" };
 }
 
-
 export async function getPaidOrders(onSuccess: (orders: Order[]) => void) {
-
   const orderRef = collection(db, "all_orders");
   onSnapshot(orderRef, (res) => {
     onSuccess(res.docs.map((doc) => doc.data() as Order));

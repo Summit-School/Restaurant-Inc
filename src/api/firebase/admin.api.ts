@@ -22,7 +22,7 @@ import { sendNotification } from "../oneSignal/notifications.api.ts";
 import { loginAdmin } from "./auth.api.ts";
 import { updateInventory } from "./menu.api.ts";
 
-export function addToInventory(inventory: InventoryItem) { }
+export function addToInventory(inventory: InventoryItem) {}
 
 /**
  * Gets all orders that are currently pending
@@ -64,7 +64,6 @@ export function fetchAllOrders(callBack: (orders: Order[]) => void) {
 export async function AddOrderToPending(order: Order, user: User) {
   const tableOrders = await isTableOccupied(order.table.id);
 
-
   order = {
     id: uuid.v4(),
     state: "ORDERED",
@@ -75,9 +74,9 @@ export async function AddOrderToPending(order: Order, user: User) {
     table: {
       id: order.table.id,
       number: order.table.number,
-      floor: order.table.floor || ""
+      floor: order.table.floor || "",
     },
-  }
+  };
 
   const tableOrderRef = doc(db, "all_tables", order.table.id);
 
@@ -87,11 +86,11 @@ export async function AddOrderToPending(order: Order, user: User) {
     floor: order.table.floor || "",
     state: order.state,
     orders: tableOrders,
-  }
-  table.orders?.push(order)
+  };
+  table.orders?.push(order);
 
-  console.log(table, "TABLE")
-  console.log(order, "ORDERS")
+  console.log(table, "TABLE");
+  console.log(order, "ORDERS");
 
   await setDoc(tableOrderRef, table as Table);
   await sendNotification({
@@ -150,7 +149,7 @@ export async function serveOrder(order: Order, user: User) {
   }
 
   const matchedIndex = tableOrders.findIndex((thisOrder) => {
-    return thisOrder.id == order.id;
+    return thisOrder.id === order.id;
   });
 
   if (matchedIndex >= 0) {
@@ -179,9 +178,7 @@ export async function serveOrder(order: Order, user: User) {
  * @returns the order if the table is occupied or null otherwise
  */
 
-export async function isTableOccupied(
-  tableId: string
-): Promise<Order[]> {
+export async function isTableOccupied(tableId: string): Promise<Order[]> {
   const tableRef = doc(db, "all_tables", tableId);
   return getDoc(tableRef).then((res) => {
     const data = res.data() as Table;
